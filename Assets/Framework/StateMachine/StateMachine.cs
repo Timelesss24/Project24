@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Platformer
+namespace Timelesss
 {
     public class StateMachine
     {
         StateNode current;
-        Dictionary<Type, StateNode> nodes = new();
-        HashSet<ITransition> anyTransitions = new();
+        readonly Dictionary<Type, StateNode> nodes = new();
+        readonly HashSet<ITransition> anyTransitions = new();
 
         public void Update()
         {
