@@ -1,6 +1,6 @@
 using System;
 
-namespace Timelesss
+namespace Platformer
 {
     public class FuncPredicate : IPredicate
     {

@@ -1,4 +1,4 @@
-namespace Timelesss
+namespace Platformer
 {
     public interface IState
     {
