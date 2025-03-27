@@ -90,7 +90,7 @@ MonoBehaviour:
   fallTimeout: 0.15
   dashForce: 10
   dashDuration: 0.2
-  dashCooldown: 1
+  dashCooldown: 0.7
 --- !u!114 &3268328116355523884
 MonoBehaviour:
   m_ObjectHideFlags: 0

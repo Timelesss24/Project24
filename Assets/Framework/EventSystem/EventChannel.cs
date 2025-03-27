@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Platformer
+namespace Timelesss
 {
     public abstract class EventChannel<T> : ScriptableObject
     {

@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using static PlayerInputActions;
 
-namespace Platformer
+namespace Timelesss
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Platformer/Input Reader")]
     public class InputReader : ScriptableObject, IPlayerActions
