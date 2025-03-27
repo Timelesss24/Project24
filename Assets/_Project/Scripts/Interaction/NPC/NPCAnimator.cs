@@ -9,14 +9,17 @@ namespace Timelesss
         private Animator animator;
 
         private const string idleHashString = "IdleState";
+        private const string talkHashString = "IsTalk";
 
-        private int idleHash;
+        public int idleHash;
+        public int talkHash;
 
         private void Start()
         {
             animator = GetComponent<Animator>();
 
             idleHash = Animator.StringToHash(idleHashString);
+            talkHash = Animator.StringToHash(talkHashString);
 
             InvokeRepeating(nameof(SetRandomIdleAnimation), 0f, 5f);
         }
@@ -25,6 +28,16 @@ namespace Timelesss
         {
             int randomIdle = Random.Range(0, 4);
             animator.SetInteger(idleHash, randomIdle);
+        }
+
+        public void StartAnimation(int hash)
+        {
+            animator.SetBool(hash, true);
+        }
+
+        public void StopAnimation(int hash)
+        {
+            animator.SetBool(hash, false);
         }
     }
 }

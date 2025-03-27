@@ -4,7 +4,14 @@ namespace Timelesss
 {
     public class NPC : InteractableBase
     {
+        private NPCAnimator animator;
+
         public override string InteractionName { get; } = "대화하기";
+
+        private void Start()
+        {
+            animator = GetComponent<NPCAnimator>();
+        }
 
         public override void Interact()
         {
@@ -16,7 +23,17 @@ namespace Timelesss
 
             // 대화창 UI 열기
 
+            animator.StartAnimation(animator.talkHash);
+
             Debug.Log("NPC와 대화");
+        }
+
+        protected override void OnTriggerExit(Collider other)
+        {
+            base.OnTriggerExit(other);
+
+            if (other.CompareTag(PlayerTag))
+                animator.StopAnimation(animator.talkHash);
         }
     }
 }

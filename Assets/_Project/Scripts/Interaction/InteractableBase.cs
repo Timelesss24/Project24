@@ -10,7 +10,7 @@ namespace Timelesss
 
         public abstract void Interact();
 
-        private void OnTriggerEnter(Collider other)
+        protected virtual void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(PlayerTag))
             {
@@ -21,7 +21,7 @@ namespace Timelesss
             }
         }
 
-        private void OnTriggerExit(Collider other)
+        protected virtual void OnTriggerExit(Collider other)
         {
             if (other.CompareTag(PlayerTag))
             {
