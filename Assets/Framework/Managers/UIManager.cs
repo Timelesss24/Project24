@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Scripts.UI;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityUtils;
 
 namespace Managers
@@ -41,6 +43,7 @@ namespace Managers
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.overrideSorting = true;
             canvas.sortingOrder = sort ? _currentOrder++ : 0;
+            go.GetOrAdd<GraphicRaycaster>();
         }
 
         public T ShowUI<T>( UICategory category = UICategory.SceneUI) where T : UIBase
