@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Timelesss
 {
@@ -17,7 +17,7 @@ namespace Timelesss
                 other.GetComponent<PlayerInteractor>().AddInteractable(this);
                 Debug.Log(InteractionName);
 
-                // UI ÇÁ·ÒÇÁÆ® ¶ç¿öÁÖ±â (InteractionName)
+                // UI í”„ë¡¬í”„íŠ¸ ë„ì›Œì£¼ê¸° (InteractionName)
             }
         }
 
@@ -28,7 +28,7 @@ namespace Timelesss
                 other.GetComponent<PlayerInteractor>().RemoveInteractable(this);
                 Debug.Log("OnTriggerExit");
 
-                // UI ÇÁ·ÒÇÁÆ® Áö¿öÁÖ±â
+                // UI í”„ë¡¬í”„íŠ¸ ì§€ì›Œì£¼ê¸°
             }
         }
     }

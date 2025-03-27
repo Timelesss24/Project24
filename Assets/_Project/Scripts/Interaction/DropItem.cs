@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Timelesss
 {
     public class DropItem : InteractableBase
     {
-        [SerializeField] private GameObject item; // ¾ÆÀÌÅÛ SO »ı¼º ÈÄ GameObject¿¡¼­ º¯°æ ¿¹Á¤
+        [SerializeField] private GameObject item; // ì•„ì´í…œ SO ìƒì„± í›„ GameObjectì—ì„œ ë³€ê²½ ì˜ˆì •
 
-        public override string InteractionName { get; } = "È¹µæÇÏ±â";
+        public override string InteractionName { get; } = "íšë“í•˜ê¸°";
 
         public override void Interact()
         {
-            Debug.Log($"{item.name} È¹µæ");
+            Debug.Log($"{item.name} íšë“");
 
-            // ¾ÆÀÌÅÛ Áİ±â ¾Ö´Ï¸ŞÀÌ¼Ç
+            // ì•„ì´í…œ ì¤ê¸° ì• ë‹ˆë©”ì´ì…˜
 
-            // UI ÇÁ·ÒÇÁÆ® ¶ç¿öÁÖ±â (XX ¸¦ È¹µæÇß½À´Ï´Ù.)
+            // UI í”„ë¡¬í”„íŠ¸ ë„ì›Œì£¼ê¸° (XX ë¥¼ íšë“í–ˆìŠµë‹ˆë‹¤.)
 
             // inventory.AddItem(item);
 

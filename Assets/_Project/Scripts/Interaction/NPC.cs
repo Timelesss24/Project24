@@ -1,22 +1,22 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Timelesss
 {
     public class NPC : InteractableBase
     {
-        public override string InteractionName { get; } = "´ëÈ­ÇÏ±â";
+        public override string InteractionName { get; } = "ëŒ€í™”í•˜ê¸°";
 
         public override void Interact()
         {
-            // ÇÃ·¹ÀÌ¾î Á¶ÀÛ ºÒ°¡´É ÇÏµµ·Ï º¯°æ
+            // í”Œë ˆì´ì–´ ì¡°ì‘ ë¶ˆê°€ëŠ¥ í•˜ë„ë¡ ë³€ê²½
 
-            // NPC ¹Ù¶óº¸µµ·Ï È¸Àü
+            // NPC ë°”ë¼ë³´ë„ë¡ íšŒì „
 
-            // UI ÇÁ·ÒÇÁÆ® Áö¿öÁÖ±â
+            // UI í”„ë¡¬í”„íŠ¸ ì§€ì›Œì£¼ê¸°
 
-            // ´ëÈ­Ã¢ UI ¿­±â
+            // ëŒ€í™”ì°½ UI ì—´ê¸°
 
-            Debug.Log("NPC¿Í ´ëÈ­");
+            Debug.Log("NPCì™€ ëŒ€í™”");
         }
     }
 }

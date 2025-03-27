@@ -1,22 +1,22 @@
-using Managers;
+ï»¿using Managers;
 using UnityEngine;
 
 namespace Timelesss
 {
     public class Portal : InteractableBase
     {
-        public override string InteractionName { get; } = "ÀÔÀåÇÏ±â";
+        public override string InteractionName { get; } = "ì…ì¥í•˜ê¸°";
 
         [SerializeField] private string targetSceneName;
 
         public override void Interact()
         {
-            // ÀÔÀå È®ÀÎ ÆË¾÷ ¶ç¿öÁÖ±â
+            // ì…ì¥ í™•ì¸ íŒì—… ë„ì›Œì£¼ê¸°
 
-            // ConfirmPopup.SetUp("´øÀüÀ¸·Î ÀÔÀåÇÏ½Ã°Ú½À´Ï±î?, () => SceneLoader.Instance.LoadScene(targetSceneName)");
+            // ConfirmPopup.SetUp("ë˜ì „ìœ¼ë¡œ ì…ì¥í•˜ì‹œê² ìŠµë‹ˆê¹Œ?, () => SceneLoader.Instance.LoadScene(targetSceneName)");
 
-            Debug.Log($"{targetSceneName} ´øÀü ÀÔÀå");
-            SceneLoader.Instance.LoadScene(targetSceneName); // Å×½ºÆ®¿ë
+            Debug.Log($"{targetSceneName} ë˜ì „ ì…ì¥");
+            SceneLoader.Instance.LoadScene(targetSceneName); // í…ŒìŠ¤íŠ¸ìš©
         }
     }
 }

@@ -1,11 +1,11 @@
-namespace Timelesss
+ï»¿namespace Timelesss
 {
     public interface IInteractable
     {
-        // »óÈ£ÀÛ¿ë ¼öÇà ÇÔ¼ö
+        // ìƒí˜¸ì‘ìš© ìˆ˜í–‰ í•¨ìˆ˜
         public void Interact();
 
-        // »óÈ£ÀÛ¿ë ÀÌ¸§ (UI Ç¥½Ã¿ë ex: ´ëÈ­ÇÏ±â, È¹µæÇÏ±â, ÀÔÀåÇÏ±â)
+        // ìƒí˜¸ì‘ìš© ì´ë¦„ (UI í‘œì‹œìš© ex: ëŒ€í™”í•˜ê¸°, íšë“í•˜ê¸°, ì…ì¥í•˜ê¸°)
         public string InteractionName { get; }
     }
 }
