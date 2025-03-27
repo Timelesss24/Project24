@@ -1,4 +1,4 @@
-namespace Platformer
+namespace Timelesss
 {
     public interface ITransition
     {

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Platformer
+namespace Timelesss
 {
     public abstract class EventListener<T> : MonoBehaviour
     {
