@@ -1,5 +1,3 @@
-using Platformer;
-using S;
 using UnityEngine;
 
 namespace Timelesss
