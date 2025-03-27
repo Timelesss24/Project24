@@ -64,7 +64,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MCU_am_Stand_Conv_Talk_05_Generic
-  m_Speed: 1.3
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -3473348656425040779}
