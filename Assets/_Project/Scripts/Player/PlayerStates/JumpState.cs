@@ -15,8 +15,7 @@ namespace Timelesss
         public override void FixedUpdate()
         {
             // call Player's jump logic and move logic
-            player.JumpAndGravity();
-            player.HandleMovement();
+            player.ApplyGravity();
         }
     }
 }

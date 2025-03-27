@@ -3,6 +3,7 @@ using Cinemachine;
 using KBCore.Refs;
 using Platformer;
 using UnityEngine;
+using UnityUtils;
 using Utilities;
 using Timer = Utilities.Timer;
 
@@ -14,70 +15,57 @@ namespace Timelesss
         [Header("References")]
         [SerializeField, Self] CharacterController controller;
         [SerializeField, Self] GroundChecker groundChecker;
-        [SerializeField, Child] Animator animator;
+        [SerializeField, Self] Animator animator;
         [SerializeField, Anywhere] CinemachineFreeLook freeLookVCam;
         [SerializeField, Anywhere] InputReader input;
 
         [Header("Movement Settings")]
-        [SerializeField] float moveSpeed = 6f;
-
-        [SerializeField] private float rotationSpeed = 15f;
-        [SerializeField] float smoothTime = 0.2f;
-
-        [Header("Jump Settings")]
-        [SerializeField] float jumpForce = 10f;
-        [SerializeField] float jumpDuration = 0.5f;
-        [SerializeField] float jumpCooldown;
-        [SerializeField] float gravityMultiplier = 3f;
-
-        [Header("Dash Settings")]
-        [SerializeField] float dashForce = 10f;
-        [SerializeField] float dashDuration = 1f;
-        [SerializeField] float dashCooldown = 2f;
-
-
-        //===================
+        [SerializeField] float moveSpeed = 2f;
+        [SerializeField] float rotationSpeed = 15f;
         [Tooltip("캐릭터가 이동 방향을 바라보는 속도")] [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
-
         [Tooltip("가속 및 감속 비율")]
         public float SpeedChangeRate = 10.0f;
 
-        [Tooltip("플레이어가 점프할 수 있는 최대 높이")] [Space(10)]
-        public float JumpHeight = 1.2f;
-        [Tooltip("캐릭터가 사용할 자체 중력 값 (엔진 기본값은 -9.81f)")]
-        public float Gravity = -15.0f;
-        [Tooltip("점프 후 다시 점프할 수 있기까지 필요한 시간 (0f으로 설정하면 즉시 점프 가능)")] [Space(10)]
-        public float JumpTimeout = 0.50f;
-        [Tooltip("캐릭터가 낙하 상태로 진입하기 전까지 걸리는 시간 (계단 내려갈 때 유용)")]
-        public float FallTimeout = 0.15f;
+        [Header("Jump Settings")]
+        [SerializeField] float jumpHeight = 2;
+        [SerializeField] float jumpCooldown;
+        [SerializeField] float gravityMultiplier = 3f;
+        [SerializeField] float fallTimeout = 0.15f;
         
-        // 플레이어 이동 관련 변수
-         float speed;
-         //float targetRotation = 0.0f;
-         float rotationVelocity;
-         float verticalVelocity;
 
+        [Header("Dash Settings")]
+        [SerializeField] float dashForce = 10f;
+        [SerializeField] float dashDuration = 0.5f;
+        [SerializeField] float dashCooldown = 2f;
+        
+        float rotationVelocity;
+        float verticalVelocity;
+        float currentSpeed;
+        float dashVelocity = 1f;
+        float animationBlend;
+        
+        bool isJumpPressed;
+        bool isJumping;
+        
         const float ZeroF = 0f;
-        private readonly float terminalVelocity = 53.0f;
+        const float TerminalVelocity = 53.0f;
+
+        
+        Vector3 movement;
+        Vector3 velocity;
         
         Transform mainCam;
-
-        float currentSpeed;
-        float velocity;
-        float jumpVelocity;
-        float dashVelocity = 1f;
-
-        Vector3 movement;
-
+        
         List<Timer> timers;
-        CountdownTimer jumpTimer;
         CountdownTimer jumpCooldownTimer;
         CountdownTimer dashTimer;
         CountdownTimer dashCooldownTimer;
 
         StateMachine stateMachine;
 
+        float Gravity=>-15f; // todo  캐릭터 공욜 인터페이스로 이동;        
+        
         // Animator parameters
         static readonly int Speed = Animator.StringToHash("Speed");
 
@@ -104,7 +92,7 @@ namespace Timelesss
             var dashState = new DashState(this, animator);
 
             // Define transitions
-            At(locomotionState, jumpState, new FuncPredicate(() => jumpTimer.IsRunning));
+            At(locomotionState, jumpState, new FuncPredicate(() => isJumping));
             At(locomotionState, dashState, new FuncPredicate(() => dashTimer.IsRunning));
             Any(locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
@@ -114,16 +102,13 @@ namespace Timelesss
         bool ReturnToLocomotionState()
         {
             return groundChecker.IsGrounded
-                   && !jumpTimer.IsRunning
+                   && !isJumping
                    && !dashTimer.IsRunning;
         }
         void SetupTimers()
         {
             // Setup timers
-            jumpTimer = new CountdownTimer(jumpDuration);
             jumpCooldownTimer = new CountdownTimer(jumpCooldown);
-            jumpTimer.OnTimerStart += () => jumpVelocity = jumpForce;
-            jumpTimer.OnTimerStop += () => jumpCooldownTimer.Start();
 
             dashTimer = new CountdownTimer(dashDuration);
             dashCooldownTimer = new CountdownTimer(dashCooldown);
@@ -134,7 +119,7 @@ namespace Timelesss
             };
 
 
-            timers = new List<Timer> { jumpTimer, jumpCooldownTimer, dashTimer, dashCooldownTimer };
+            timers = new List<Timer> {jumpCooldownTimer, dashTimer, dashCooldownTimer };
         }
 
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
@@ -154,14 +139,10 @@ namespace Timelesss
 
         void OnJump(bool performed)
         {
-            if (performed && !jumpTimer.IsRunning && !jumpCooldownTimer.IsRunning && groundChecker.IsGrounded)
-            {
-                jumpTimer.Start();
-            }
-            else if (!performed && jumpTimer.IsRunning)
-            {
-                jumpTimer.Stop();
-            }
+            if (!performed || isJumpPressed || jumpCooldownTimer.IsRunning || !groundChecker.IsGrounded) return;
+            
+            isJumpPressed = true;
+            jumpCooldownTimer.Start();
         }
 
         void OnDash(bool performed)
@@ -169,10 +150,6 @@ namespace Timelesss
             if (performed && !dashTimer.IsRunning && !dashCooldownTimer.IsRunning)
             {
                 dashTimer.Start();
-            }
-            else if (!performed && dashTimer.IsRunning)
-            {
-                dashTimer.Stop();
             }
         }
 
@@ -182,6 +159,8 @@ namespace Timelesss
         {
             movement = new Vector3(input.Direction.x, 0f, input.Direction.y);
             stateMachine.Update();
+
+            controller.Move(velocity.With(y: verticalVelocity) * Time.deltaTime);
 
             HandleTimers();
             UpdateAnimator();
@@ -194,7 +173,7 @@ namespace Timelesss
 
         void UpdateAnimator()
         {
-            // animator.SetFloat(Speed, currentSpeed);
+             animator.SetFloat(Speed, animationBlend);
         }
 
         void HandleTimers()
@@ -204,70 +183,109 @@ namespace Timelesss
                 timer.Tick(Time.deltaTime);
             }
         }
+        public void OnFootstep() { } // todo 애니메이션 이벤트 에러 방지용
 
-        public void JumpAndGravity()
+        public void HandleJump()
         {
-            // If not jumping and Grounded, keep jump velocity at 0
-            if (!jumpTimer.IsRunning && groundChecker.IsGrounded)
-            {
-                jumpVelocity = ZeroF;
-                return;
-            }
-
-            if (!jumpTimer.IsRunning)
-            {
-                // Gravity takes over
-                jumpVelocity += Physics.gravity.y * gravityMultiplier * Time.fixedDeltaTime;
-            }
-
-            // Apply the calculated velocity to the player
-            //rb.velocity = new Vector3(rb.velocity.x, jumpVelocity * gravityMultiplier, rb.velocity.z);
+            if (!isJumpPressed) return; // 플레이어가 지면에 있는 경우
+            
+            // todo 낙하 타이머 초기화 
+            
+            // 점프 공식: H = 점프 높이, G = 중력 값
+            // H * -2 * G 
+            isJumpPressed = false;
+            isJumping = true;
+            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * Gravity);
         }
 
         public void HandleMovement()
         {
-            // Rotate movement direction to match camera rotation
-            var adjustedDirection = Quaternion.AngleAxis(mainCam.eulerAngles.y, Vector3.up) * movement;
-            if (adjustedDirection.magnitude > ZeroF)
+            float targetSpeed = CalculateTargetSpeed();
+            float currentHorizontalSpeed = CalculateCurrentHorizontalSpeed();
+            UpdateSpeed(currentHorizontalSpeed, targetSpeed);
+            SmoothAnimationBlend(targetSpeed);
+
+            if (movement != Vector3.zero)
             {
-                HandleRotation(adjustedDirection);
-                HandleHorizontalMovement(adjustedDirection);
-                SmoothSpeed(adjustedDirection.magnitude);
+                RotatePlayerToMovementDirection();
+            }
+
+            Vector3 targetDirection = CalculateTargetDirection();
+            velocity = targetDirection * currentSpeed;
+        }
+
+        public void ApplyGravity()
+        {
+            if (groundChecker.IsGrounded)
+            {
+                if (verticalVelocity < 0.0f)
+                {
+                    isJumping = false;
+                    verticalVelocity = -2f; // 살짝 음수 값을 줘서 지면에 붙어 있게 함
+                }
             }
             else
             {
-                SmoothSpeed(ZeroF);
+               
+                // todo 낙하 타이머 >> 착지 로직 
+            }
+            // 중력 적용 (터미널 속도까지 증가)
+            if (verticalVelocity < TerminalVelocity)
+            {
+                verticalVelocity += Gravity * Time.deltaTime;
             }
         }
-
-        void HandleHorizontalMovement(Vector3 adjustedDirection)
+        
+        // ====== Helper Method =====
+        float CalculateTargetSpeed()
         {
-            // Move the Player
-            var horizontalVelocity = adjustedDirection * (moveSpeed * dashVelocity * Time.fixedDeltaTime);
-            controller.Move(horizontalVelocity);
+            return movement != Vector3.zero ? moveSpeed * dashVelocity : 0f;
         }
 
-        void HandleRotation(Vector3 adjustedDirection)
+        float CalculateCurrentHorizontalSpeed()
         {
-        // 기준 방향의 Y 축 회전값을 Quaternion에서 각도로 변환
-        float targetRotation = Mathf.Atan2(adjustedDirection.x, adjustedDirection.z) * Mathf.Rad2Deg;
-
-        // 현재 회전값과 목표 회전값 간의 변화값을 부드럽게 계산 (SmoothDamp 사용)
-        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
-
-        // 계산된 회전값을 사용하여 오브젝트의 회전을 설정
-        transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-
+            // Compute magnitude for horizontal velocity only
+            return new Vector3(controller.velocity.x, 0.0f, controller.velocity.z).magnitude;
         }
 
-        void SmoothSpeed(float value)
+        void UpdateSpeed( float currentHorizontalSpeed, float targetSpeed)
         {
-            currentSpeed = Mathf.SmoothDamp(currentSpeed, value, ref velocity, smoothTime);
+            const float speedOffset = 0.1f;
+
+            if (Mathf.Abs(currentHorizontalSpeed - targetSpeed) > speedOffset)
+            {
+                currentSpeed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed, Time.deltaTime * SpeedChangeRate);
+                currentSpeed = Mathf.Round(currentSpeed * 1000f) / 1000f; // Round to 3 decimal places
+            }
+            else
+            {
+                currentSpeed = targetSpeed;
+            }
+            
         }
 
-        void OnGUI()
+        void RotatePlayerToMovementDirection()
         {
-            GUI.Label(new Rect(10, 10, 100, 20), $"DashTimer: {dashTimer.Progress}");
+            float targetRotation = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+            float smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
+
+            transform.rotation = Quaternion.Euler(0.0f, smoothRotation, 0.0f);
         }
+
+        Vector3 CalculateTargetDirection()
+        {
+            float targetRotation = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+            return (Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward).normalized;
+        }
+        
+        // 애니메이션 블렌딩 속도를 보간하여 부드럽게 변경
+
+        void SmoothAnimationBlend(float targetSpeed)
+        {
+            animationBlend = Mathf.Lerp(animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+            if (animationBlend < 0.01f) animationBlend = 0f;
+        }
+
     }
+
 }

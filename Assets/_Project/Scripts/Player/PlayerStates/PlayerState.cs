@@ -23,7 +23,7 @@ namespace Timelesss
         
         public virtual void OnEnter()
         {
-            // noop
+            Debug.Log("Entering state: " + this.GetType().Name);
         }
         public virtual void Update()
         {
