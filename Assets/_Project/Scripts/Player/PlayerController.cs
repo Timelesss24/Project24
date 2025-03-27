@@ -21,7 +21,7 @@ namespace Timelesss
         [Header("Movement Settings")]
         [SerializeField] float moveSpeed = 6f;
 
-        [SerializeField] float rotationSpeed = 15f;
+        [SerializeField] private float rotationSpeed = 15f;
         [SerializeField] float smoothTime = 0.2f;
 
         [Header("Jump Settings")]
@@ -59,7 +59,7 @@ namespace Timelesss
          float verticalVelocity;
 
         const float ZeroF = 0f;
-        readonly float terminalVelocity = 53.0f;
+        private readonly float terminalVelocity = 53.0f;
         
         Transform mainCam;
 

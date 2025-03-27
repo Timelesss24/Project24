@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Platformer;
 using UnityEngine;
 
-namespace Timeless
+namespace Timelesss
 {
     public class EnemyStateMachine : StateMachine
     {
-        public Enemy Enemy { get; }
+        public EnemyController Enemy { get; }
 
         public Vector2 Movement { get; set; }
         public float MovementSpeed { get; private set; }
@@ -20,7 +19,7 @@ namespace Timeless
         public EnemyDieState DieStateState { get; }
         public EnemyIdleState IdleStateState { get; }
 
-        public EnemyStateMachine(Enemy enemy)
+        public EnemyStateMachine(EnemyController enemy)
         {
             this.Enemy = enemy;
             Target = GameObject.FindGameObjectWithTag("Player");
@@ -29,6 +28,9 @@ namespace Timeless
             ChasingState = new EnemyChasingState(this);
             DieStateState = new EnemyDieState(this);
             IdleStateState = new EnemyIdleState(this);
+
+            MovementSpeed = Enemy.Date.BaseSpeed;
+            RotationDamping = Enemy.Date.BaseRotationDamping;
         }
     }
 }

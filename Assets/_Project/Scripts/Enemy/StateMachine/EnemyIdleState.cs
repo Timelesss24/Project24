@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Timeless
+namespace Timelesss
 {
     public class EnemyIdleState : EnemyBaseState
     {

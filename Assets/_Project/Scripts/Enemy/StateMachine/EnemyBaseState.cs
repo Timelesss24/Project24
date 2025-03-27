@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Platformer;
 using UnityEngine;
 
-namespace Timeless
+namespace Timelesss
 {
     public class EnemyBaseState : IState
     {
@@ -33,5 +32,6 @@ namespace Timeless
         {
             throw new System.NotImplementedException();
         }
+        //protected void StartAnimation(int ani)
     }
 }
