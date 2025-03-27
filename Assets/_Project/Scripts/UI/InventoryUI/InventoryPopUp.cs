@@ -9,8 +9,10 @@ namespace Timelesss
     public class InventoryPopUp : UIPopup
     {
         [SerializeField] Button closeButton;
+        [SerializeField] GameObject itemSlot;
+        [SerializeField] Transform itemSlotParent;
 
-        private void Start()
+        private void Awake()
         {
             closeButton.onClick.AddListener(OnClickCloseButton);
         }
@@ -18,6 +20,11 @@ namespace Timelesss
         void OnClickCloseButton()
         {
             ClosePopup();
+        }
+
+        void CreateItems()
+        {
+            Instantiate(itemSlot, itemSlotParent);
         }
     }
 }

@@ -15,11 +15,6 @@ namespace Timelesss
             closeButton.onClick.AddListener(OnClickCloseButton);
         }
 
-        private void Start()
-        {
-            
-        }
-
         void OnClickCloseButton()
         {
             ClosePopup();
