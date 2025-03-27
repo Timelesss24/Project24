@@ -5,7 +5,7 @@ using UnityEngine;
 using Utilities;
 using Timer = Utilities.Timer;
 
-namespace S
+namespace Timelesss
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : ValidatedMonoBehaviour

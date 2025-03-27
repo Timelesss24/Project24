@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Platformer
+namespace Timelesss
 {
     public class GroundChecker : MonoBehaviour
     {
