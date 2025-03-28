@@ -10,14 +10,14 @@ namespace Timelesss
         [SerializeField] Image hpBar;
         [SerializeField] Image mpBar;
 
-        void SetHPBar()
+        public void SetHPBar(float amount)
         {
-
+            hpBar.fillAmount = amount / 100.0f;
         }
 
-        void SetMPBar()
+        public void SetMpBar(float amount)
         {
-
+            mpBar.fillAmount = amount / 100.0f;
         }
     }
 }

@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interaction",
+                    "type": "Button",
+                    "id": "1f5a7028-ca70-4173-8e04-1893496f5b1c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -283,6 +292,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b1466427-4643-439e-9509-802a52ea6d20",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardOrGamepad",
+                    "action": "MouseControlCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e450180a-6fb2-4d82-8929-fb205b518df0",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
@@ -338,12 +358,12 @@
                 },
                 {
                     "name": "",
-                    "id": "b1466427-4643-439e-9509-802a52ea6d20",
-                    "path": "<Mouse>/rightButton",
+                    "id": "0a1ada25-f55e-4e65-9c9b-723af3fc53c1",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseControlCamera",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
