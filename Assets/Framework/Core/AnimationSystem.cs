@@ -231,5 +231,11 @@ namespace Core
                 _playableGraph.Destroy();
             }
         }
+
+        class ClipInfo
+        {
+            public AnimationClip Clip;
+            
+        }
     }
 }
