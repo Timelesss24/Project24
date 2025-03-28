@@ -20,5 +20,6 @@ namespace Timelesss
             player.HandleJump();
             player.HandleMovement();
         }
+        
     }
 }
