@@ -12,9 +12,17 @@ namespace Timelesss
         [SerializeField] GameObject itemSlot;
         [SerializeField] Transform itemSlotParent;
 
+        PlayerInventory playerInventory;
+
         private void Awake()
         {
             closeButton.onClick.AddListener(OnClickCloseButton);
+        }
+
+        private void Start()
+        {
+            playerInventory = FindObjectOfType<PlayerInventory>();
+            CreateInventoryItems();
         }
 
         void OnClickCloseButton()
@@ -22,14 +30,19 @@ namespace Timelesss
             ClosePopup();
         }
 
-        void CreateItems()
+        void CreateInventoryItems()
         {
-            Instantiate(itemSlot, itemSlotParent);
+            foreach (ItemData itemData in playerInventory.playerItems)
+            {
+                CreateUIItem(itemData);
+            }
         }
-
-        public void Test(float test)
+        
+        void CreateUIItem(ItemData itemData)
         {
-            Debug.Log($"{test}");
+            ItemSlot go = Instantiate(itemSlot, itemSlotParent).GetComponent<ItemSlot>();
+            go.itemIcon.sprite = itemData.ItemIcon;
+            go.itemData = itemData;
         }
     }
 }

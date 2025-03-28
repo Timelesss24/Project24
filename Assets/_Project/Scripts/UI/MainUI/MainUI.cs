@@ -16,7 +16,7 @@ namespace Timelesss
         [SerializeField] Button skillButton;
         [SerializeField] Button ultimateSkillButton;
         [SerializeField] Button useItemButton;
-        [SerializeField] EventChannel<float> eventChannel;
+        //[SerializeField] EventChannel<float> eventChannel;
         
 
         UIManager uIManager;
@@ -43,7 +43,7 @@ namespace Timelesss
         void OnClickInventoryButton()
         {
             uIManager.ShowPopup<InventoryPopUp>();
-            eventChannel.Invoke(10);
+            //eventChannel.Invoke(10);
         }
         void OnClickQuestButton()
         {

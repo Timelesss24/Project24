@@ -7,16 +7,25 @@ namespace Timelesss
     {
         private List<IInteractable> interactableList = new List<IInteractable>();
 
-        private void Update()
+        [SerializeField] InputReader inputReader;
+
+        private void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            inputReader.InterAction += OnInteraction;
+        }
+
+        private void OnDisable()
+        {
+            inputReader.InterAction -= OnInteraction;
+        }
+
+        void OnInteraction()
+        {
+            if (interactableList.Count > 0)
             {
-                if (interactableList.Count > 0)
-                {
-                    IInteractable interactableObj = interactableList[interactableList.Count - 1];
-                    interactableObj.Interact();
-                    interactableList.Remove(interactableObj);
-                }
+                IInteractable interactableObj = interactableList[interactableList.Count - 1];
+                interactableObj.Interact();
+                interactableList.Remove(interactableObj);
             }
         }
 
@@ -33,6 +42,7 @@ namespace Timelesss
             if (interactableList.Contains(interactable))
             {
                 interactableList.Remove(interactable);
+                Debug.Log("remove");
             }
         }
     }
