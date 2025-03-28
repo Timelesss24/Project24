@@ -7,17 +7,20 @@ namespace Timelesss
 {
     public class PlayerConditionUI : MonoBehaviour
     {
-        [SerializeField] Image hpBar;
-        [SerializeField] Image mpBar;
+        [SerializeField] Slider hpBar;
+        [SerializeField] Slider staminaBar;
+
+        [SerializeField] EventChannel<float> hpChannel;
+        [SerializeField] EventChannel<float> mpChannel;
 
         public void SetHPBar(float amount)
         {
-            hpBar.fillAmount = amount / 100.0f;
+            hpBar.value = amount / 100.0f;
         }
 
-        public void SetMpBar(float amount)
+        public void SetStaminaBar(float amount)
         {
-            mpBar.fillAmount = amount / 100.0f;
+            staminaBar.value = amount / 100.0f;
         }
     }
 }
