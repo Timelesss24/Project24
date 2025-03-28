@@ -16,7 +16,7 @@ namespace Timelesss
             // ConfirmPopup.SetUp("던전으로 입장하시겠습니까?, () => SceneLoader.Instance.LoadScene(targetSceneName)");
 
             Debug.Log($"{targetSceneName} 던전 입장");
-            SceneLoader.Instance.LoadScene(targetSceneName); // 테스트용
+            //SceneLoader.Instance.LoadScene(targetSceneName); // 테스트용
         }
     }
 }
