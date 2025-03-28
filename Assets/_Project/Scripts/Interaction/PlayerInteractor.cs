@@ -44,7 +44,6 @@ namespace Timelesss
             if (interactableList.Contains(interactable))
             {
                 interactableList.Remove(interactable);
-                Debug.Log("remove");
             }
         }
     }
