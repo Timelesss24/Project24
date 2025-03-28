@@ -329,11 +329,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7664069903261289070}
         m_TargetAssemblyTypeName: Timelesss.InventoryPopUp, Assembly-CSharp
-        m_MethodName: Test
-        m_Mode: 0
+        m_MethodName: DropItemAddToInventory
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: Timelesss.ItemData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

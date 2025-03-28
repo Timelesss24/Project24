@@ -27,9 +27,9 @@ namespace Timelesss
             Instantiate(itemSlot, itemSlotParent);
         }
 
-        public void Test(float test)
+        public void DropItemAddToInventory(ItemData itemData)
         {
-            Debug.Log($"{test}");
+            Debug.Log($"{itemData}");
         }
     }
 }

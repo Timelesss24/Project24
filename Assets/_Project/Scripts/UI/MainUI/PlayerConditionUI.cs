@@ -12,12 +12,12 @@ namespace Timelesss
 
         public void SetHPBar(float amount)
         {
-
+            hpBar.fillAmount = amount / 100.0f;
         }
 
         public void SetMpBar(float amount)
         {
-
+            mpBar.fillAmount = amount / 100.0f;
         }
     }
 }

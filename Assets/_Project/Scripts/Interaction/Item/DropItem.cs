@@ -11,6 +11,8 @@ namespace Timelesss
 
         private ItemSpawner spawner;
 
+        [SerializeField] EventChannel<ItemData> itemEventChannel;
+
         public override void Interact()
         {
             Debug.Log($"{itemData.ItemName} 획득");
@@ -19,7 +21,7 @@ namespace Timelesss
 
             // UI 프롬프트 띄워주기 (XX 를 획득했습니다.)
 
-            // inventory.AddItem(item);
+            itemEventChannel.Invoke(itemData);
 
 
             spawner.ReturnItem(this);

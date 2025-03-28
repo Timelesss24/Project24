@@ -15,6 +15,7 @@ namespace Timelesss
         public event UnityAction<bool> Jump = delegate { };
         public event UnityAction<bool> Dash = delegate { };
         public event UnityAction Attack = delegate { };
+        public event UnityAction InterAction = delegate { };
 
         PlayerInputActions inputActions;
 
@@ -86,6 +87,14 @@ namespace Timelesss
                 case InputActionPhase.Canceled:
                     Jump?.Invoke(false);
                     break;
+            }
+        }
+
+        public void OnInteraction(InputAction.CallbackContext context)
+        {
+            if(context.phase == InputActionPhase.Started)
+            {
+                InterAction?.Invoke();
             }
         }
     }

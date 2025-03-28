@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7843059867319882193}
   - component: {fileID: 1692428792310611199}
   - component: {fileID: 2346308601761311012}
+  - component: {fileID: 5236407794886212343}
   m_Layer: 0
   m_Name: DropItem
   m_TagString: Untagged
@@ -68,6 +69,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 0}
+  itemEventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}
+--- !u!114 &5236407794886212343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5172930129705760315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549cb9bfd15c99542bf8d3a6afef5983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7664069903261289070, guid: 54e1a5cfc6bae0c48984468f892c12c7,
+          type: 3}
+        m_TargetAssemblyTypeName: Timelesss.InventoryPopUp, Assembly-CSharp
+        m_MethodName: DropItemAddToInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &6951766262277174325
 PrefabInstance:
   m_ObjectHideFlags: 0
