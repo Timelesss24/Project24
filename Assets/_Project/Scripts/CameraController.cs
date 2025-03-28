@@ -3,7 +3,7 @@ using Cinemachine;
 using KBCore.Refs;
 using UnityEngine;
 
-namespace Platformer
+namespace Timelesss
 {
     public class CameraController : ValidatedMonoBehaviour
     {
