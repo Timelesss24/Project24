@@ -2,21 +2,18 @@ using System;
 
 namespace Timelesss
 {
-    public class ActionPredicate : IPredicate
-    {
-        private readonly Action action;
-        private readonly Func<bool> condition;
+    /// <summary>
+    /// Represents a predicate that encapsulates an action and evaluates to true once the action has been invoked.
+    /// </summary>
+    public class ActionPredicate : IPredicate {
+        public bool Flag { get; private set; }
 
-        public ActionPredicate(Action action, Func<bool> condition)
-        {
-            this.action = action ?? throw new ArgumentNullException(nameof(action));
-            this.condition = condition ?? throw new ArgumentNullException(nameof(condition));
-        }
+        public ActionPredicate(ref Action eventReaction) => eventReaction += () => { Flag = true; };
 
-        public bool Evaluate()
-        {
-            action?.Invoke();
-            return condition.Invoke();
+        public bool Evaluate() {
+            bool result = Flag;
+            Flag = false;
+            return result;
         }
     }
 }
