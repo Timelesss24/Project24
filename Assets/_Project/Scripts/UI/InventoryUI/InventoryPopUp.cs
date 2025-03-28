@@ -26,5 +26,10 @@ namespace Timelesss
         {
             Instantiate(itemSlot, itemSlotParent);
         }
+
+        public void Test(float test)
+        {
+            Debug.Log($"{test}");
+        }
     }
 }
