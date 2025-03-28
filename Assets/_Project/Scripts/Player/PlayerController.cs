@@ -16,7 +16,7 @@ namespace Timelesss
         [SerializeField, Self] CharacterController controller;
         [SerializeField, Self] GroundChecker groundChecker;
         [SerializeField, Self] Animator animator;
-        [SerializeField, Self] CombatController combatController;
+        //[SerializeField, Self] CombatController combatController;
         [SerializeField, Anywhere] CinemachineFreeLook freeLookVCam;
         [SerializeField, Anywhere] InputReader input;
 
@@ -71,6 +71,9 @@ namespace Timelesss
 
         // todo Temp Code
         float Gravity => -15f;
+
+        public GameObject particle;
+        
         void Awake()
         {
             if (Camera.main != null) mainCam = Camera.main.transform;
@@ -93,13 +96,13 @@ namespace Timelesss
             // Declare states
             var locomotionState = new LocomotionState(this, animator);
             var jumpState = new JumpState(this, animator);
-            var dashState = new DashState(this, animator);
-            var attackState = new AttackState(this, animator, combatController);
+            var dashState = new DashState(this, animator, particle);
+            //var attackState = new AttackState(this, animator, combatController);
 
             // Define transitions
             At(locomotionState, jumpState, new FuncPredicate(() => isJumping));
             At(locomotionState, dashState, new FuncPredicate(() => dashTimer.IsRunning));
-            At(locomotionState, attackState, new FuncPredicate(() => isAttacking));
+            //At(locomotionState, attackState, new FuncPredicate(() => isAttacking));
             Any(locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
             // Set initial state
@@ -109,8 +112,7 @@ namespace Timelesss
         {
             return groundChecker.IsGrounded
                    && !isJumping
-                   && !dashTimer.IsRunning
-                   && !isAttacking;
+                   && !dashTimer.IsRunning;
         }
         void SetupTimers()
         {

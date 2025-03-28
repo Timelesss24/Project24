@@ -55,7 +55,7 @@ namespace Timelesss
     }
 
     [CustomEditor(typeof(ItemSpawner))]
-    public class DungeonGeneratorButton : Editor
+    public class ItemSpawnerButton : Editor
     {
         public override void OnInspectorGUI()
         {

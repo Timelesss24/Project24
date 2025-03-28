@@ -1,15 +1,5 @@
 {
   "dependencies": {
-    "com.eflatun.scenereference": {
-      "version": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.1",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.settings-manager": "2.0.1",
-        "com.unity.nuget.newtonsoft-json": "3.0.2"
-      },
-      "hash": "c94f1c9902e06c45975982cc3ac448e9330cc96d"
-    },
     "com.kylewbanks.scenerefattribute": {
       "version": "git+https://github.com/KyleBanks/scene-ref-attribute",
       "depth": 0,
@@ -96,13 +86,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.nuget.newtonsoft-json": {
-      "version": "3.2.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.playablegraph-visualizer": {
       "version": "https://github.com/Unity-Technologies/graph-visualizer.git",
       "depth": 0,
@@ -144,13 +127,6 @@
     "com.unity.searcher": {
       "version": "4.9.2",
       "depth": 2,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.settings-manager": {
-      "version": "2.0.1",
-      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
