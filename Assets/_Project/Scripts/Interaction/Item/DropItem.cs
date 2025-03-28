@@ -15,7 +15,7 @@ namespace Timelesss
 
         public override void Interact()
         {
-            Debug.Log($"{itemData.ItemName} 획득");
+            Debug.Log($"{itemData} 획득");
 
             // 아이템 줍기 애니메이션
 

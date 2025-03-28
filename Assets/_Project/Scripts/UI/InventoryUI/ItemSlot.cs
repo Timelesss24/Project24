@@ -7,6 +7,7 @@ namespace Timelesss
 {
     public class ItemSlot : MonoBehaviour
     {
-        [SerializeField] Image itemIcon;
+        public Image itemIcon;
+        public ItemData itemData;
     }
 }

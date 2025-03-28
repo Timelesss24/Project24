@@ -186,6 +186,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5524334504431369855, guid: ca8d817d7cfdf93498fbb15be733a815,
+        type: 3}
+      propertyPath: poolSize
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -492,7 +497,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3783237538929662039, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2016975954}
+    - targetCorrespondingSourceObject: {fileID: 3783237538929662039, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2016975953}
   m_SourcePrefab: {fileID: 100100000, guid: 927eb925089e24dec90b3c9f28cdd3e9, type: 3}
 --- !u!224 &506659040 stripped
 RectTransform:
@@ -880,6 +893,52 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!1 &2016975946 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3783237538929662039, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 173064015}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2016975953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016975946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549cb9bfd15c99542bf8d3a6afef5983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2016975954}
+        m_TargetAssemblyTypeName: Timelesss.PlayerInventory, Assembly-CSharp
+        m_MethodName: DropItemAddToInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2016975954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016975946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9dc54fca41a75439f41b8574aef4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5072343112593140158
 PrefabInstance:
   m_ObjectHideFlags: 0
