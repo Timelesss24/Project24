@@ -1,10 +1,18 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Timelesss
 {
+    public class DialogueWrraper
+    {
+
+    }
+
     public class NPC : InteractableBase
     {
+        [SerializeField] private int npcID;
+
         private NPCAnimator animator;
 
         public override string InteractionName { get; } = "대화하기";
@@ -15,19 +23,24 @@ namespace Timelesss
         private float rotationSpeed = 5f;
         private Coroutine rotationCoroutine;
 
+        private TestDialogueDataLoader test;
+        private int currentDialogueID;
+
         private void Start()
         {
             animator = GetComponent<NPCAnimator>();
 
+            test = new TestDialogueDataLoader();
+
             startingRotation = transform.rotation;
             playerTransform = FindObjectOfType<CharacterController>()?.transform;
+
+            currentDialogueID = FindFirstDialogueID();
         }
 
         public override void Interact()
         {
             // 플레이어 조작 불가능 하도록 변경
-
-            // NPC 바라보도록 회전
 
             if (playerTransform == null)
             {
@@ -40,7 +53,6 @@ namespace Timelesss
                 }
             }
 
-
             if (rotationCoroutine != null)
                 StopCoroutine(rotationCoroutine);
 
@@ -52,7 +64,7 @@ namespace Timelesss
 
             animator.StartAnimation(animator.talkHash);
 
-            Debug.Log("NPC와 대화");
+            ShowCurrentDialogue();
         }
 
         protected override void OnTriggerExit(Collider other)
@@ -101,6 +113,43 @@ namespace Timelesss
                 }
 
                 yield return null;
+            }
+        }
+
+        private int FindFirstDialogueID()
+        {
+            foreach (var data in test.ItemsDict.Values)
+            {
+                if (data.npcID == npcID) 
+                {
+                    return data.key;
+                }
+            }
+
+            Debug.LogWarning($"NPC {npcID}의 첫 번째 대화를 찾을 수 없습니다.");
+            return -1;
+        }
+
+
+        private void ShowCurrentDialogue()
+        {
+            if (!test.ItemsDict.TryGetValue(currentDialogueID, out var dialogue))
+            {
+                Debug.LogWarning($"현재 대화 ID {currentDialogueID}에 해당하는 데이터를 찾을 수 없습니다.");
+                return;
+            }
+
+            Debug.Log($"NPC {npcID}: {dialogue.dialogueText}");
+
+            if (dialogue.nextDialogueID != 0) 
+            {
+                currentDialogueID = dialogue.nextDialogueID; 
+                Debug.Log($"다음 대화 ID: {currentDialogueID}");
+            }
+            else
+            {
+                Debug.Log("대화 종료");
+                currentDialogueID = FindFirstDialogueID();
             }
         }
     }

@@ -11,8 +11,8 @@ namespace Timelesss
         private const string idleHashString = "IdleState";
         private const string talkHashString = "IsTalk";
 
-        public int idleHash;
-        public int talkHash;
+        [HideInInspector] public int idleHash;
+        [HideInInspector] public int talkHash;
 
         private void Start()
         {

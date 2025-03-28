@@ -1,0 +1,22 @@
+{
+  "Items": [
+    {
+      "key": 1,
+      "npcID": 1,
+      "dialogueText": "안녕하세요! 처음 뵙겠습니다.",
+      "nextDialogueID": 2
+    },
+    {
+      "key": 2,
+      "npcID": 1,
+      "dialogueText": "테스트 텍스트A",
+      "nextDialogueID": 3
+    },
+    {
+      "key": 3,
+      "npcID": 1,
+      "dialogueText": "테스트 텍스트B",
+      "nextDialogueID": 0
+    }
+  ]
+}
