@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Clip>k__BackingField: {fileID: 6799651534840860903, guid: b8075c9babebc1a4a877c916f1b2fb05,
     type: 3}
-  <ImpactStartTime>k__BackingField: 24
-  <ImpactEndTime>k__BackingField: 29
+  <ImpactStartTime>k__BackingField: 0.3
+  <ImpactEndTime>k__BackingField: 0.4
