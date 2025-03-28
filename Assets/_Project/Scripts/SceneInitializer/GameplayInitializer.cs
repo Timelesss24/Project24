@@ -1,6 +1,7 @@
 using _01_Scripts.UI;
 using Managers;
 using Scripts.UI;
+using Timelesss;
 using UnityEngine;
 
 namespace Framework
@@ -15,7 +16,7 @@ namespace Framework
            // EnemyManager.Instance.SpawnEnemies();
 
             // 게임플레이 UI 표시
-             UIManager.Instance.ShowUI<UIGameScene>();
+             UIManager.Instance.ShowUI<MainUI>();
 
             // 게임 로직 실행
             Debug.Log("Gameplay is now running.");
