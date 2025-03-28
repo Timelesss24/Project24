@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52ea1ebfc7be334093fbe424b63d23c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 7400000, guid: 19d70cddc853d934d8ebfc7cac722062, type: 2}
   interactionText: {fileID: 5611970956637889152}
   targetSceneName: GamePlay
 --- !u!1001 &5639041102423370190

@@ -5573,6 +5573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d03deefd3c62c794781a5473bf3b768e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 7400000, guid: 19d70cddc853d934d8ebfc7cac722062, type: 2}
   interactionText: {fileID: 2631670162541721031}
   npcID: 0
 --- !u!114 &3895613264718876687

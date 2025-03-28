@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 3268328116355523884}
   - component: {fileID: 6187148080591312827}
   - component: {fileID: 5659593342756495435}
+  - component: {fileID: 8440744671260616448}
+  - component: {fileID: 7479521191868915765}
+  - component: {fileID: 4248250335780477909}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -94,7 +97,6 @@ MonoBehaviour:
   dashForce: 10
   dashDuration: 0.2
   dashCooldown: 0.7
-  weaponData: {fileID: 0}
 --- !u!114 &9007843920410416306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,6 +161,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputReader: {fileID: 11400000, guid: 82e985447364b4adfa7668c2e6b94ac9, type: 2}
+--- !u!114 &8440744671260616448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783237538929662039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a9dc54fca41a75439f41b8574aef4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7479521191868915765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783237538929662039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549cb9bfd15c99542bf8d3a6afef5983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8440744671260616448}
+        m_TargetAssemblyTypeName: Timelesss.PlayerInventory, Assembly-CSharp
+        m_MethodName: DropItemAddToInventory
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4248250335780477909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783237538929662039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2dd01aeb49a476db0146c26f5ff888b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: a04b7f6aa8158f94c8e23a69eaa2fb08, type: 2}
 --- !u!1 &4046860838115451218
 GameObject:
   m_ObjectHideFlags: 0

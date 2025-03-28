@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionText: {fileID: 2255543586792949235}
   itemData: {fileID: 0}
+  clip: {fileID: 7400000, guid: 19d70cddc853d934d8ebfc7cac722062, type: 2}
   itemEventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}
 --- !u!1001 &6951766262277174325
 PrefabInstance:
