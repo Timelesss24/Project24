@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be598a1176da4395a5e51073ae218dcc, type: 3}
-  m_Name: MpChannel
+  m_Name: StaminaChannel
   m_EditorClassIdentifier: 
