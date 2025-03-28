@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Cinemachine;
 using Core;
@@ -16,7 +17,7 @@ namespace Timelesss
         [SerializeField, Self] CharacterController controller;
         [SerializeField, Self] GroundChecker groundChecker;
         [SerializeField, Self] Animator animator;
-        //[SerializeField, Self] CombatController combatController;
+        [SerializeField, Self] CombatController combatController;
         [SerializeField, Anywhere] CinemachineFreeLook freeLookVCam;
         [SerializeField, Anywhere] InputReader input;
 
@@ -38,6 +39,7 @@ namespace Timelesss
         [SerializeField] float dashForce = 10f;
         [SerializeField] float dashDuration = 0.5f;
         [SerializeField] float dashCooldown = 2f;
+
         
         float rotationVelocity;
         float verticalVelocity;
@@ -48,7 +50,6 @@ namespace Timelesss
         bool isJumpPressed;
         bool isJumping;
         bool isAttackPressed;
-        bool isAttacking;
 
         Vector3 movement;
         Vector3 velocity;
@@ -72,7 +73,6 @@ namespace Timelesss
         // todo Temp Code
         float Gravity => -15f;
 
-        public GameObject particle;
         
         void Awake()
         {
@@ -96,13 +96,13 @@ namespace Timelesss
             // Declare states
             var locomotionState = new LocomotionState(this, animator);
             var jumpState = new JumpState(this, animator);
-            var dashState = new DashState(this, animator, particle);
-            //var attackState = new AttackState(this, animator, combatController);
+            var dashState = new DashState(this, animator);
+            var attackState = new AttackState(this, animator);
 
             // Define transitions
             At(locomotionState, jumpState, new FuncPredicate(() => isJumping));
             At(locomotionState, dashState, new FuncPredicate(() => dashTimer.IsRunning));
-            //At(locomotionState, attackState, new FuncPredicate(() => isAttacking));
+            At(locomotionState, attackState, new ActionPredicate(ref combatController.OnStartAttack));
             Any(locomotionState, new FuncPredicate(ReturnToLocomotionState));
 
             // Set initial state
@@ -112,7 +112,8 @@ namespace Timelesss
         {
             return groundChecker.IsGrounded
                    && !isJumping
-                   && !dashTimer.IsRunning;
+                   && !dashTimer.IsRunning
+                   && combatController.AttackState == AttackStates.Idle;
         }
         void SetupTimers()
         {
@@ -126,7 +127,6 @@ namespace Timelesss
                 dashVelocity = 1f;
                 dashCooldownTimer.Start();
             };
-            
 
             timers = new List<Timer> { jumpCooldownTimer, dashTimer, dashCooldownTimer };
         }
@@ -150,11 +150,9 @@ namespace Timelesss
 
         void OnAttack()
         {
-            if (isAttackPressed || !groundChecker.IsGrounded) return;
+            if (!groundChecker.IsGrounded) return;
 
-            isAttackPressed = true;
-            isAttacking = true;
-            // jumpCooldownTimer.Start();
+            combatController?.TryAttack();
         }
 
         void OnJump(bool performed)
@@ -219,7 +217,7 @@ namespace Timelesss
         }
         public void OnFootstep() { } // todo 애니메이션 이벤트 에러 방지용
 
-        public void HandleJump()
+        public void OnJumpPressed()
         {
             if (!isJumpPressed) return; // 플레이어가 지면에 있는 경우
 

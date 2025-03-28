@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
 namespace Timelesss
 {
@@ -10,14 +12,34 @@ namespace Timelesss
 
         public abstract void Interact();
 
+        [SerializeField] protected TextMeshPro interactionText;
+        protected Coroutine textRotateCoroutine;
+
+        private void Awake()
+        {
+            if (interactionText != null)
+            {
+                interactionText.text = InteractionName;
+                interactionText.enabled = false;
+            }
+            else
+            {
+                Debug.LogWarning("TextMeshPro를 찾을 수 없습니다.");
+            }
+        }
+
         protected virtual void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag(PlayerTag))
             {
                 other.GetComponent<PlayerInteractor>().AddInteractable(this);
-                Debug.Log(InteractionName);
 
-                // UI 프롬프트 띄워주기 (InteractionName)
+                interactionText.enabled = true;
+
+                if (textRotateCoroutine != null)
+                    StopCoroutine(textRotateCoroutine);
+
+                textRotateCoroutine = StartCoroutine(RotateInteractionText());
             }
         }
 
@@ -26,9 +48,23 @@ namespace Timelesss
             if (other.CompareTag(PlayerTag))
             {
                 other.GetComponent<PlayerInteractor>().RemoveInteractable(this);
-                Debug.Log("OnTriggerExit");
 
-                // UI 프롬프트 지워주기
+                interactionText.enabled = false;
+
+                if (textRotateCoroutine != null)
+                    StopCoroutine(textRotateCoroutine);
+            }
+        }
+
+        private IEnumerator RotateInteractionText()
+        {
+            while (interactionText.IsActive())
+            {
+                Vector3 directionToCamera = (Camera.main.transform.position - interactionText.transform.position).normalized;
+                interactionText.transform.rotation = Quaternion.LookRotation(directionToCamera);
+                interactionText.transform.eulerAngles += new Vector3(0, 180, 0);
+
+                yield return null;
             }
         }
     }

@@ -25,7 +25,9 @@ namespace Timelesss
             {
                 IInteractable interactableObj = interactableList[interactableList.Count - 1];
                 interactableObj.Interact();
-                interactableList.Remove(interactableObj);
+
+                if (interactableObj is DropItem)
+                    interactableList.Remove(interactableObj);
             }
         }
 
@@ -42,7 +44,6 @@ namespace Timelesss
             if (interactableList.Contains(interactable))
             {
                 interactableList.Remove(interactable);
-                Debug.Log("remove");
             }
         }
     }

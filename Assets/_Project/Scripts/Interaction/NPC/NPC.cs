@@ -4,11 +4,6 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    public class DialogueWrraper
-    {
-
-    }
-
     public class NPC : InteractableBase
     {
         [SerializeField] private int npcID;
