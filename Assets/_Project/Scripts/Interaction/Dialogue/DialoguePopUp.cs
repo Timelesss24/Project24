@@ -17,10 +17,12 @@ namespace Timelesss
         [SerializeField] private Camera NPCCamera;
 
         [SerializeField] private TextMeshProUGUI dialogueText;
+        [SerializeField] private TextMeshProUGUI npcNameText;
 
 
         private Coroutine typewriterCoroutine;
         private float typewriterSpeed = 0.05f;
+
 
         public void ShowDialogue(string text, bool hasNextDialogue)
         {
@@ -48,24 +50,26 @@ namespace Timelesss
             {
                 nextButton.gameObject.SetActive(true);
                 nextButton.onClick.RemoveAllListeners();
-                nextButton.onClick.AddListener(OnNextDialogueClicked);
+                nextButton.onClick.AddListener(OnClickNextButton);
             }
             else
             {
                 closeButton.gameObject.SetActive(true);
                 closeButton.onClick.RemoveAllListeners();
-                closeButton.onClick.AddListener(OnCloseDialogueClicked);
+                closeButton.onClick.AddListener(OnClickCloseButton);
             }
         }
 
-        private void OnNextDialogueClicked()
+        private void OnClickNextButton()
         {
             DialogueManager.Instance.ShowCurrentDialogue();
         }
 
-        private void OnCloseDialogueClicked()
+        private void OnClickCloseButton()
         {
             ClosePopup();
         }
+
+        public void SetNPCNameText(string name) => npcNameText.text = name;
     }
 }

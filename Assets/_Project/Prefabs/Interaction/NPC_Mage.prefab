@@ -9488,7 +9488,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 7400000, guid: 19d70cddc853d934d8ebfc7cac722062, type: 2}
   interactionText: {fileID: 8309066003319795173}
-  npcID: 1
+  npcInfo:
+    Name: "\uB69C\uB8E8\uB8E8"
+    ID: 1
 --- !u!114 &1195268737188825412
 MonoBehaviour:
   m_ObjectHideFlags: 0

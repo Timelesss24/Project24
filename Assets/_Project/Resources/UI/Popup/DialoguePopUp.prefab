@@ -198,6 +198,7 @@ MonoBehaviour:
   closeButton: {fileID: 7080349153254812142}
   NPCCamera: {fileID: 0}
   dialogueText: {fileID: 3479677814237430833}
+  npcNameText: {fileID: 1927593704221600579}
 --- !u!1 &1224134914657110753
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +467,7 @@ GameObject:
   - component: {fileID: 8821682714507261368}
   - component: {fileID: 1927593704221600579}
   m_Layer: 5
-  m_Name: NPCName
+  m_Name: NPCNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

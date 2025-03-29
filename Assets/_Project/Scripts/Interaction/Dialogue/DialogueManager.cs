@@ -45,6 +45,7 @@ namespace Timelesss
                 dialoguePopUp = UIManager.Instance.ShowPopup<DialoguePopUp>();
 
             dialoguePopUp.Show();
+            dialoguePopUp.SetNPCNameText(npcInfo.Name);
 
             ShowCurrentDialogue();
         }
