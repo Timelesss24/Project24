@@ -38,6 +38,7 @@ namespace Timelesss
             {
                 npcCamera.transform.parent = npcTransform;
                 npcCamera.transform.localPosition = new Vector3(0, 1.7f, 1f);
+                npcCamera.transform.localRotation = Quaternion.Euler(0, 180f, 0);
             }
 
 
