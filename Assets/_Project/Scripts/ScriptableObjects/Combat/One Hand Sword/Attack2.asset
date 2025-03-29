@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63325e757582412fb8865f5e5eb9ed78, type: 3}
   m_Name: Attack2
   m_EditorClassIdentifier: 
-  <Clip>k__BackingField: {fileID: 6799651534840860903, guid: b8075c9babebc1a4a877c916f1b2fb05,
-    type: 3}
+  <Clip>k__BackingField: {fileID: 7400000, guid: 4a76877b5198844c0aa45337548f3c23,
+    type: 2}
   <ImpactStartTime>k__BackingField: 0.3
   <ImpactEndTime>k__BackingField: 0.4

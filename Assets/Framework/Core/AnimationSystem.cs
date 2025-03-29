@@ -20,6 +20,8 @@ namespace Core
 
         readonly List<Coroutine> _blendCoroutines = new();
         List<AnimationMixerPlayable> _oneShotMixers = new();
+        
+        public bool IsSynced => _oneShotMixers.Count != 0; 
 
         void Start()
         {
@@ -52,7 +54,7 @@ namespace Core
             _playableGraph.Play();
         }
 
-        public void PlayOneShot(AnimationClip clip)
+        public void PlayOneShot(AnimationClip clip, Action onComplte = null)
         {
             if (clip == null)
             {
@@ -93,6 +95,7 @@ namespace Core
                 oneShotMixer.SetInputWeight(0, weight);
                 oneShotMixer.SetInputWeight(1, 1f - weight);
             }, clip.length - blendDuration, () => {
+               
                 _playableGraph.DestroyPlayable(clipPlayable);
                 
                 // 마지막 원샷 믹서가 사라지면 baseMixer 다시 연결
@@ -108,6 +111,8 @@ namespace Core
 
                 _topLevelMixer.ConnectInput(0, _baseMixer, 0);
                 _topLevelMixer.SetInputWeight(0, 1f);
+                
+                onComplte?.Invoke();
             }));
 
             _blendCoroutines.Add(blendIn);

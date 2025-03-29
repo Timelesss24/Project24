@@ -11,8 +11,6 @@ namespace Timelesss
         {
             Debug.Log("Entering Locomotion State");
             animator.CrossFade(LocomotionHash, crossFadeDuration);
-            
-            player.OnJumpPressed();
         }
 
         public override void Update()
