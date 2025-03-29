@@ -27,6 +27,7 @@ namespace Timelesss
         [SerializeField, Anywhere] WeaponData defaultWeaponData;
 
 
+        AttachedWeapon currentWeaponHandler;
         WeaponData currentWeaponData;
         GameObject currentWeaponObject;
         GameObject prevGameObj; // Collider sweep 공격 히트 체크용 
@@ -42,8 +43,10 @@ namespace Timelesss
 
         public event Action OnStartAttack;
         public event Action OnEndAttack;
+        public event Action<AttachedWeapon> OnEnableHit;
 
         public bool IsAttacking => AttackState != AttackStates.Idle;
+        public AttackData CurrentAttack { get; private set; }
 
         void OnValidate() => this.ValidateRefs();
 
@@ -75,7 +78,7 @@ namespace Timelesss
         }
         public void TryAttack()
         {
-            if (!defaultWeaponData) return;
+            if (!currentWeaponData) return;
             HandleAttack();
         }
 
@@ -94,9 +97,10 @@ namespace Timelesss
         {
             AttackState = AttackStates.Windup;
 
-            var attackList = defaultWeaponData.AttacksContainer.Attacks;
+            var attackList = currentWeaponData.AttacksContainer.Attacks;
             var attackSlot = attackList[comboCount];
             var attack = attackSlot.Attack;
+            CurrentAttack = attack;
             //todo ChargeAttack 추가
 
             var attackDir = playerController.Movement == Vector3.zero ? transform.forward : playerController.CalculateTargetDirection();
@@ -233,6 +237,7 @@ namespace Timelesss
         void EnableActiveCollider()
         {
             activeCollider = weaponCollider;
+            OnEnableHit?.Invoke(currentWeaponHandler);
         }
 
         void DisableActiveCollider()
@@ -264,6 +269,7 @@ namespace Timelesss
             currentWeaponObject.transform.localPosition = data.LocalPosition;
             currentWeaponObject.transform.localRotation = Quaternion.Euler(data.LocalRotation);
             currentWeaponObject.tag = "Hitbox";
+            currentWeaponHandler = currentWeaponObject.GetComponent<AttachedWeapon>();
             currentWeaponData = data;
             // Todo 무기 스왑 시스템 추가 할시 => 리스트 관리
 
