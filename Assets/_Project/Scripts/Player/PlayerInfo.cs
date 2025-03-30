@@ -50,14 +50,14 @@ namespace Timelesss
             Debug.Log($"스태미너가 {value}만큼 소모되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
         }
 
-        private void RestoreHealth(float value)
+        public void RestoreHealth(float value)
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, maxHealth);
             hpChangedEvent?.Invoke((float)currentHealth);
             Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{maxHealth}");
         }
 
-        private void RestoreStamina(float value)
+        public void RestoreStamina(float value)
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);

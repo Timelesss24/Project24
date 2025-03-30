@@ -73,7 +73,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Jump"",
+                    ""name"": ""Roll"",
                     ""type"": ""Button"",
                     ""id"": ""7e516df6-12e2-4872-8c35-f1b522cb7631"",
                     ""expectedControlType"": ""Button"",
@@ -315,7 +315,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b1466427-4643-439e-9509-802a52ea6d20"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardOrGamepad"",
@@ -352,7 +352,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardOrGamepad"",
-                    ""action"": ""Jump"",
+                    ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -363,7 +363,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardOrGamepad"",
-                    ""action"": ""Jump"",
+                    ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -978,7 +978,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_MouseControlCamera = m_Player.FindAction("MouseControlCamera", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1058,7 +1058,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_MouseControlCamera;
     private readonly InputAction m_Player_Run;
-    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
@@ -1069,7 +1069,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @MouseControlCamera => m_Wrapper.m_Player_MouseControlCamera;
         public InputAction @Run => m_Wrapper.m_Player_Run;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Roll => m_Wrapper.m_Player_Roll;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1095,9 +1095,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
-            @Jump.started += instance.OnRoll;
-            @Jump.performed += instance.OnRoll;
-            @Jump.canceled += instance.OnRoll;
+            @Roll.started += instance.OnRoll;
+            @Roll.performed += instance.OnRoll;
+            @Roll.canceled += instance.OnRoll;
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
@@ -1120,9 +1120,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
-            @Jump.started -= instance.OnRoll;
-            @Jump.performed -= instance.OnRoll;
-            @Jump.canceled -= instance.OnRoll;
+            @Roll.started -= instance.OnRoll;
+            @Roll.performed -= instance.OnRoll;
+            @Roll.canceled -= instance.OnRoll;
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
