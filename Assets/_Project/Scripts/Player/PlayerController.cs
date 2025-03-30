@@ -18,6 +18,7 @@ namespace Timelesss
         [SerializeField, Self] GroundChecker groundChecker;
         [SerializeField, Self] Animator animator;
         [SerializeField, Self] CombatController combatController;
+        [SerializeField, Self] AnimationSystem animationSystem;
         [SerializeField, Anywhere] CinemachineFreeLook freeLookVCam;
         [SerializeField, Anywhere] InputReader input;
 
@@ -62,7 +63,7 @@ namespace Timelesss
         CountdownTimer dashCooldownTimer;
 
         StateMachine stateMachine;
-        AnimationSystem animationSystem;
+        
         public AnimationSystem AnimationSystem => animationSystem;
 
         // Animator parameters
@@ -82,8 +83,7 @@ namespace Timelesss
             // 타겟(플레이어)이 새로운 위치로 워프되었을 때, FreeLook 카메라의 위치를 업데이트함
             freeLookVCam.OnTargetObjectWarped(transform,
                 transform.position - freeLookVCam.transform.position - Vector3.forward);
-
-            animationSystem = new AnimationSystem(animator);
+            
 
             SetupTimers();
             SetupStateMachine();

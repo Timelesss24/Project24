@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Timelesss
@@ -7,7 +8,13 @@ namespace Timelesss
     {
         private List<IInteractable> interactableList = new List<IInteractable>();
 
+        AnimationSystem animationSystem;
         [SerializeField] InputReader inputReader;
+
+        private void Start()
+        {
+            animationSystem = GetComponent<PlayerController>().AnimationSystem;
+        }
 
         private void OnEnable()
         {
@@ -23,7 +30,9 @@ namespace Timelesss
         {
             if (interactableList.Count > 0)
             {
+
                 IInteractable interactableObj = interactableList[interactableList.Count - 1];
+                animationSystem.PlayOneShot(interactableObj.Clip);
                 interactableObj.Interact();
 
                 if (interactableObj is DropItem)

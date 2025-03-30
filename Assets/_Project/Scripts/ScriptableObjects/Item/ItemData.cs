@@ -7,5 +7,9 @@ namespace Timelesss
         public string ItemName;
         public string ItemDescription;
         public Sprite ItemIcon;
+
+        public abstract string ItemType {  get; }
+
+        public int Stack = 0;
     }
 }

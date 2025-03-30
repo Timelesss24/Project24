@@ -10,6 +10,9 @@ namespace Timelesss
 
         public abstract string InteractionName { get; }
 
+        [SerializeField] private AnimationClip clip;
+        public AnimationClip Clip => clip;
+
         public abstract void Interact();
 
         [SerializeField] protected TextMeshPro interactionText;
