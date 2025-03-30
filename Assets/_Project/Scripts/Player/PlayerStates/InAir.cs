@@ -2,14 +2,13 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    public class JumpState : PlayerState
+    public class InAir : PlayerState
     {
-        public JumpState(PlayerController player, Animator animator) : base(player, animator) { }
+        public InAir(PlayerController player, Animator animator) : base(player, animator) { }
 
         public override void OnEnter()
         {
-            Debug.Log("Entering Jump State");
-            animator.CrossFade(JumpHash, crossFadeDuration);
+            animator.CrossFade(InAirHash, crossFadeDuration);
         }
 
         public override void FixedUpdate()
