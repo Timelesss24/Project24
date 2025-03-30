@@ -43,6 +43,13 @@ namespace Timelesss
             }
         }
 
+        public void UseStamina(float value)
+        {
+            currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
+            staminaChangedEvent?.Invoke(currentStamina);
+            Debug.Log($"스태미너가 {value}만큼 소모되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+        }
+
         private void RestoreHealth(float value)
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, maxHealth);
@@ -63,6 +70,9 @@ namespace Timelesss
     {
         private int healAmount = 10;
         private int damageAmount = 10;
+
+        private float staminaRecoverAmount = 10f;
+        private float staminaUseAmount = 10f;
 
         public override void OnInspectorGUI()
         {
@@ -87,6 +97,21 @@ namespace Timelesss
                 if (GUILayout.Button("데미지 입히기"))
                 {
                     playerInfo.TakeDamage(damageAmount);
+                }
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("스태미너 조정", EditorStyles.boldLabel);
+
+                staminaRecoverAmount = EditorGUILayout.Slider("스태미너 회복량", staminaRecoverAmount, 1f, 100f);
+                if (GUILayout.Button("스태미너 회복"))
+                {
+                    playerInfo.UsePotion(PotionType.Stamina, staminaRecoverAmount);
+                }
+
+                staminaUseAmount = EditorGUILayout.Slider("스태미너 사용량", staminaUseAmount, 1f, 100f);
+                if (GUILayout.Button("스태미너 사용"))
+                {
+                    playerInfo.UseStamina(staminaUseAmount);
                 }
             }
             else
