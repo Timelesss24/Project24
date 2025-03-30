@@ -12,7 +12,7 @@ namespace Timelesss
         public event UnityAction<Vector2, bool> Look = delegate { };
         public event UnityAction EnableMouseControlCamera = delegate { };
         public event UnityAction DisableMouseControlCamera = delegate { };
-        public event UnityAction<bool> Jump = delegate { };
+        public event UnityAction Roll = delegate { };
         public event UnityAction<bool> Dash = delegate { };
         public event UnityAction Attack = delegate { };
         public event UnityAction InterAction = delegate { };
@@ -77,22 +77,15 @@ namespace Timelesss
             }
         }
 
-        public void OnJump(InputAction.CallbackContext context)
+        public void OnRoll(InputAction.CallbackContext context)
         {
-            switch (context.phase)
-            {
-                case InputActionPhase.Started:
-                    Jump?.Invoke(true);
-                    break;
-                case InputActionPhase.Canceled:
-                    Jump?.Invoke(false);
-                    break;
-            }
+            if (context.phase == InputActionPhase.Started)
+                Roll?.Invoke();
         }
 
         public void OnInteraction(InputAction.CallbackContext context)
         {
-            if(context.phase == InputActionPhase.Started)
+            if (context.phase == InputActionPhase.Started)
             {
                 InterAction?.Invoke();
             }

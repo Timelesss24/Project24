@@ -7,6 +7,7 @@ namespace Timelesss
     public class StateMachine
     {
         StateNode current;
+        public IState CurrentState => current.State;
         readonly Dictionary<Type, StateNode> nodes = new();
         readonly HashSet<ITransition> anyTransitions = new();
 

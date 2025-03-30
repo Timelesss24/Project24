@@ -16,6 +16,7 @@ namespace Timelesss
         [Header("References")]
         [SerializeField, Self] CharacterController controller;
         [SerializeField, Self] GroundChecker groundChecker;
+        [SerializeField] Transform cameraLook;
         [SerializeField, Self] Animator animator;
         [SerializeField, Self] CombatController combatController;
         [SerializeField, Self] AnimationSystem animationSystem;
@@ -37,33 +38,33 @@ namespace Timelesss
         [SerializeField] float fallTimeout = 0.15f;
         
         [Header("Dash Settings")]
-        [SerializeField] float dashForce = 10f;
-        [SerializeField] float dashDuration = 0.5f;
-        [SerializeField] float dashCooldown = 2f;
+        [SerializeField] float dashForce = 2f;
 
-        
+        [Header("Roll Settings")]
+        [SerializeField] float rollCooldown;
+
         float rotationVelocity;
         float verticalVelocity;
         float currentSpeed;
         float dashVelocity = 1f;
         float animationBlend;
 
-        bool isJumpPressed;
-        bool isJumping;
+        bool isSprint;
         bool isAttackPressed;
-
-        Vector3 movement;
+        
+        public Vector3 Movement {get; private set;}
         Vector3 velocity;
 
         Transform mainCam;
 
         List<Timer> timers;
         CountdownTimer jumpCooldownTimer;
-        CountdownTimer dashTimer;
-        CountdownTimer dashCooldownTimer;
+        CountdownTimer rollCooldownTimer;
 
         StateMachine stateMachine;
-        
+
+        Action onRoll;
+
         public AnimationSystem AnimationSystem => animationSystem;
 
         // Animator parameters
@@ -73,18 +74,28 @@ namespace Timelesss
 
         // todo Temp Code
         float Gravity => -15f;
+        public AnimationClip RollClip;
 
+        IState locomotionState;
+        IState inAir;
+        IState attackState;
+        IState rollState;
+
+        IPredicate RollingPredicate => new ActionPredicate(ref onRoll);
+        IPredicate IsAttacking => new FuncPredicate(() => combatController.IsAttacking && stateMachine.CurrentState is not AttackState);
+
+        bool IsBusy => stateMachine.CurrentState != locomotionState;
         
+
         void Awake()
         {
             if (Camera.main != null) mainCam = Camera.main.transform;
-            freeLookVCam.Follow = transform;
-            freeLookVCam.LookAt = transform;
+            freeLookVCam.Follow = cameraLook;
+            freeLookVCam.LookAt = cameraLook;
             // 타겟(플레이어)이 새로운 위치로 워프되었을 때, FreeLook 카메라의 위치를 업데이트함
-            freeLookVCam.OnTargetObjectWarped(transform,
-                transform.position - freeLookVCam.transform.position - Vector3.forward);
+            freeLookVCam.OnTargetObjectWarped(cameraLook,
+                cameraLook.position - freeLookVCam.transform.position - Vector3.forward);
             
-
             SetupTimers();
             SetupStateMachine();
 
@@ -94,16 +105,16 @@ namespace Timelesss
             stateMachine = new StateMachine();
 
             // Declare states
-            var locomotionState = new LocomotionState(this, animator);
-            var jumpState = new JumpState(this, animator);
-            var dashState = new DashState(this, animator);
-            var attackState = new AttackState(this, animator);
+             locomotionState = new LocomotionState(this, animator);
+             inAir = new InAir(this, animator);
+             attackState = new AttackState(this, animator, combatController, stateMachine, locomotionState);
+             rollState = new RollState(this, animator,stateMachine, locomotionState);
 
             // Define transitions
-            At(locomotionState, jumpState, new FuncPredicate(() => isJumping));
-            At(locomotionState, dashState, new FuncPredicate(() => dashTimer.IsRunning));
-            At(locomotionState, attackState, new ActionPredicate(ref combatController.OnStartAttack));
-            Any(locomotionState, new FuncPredicate(ReturnToLocomotionState));
+            At(locomotionState,rollState, RollingPredicate);
+            At(locomotionState, attackState, IsAttacking);
+            Any(inAir, new FuncPredicate(() => !groundChecker.IsGrounded));
+            At(inAir, locomotionState, new FuncPredicate(() => groundChecker.IsGrounded));
 
             // Set initial state
             stateMachine.SetState(locomotionState);
@@ -111,24 +122,15 @@ namespace Timelesss
         bool ReturnToLocomotionState()
         {
             return groundChecker.IsGrounded
-                   && !isJumping
-                   && !dashTimer.IsRunning
-                   && combatController.AttackState == AttackStates.Idle;
+                   && !animationSystem.IsSynced;
         }
         void SetupTimers()
         {
             // Setup timers
             jumpCooldownTimer = new CountdownTimer(jumpCooldown);
+            rollCooldownTimer = new CountdownTimer(rollCooldown);
 
-            dashTimer = new CountdownTimer(dashDuration);
-            dashCooldownTimer = new CountdownTimer(dashCooldown);
-            dashTimer.OnTimerStart += () => dashVelocity = dashForce;
-            dashTimer.OnTimerStop += () => {
-                dashVelocity = 1f;
-                dashCooldownTimer.Start();
-            };
-
-            timers = new List<Timer> { jumpCooldownTimer, dashTimer, dashCooldownTimer };
+            timers = new List<Timer> { jumpCooldownTimer, rollCooldownTimer };
         }
 
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
@@ -136,38 +138,44 @@ namespace Timelesss
 
         void OnEnable()
         {
-            input.Jump += OnJump;
+            input.Roll += OnRoll;
             input.Dash += OnDash;
             input.Attack += OnAttack;
         }
 
         void OnDisable()
         {
-            input.Jump -= OnJump;
+            input.Roll -= OnRoll;
             input.Dash -= OnDash;
             input.Attack -= OnAttack;
         }
 
         void OnAttack()
         {
-            if (!groundChecker.IsGrounded) return;
+            if (IsBusy && stateMachine.CurrentState != attackState) return;
 
             combatController?.TryAttack();
         }
 
-        void OnJump(bool performed)
+        void OnRoll()
         {
-            if (!performed || isJumpPressed || jumpCooldownTimer.IsRunning || !groundChecker.IsGrounded) return;
-
-            isJumpPressed = true;
-            jumpCooldownTimer.Start();
+            if (IsBusy || rollCooldownTimer.IsRunning ) return;
+            
+            onRoll?.Invoke();
+            rollCooldownTimer.Start();
         }
 
         void OnDash(bool performed)
         {
-            if (performed && !dashTimer.IsRunning && !dashCooldownTimer.IsRunning)
+            if (performed)
             {
-                dashTimer.Start();
+                isSprint = true;
+                dashVelocity = dashForce;
+            }
+            else
+            {
+                dashVelocity = 1f;
+                isSprint = false;
             }
         }
 
@@ -175,7 +183,7 @@ namespace Timelesss
 
         void Update()
         {
-            movement = new Vector3(input.Direction.x, ZeroF, input.Direction.y);
+            Movement = new Vector3(input.Direction.x, ZeroF, input.Direction.y);
             stateMachine.Update();
 
             controller.Move(velocity.With(y: verticalVelocity) * Time.deltaTime);
@@ -193,19 +201,20 @@ namespace Timelesss
         {
             HandleOnAnimationMove(animator);
         }
-        
+
         void HandleOnAnimationMove(Animator animatorController)
         {
+            if(stateMachine.CurrentState is  LocomotionState) return;
             if (animatorController.deltaPosition != Vector3.zero)
             {
-                transform.position += animatorController.deltaPosition;
+                controller.Move(animatorController.deltaPosition);
             }
             transform.rotation *= animatorController.deltaRotation;
         }
-        
+
         void UpdateAnimator()
         {
-            animator.SetFloat(Speed, animationBlend);
+            animator.SetFloat(Speed, velocity.With(y:0f).magnitude / moveSpeed);
         }
 
         void HandleTimers()
@@ -217,16 +226,12 @@ namespace Timelesss
         }
         public void OnFootstep() { } // todo 애니메이션 이벤트 에러 방지용
 
-        public void OnJumpPressed()
+        public void JumpPressed()
         {
-            if (!isJumpPressed) return; // 플레이어가 지면에 있는 경우
-
             // todo 낙하 타이머 초기화 
 
             // 점프 공식: H = 점프 높이, G = 중력 값
             // H * -2 * G 
-            isJumpPressed = false;
-            isJumping = true;
             verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * Gravity);
         }
 
@@ -235,9 +240,8 @@ namespace Timelesss
             float targetSpeed = CalculateTargetSpeed();
             float currentHorizontalSpeed = CalculateCurrentHorizontalSpeed();
             UpdateSpeed(currentHorizontalSpeed, targetSpeed);
-            SmoothAnimationBlend(targetSpeed);
 
-            if (movement != Vector3.zero)
+            if (Movement != Vector3.zero)
             {
                 RotatePlayerToMovementDirection();
             }
@@ -245,14 +249,13 @@ namespace Timelesss
             Vector3 targetDirection = CalculateTargetDirection();
             velocity = targetDirection * currentSpeed;
         }
-        
+
         public void ApplyGravity()
         {
             if (groundChecker.IsGrounded)
             {
                 if (verticalVelocity < ZeroF)
                 {
-                    isJumping = false;
                     verticalVelocity = -2f; // 살짝 음수 값을 줘서 지면에 붙어 있게 함
                 }
             }
@@ -269,10 +272,10 @@ namespace Timelesss
         }
 
         // ====== Helper Method ====
-        
+
         float CalculateTargetSpeed()
         {
-            return movement != Vector3.zero ? moveSpeed * dashVelocity : ZeroF;
+            return Movement != Vector3.zero ? moveSpeed * dashVelocity : ZeroF;
         }
 
         float CalculateCurrentHorizontalSpeed()
@@ -297,27 +300,22 @@ namespace Timelesss
 
         }
 
-        void RotatePlayerToMovementDirection()
+        public void RotatePlayerToMovementDirection(bool isSmooth = true)
         {
-            float targetRotation = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
-            float smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
+            float targetRotation = Mathf.Atan2(Movement.x, Movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+            float smoothRotation = targetRotation;
+            if (isSmooth)
+                 smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
 
             transform.rotation = Quaternion.Euler(ZeroF, smoothRotation, ZeroF);
         }
 
-        Vector3 CalculateTargetDirection()
+       public  Vector3 CalculateTargetDirection()
         {
-            float targetRotation = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
+            float targetRotation = Mathf.Atan2(Movement.x, Movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
             return (Quaternion.Euler(ZeroF, targetRotation, ZeroF) * Vector3.forward).normalized;
         }
-
-        // 애니메이션 블렌딩 속도를 보간하여 부드럽게 변경
-
-        void SmoothAnimationBlend(float targetSpeed)
-        {
-            animationBlend = Mathf.Lerp(animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (animationBlend < 0.01f) animationBlend = ZeroF;
-        }
+       
 
         public void ResetVelocity()
         {

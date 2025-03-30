@@ -1095,9 +1095,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
-            @Jump.started += instance.OnJump;
-            @Jump.performed += instance.OnJump;
-            @Jump.canceled += instance.OnJump;
+            @Jump.started += instance.OnRoll;
+            @Jump.performed += instance.OnRoll;
+            @Jump.canceled += instance.OnRoll;
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
@@ -1120,9 +1120,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
-            @Jump.started -= instance.OnJump;
-            @Jump.performed -= instance.OnJump;
-            @Jump.canceled -= instance.OnJump;
+            @Jump.started -= instance.OnRoll;
+            @Jump.performed -= instance.OnRoll;
+            @Jump.canceled -= instance.OnRoll;
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
@@ -1313,7 +1313,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnMouseControlCamera(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
-        void OnJump(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
     }
     public interface IUIActions
