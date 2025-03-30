@@ -41,7 +41,6 @@ namespace Timelesss
         void CreateUIItem(ItemData itemData)
         {
             ItemSlot go = Instantiate(itemSlot, itemSlotParent).GetComponent<ItemSlot>();
-            go.itemIcon.sprite = itemData.ItemIcon;
             go.itemData = itemData;
         }
     }

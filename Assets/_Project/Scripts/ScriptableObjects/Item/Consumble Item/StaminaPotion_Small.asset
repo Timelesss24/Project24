@@ -19,3 +19,4 @@ MonoBehaviour:
   effectValue: 50
   duration: 0
   type: 1
+  itemType: 0
