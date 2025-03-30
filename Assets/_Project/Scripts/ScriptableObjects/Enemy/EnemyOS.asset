@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wanderRadius: 10
   timeBetweenAttacks: 0.2
-  detectionAngle: 60
+  detectionAngle: 360
   detectionRadius: 10
-  innerDetectionRadius: 2
-  detectionCooldown: 0
-  attackRange: 0
-  attackDamage: 0
+  innerDetectionRadius: 5
+  detectionCooldown: 1
+  attackRange: 2
+  attackDamage: 10
