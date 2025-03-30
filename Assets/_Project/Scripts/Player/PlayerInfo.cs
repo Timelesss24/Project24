@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -7,16 +7,22 @@ namespace Timelesss
 {
     public class PlayerInfo : MonoBehaviour
     {
-        public int currentHealth = 100;
-        public int maxHealth = 100;
+        private string playerName;
 
-        public float currentStamina = 100;
-        public float maxStamina = 100;
+        private int currentHealth = 100;
+        private int maxHealth = 100;
+
+        private float currentStamina = 100;
+        private float maxStamina = 100;
+
+        [SerializeField] private EventChannel<float> hpChangedEvent;
+        [SerializeField] private EventChannel<float> staminaChangedEvent;
 
         public void TakeDamage(int damage)
         {
             currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
-            Debug.Log($"{damage}ÀÇ µ¥¹ÌÁö¸¦ ÀÔ¾ú½À´Ï´Ù. ÇöÀç Ã¼·Â : {currentHealth}/{maxHealth}");
+            hpChangedEvent?.Invoke((float)currentHealth);
+            Debug.Log($"{damage}ì˜ ë°ë¯¸ì§€ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤. í˜„ì¬ ì²´ë ¥ : {currentHealth}/{maxHealth}");
         }
 
         public void UsePotion(PotionType potionType, float effectValue, float duration = 0)
@@ -32,7 +38,7 @@ namespace Timelesss
                     break;
 
                 default:
-                    Debug.LogWarning("¾Ë ¼ö ¾ø´Â Æ÷¼Ç Å¸ÀÔÀÔ´Ï´Ù.");
+                    Debug.LogWarning("ì•Œ ìˆ˜ ì—†ëŠ” í¬ì…˜ íƒ€ì…ì…ë‹ˆë‹¤.");
                     break;
             }
         }
@@ -40,13 +46,15 @@ namespace Timelesss
         private void RestoreHealth(float value)
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, maxHealth);
-            Debug.Log($"Ã¼·ÂÀÌ {value}¸¸Å­ È¸º¹µÇ¾ú½À´Ï´Ù. ÇöÀç Ã¼·Â: {currentHealth}/{maxHealth}");
+            hpChangedEvent?.Invoke((float)currentHealth);
+            Debug.Log($"ì²´ë ¥ì´ {value}ë§Œí¼ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤. í˜„ì¬ ì²´ë ¥: {currentHealth}/{maxHealth}");
         }
 
         private void RestoreStamina(float value)
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
-            Debug.Log($"½ºÅÂ¹Ì³Ê°¡ {value}¸¸Å­ È¸º¹µÇ¾ú½À´Ï´Ù. ÇöÀç ½ºÅÂ¹Ì³Ê: {currentStamina}/{maxStamina}");
+            staminaChangedEvent?.Invoke(currentStamina);
+            Debug.Log($"ìŠ¤íƒœë¯¸ë„ˆê°€ {value}ë§Œí¼ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤. í˜„ì¬ ìŠ¤íƒœë¯¸ë„ˆ: {currentStamina}/{maxStamina}");
         }
     }
 
@@ -65,25 +73,25 @@ namespace Timelesss
             if (EditorApplication.isPlaying)
             {
                 EditorGUILayout.Space();
-                EditorGUILayout.LabelField("Ã¼·Â Á¶Á¤", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("ì²´ë ¥ ì¡°ì •", EditorStyles.boldLabel);
 
-                healAmount = EditorGUILayout.IntSlider("È¸º¹·®", healAmount, 20, 150);
-                if (GUILayout.Button("Ã¼·Â È¸º¹"))
+                healAmount = EditorGUILayout.IntSlider("íšŒë³µëŸ‰", healAmount, 20, 150);
+                if (GUILayout.Button("ì²´ë ¥ íšŒë³µ"))
                 {
                     playerInfo.UsePotion(PotionType.HP, healAmount);
                 }
 
                 EditorGUILayout.Space();
 
-                damageAmount = EditorGUILayout.IntSlider("µ¥¹ÌÁö", damageAmount, 1, 100);
-                if (GUILayout.Button("µ¥¹ÌÁö ÀÔÈ÷±â"))
+                damageAmount = EditorGUILayout.IntSlider("ë°ë¯¸ì§€", damageAmount, 1, 100);
+                if (GUILayout.Button("ë°ë¯¸ì§€ ì…íˆê¸°"))
                 {
                     playerInfo.TakeDamage(damageAmount);
                 }
             }
             else
             {
-                EditorGUILayout.HelpBox("ÇÃ·¹ÀÌ ¸ğµå¿¡¼­¸¸ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.", MessageType.Warning);
+                EditorGUILayout.HelpBox("í”Œë ˆì´ ëª¨ë“œì—ì„œë§Œ ì‚¬ìš©í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.", MessageType.Warning);
             }
         }
     }
