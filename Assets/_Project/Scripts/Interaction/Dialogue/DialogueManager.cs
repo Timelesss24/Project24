@@ -1,4 +1,4 @@
-using Managers;
+ï»¿using Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace Timelesss
 
             if (currentDialogueID == -1)
             {
-                Debug.LogWarning($"NPC {npcInfo.ID}ÀÇ ´ëÈ­ µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning($"NPC {npcInfo.ID}ì˜ ëŒ€í™” ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 
@@ -55,7 +55,7 @@ namespace Timelesss
         {
             if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out var dialogue))
             {
-                Debug.LogWarning($"ÇöÀç ´ëÈ­ ID {currentDialogueID}¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning($"í˜„ì¬ ëŒ€í™” ID {currentDialogueID}ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
                 return;
             }
 

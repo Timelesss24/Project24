@@ -1,0 +1,123 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+namespace Timelesss
+{
+    public class PlayerInfo : MonoBehaviour
+    {
+        private string playerName;
+
+        private int currentHealth = 100;
+        private int maxHealth = 100;
+
+        private float currentStamina = 100;
+        private float maxStamina = 100;
+
+        [SerializeField] private EventChannel<float> hpChangedEvent;
+        [SerializeField] private EventChannel<float> staminaChangedEvent;
+
+        public void TakeDamage(int damage)
+        {
+            currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
+            hpChangedEvent?.Invoke((float)currentHealth);
+            Debug.Log($"{damage}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{maxHealth}");
+        }
+
+        public void UsePotion(PotionType potionType, float effectValue, float duration = 0)
+        {
+            switch (potionType)
+            {
+                case PotionType.HP:
+                    RestoreHealth(effectValue);
+                    break;
+
+                case PotionType.Stamina:
+                    RestoreStamina(effectValue);
+                    break;
+
+                default:
+                    Debug.LogWarning("알 수 없는 포션 타입입니다.");
+                    break;
+            }
+        }
+
+        public void UseStamina(float value)
+        {
+            currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
+            staminaChangedEvent?.Invoke(currentStamina);
+            Debug.Log($"스태미너가 {value}만큼 소모되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+        }
+
+        private void RestoreHealth(float value)
+        {
+            currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, maxHealth);
+            hpChangedEvent?.Invoke((float)currentHealth);
+            Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{maxHealth}");
+        }
+
+        private void RestoreStamina(float value)
+        {
+            currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
+            staminaChangedEvent?.Invoke(currentStamina);
+            Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+        }
+    }
+
+    [CustomEditor(typeof(PlayerInfo))]
+    public class PlayerInfoEditor : Editor
+    {
+        private int healAmount = 10;
+        private int damageAmount = 10;
+
+        private float staminaRecoverAmount = 10f;
+        private float staminaUseAmount = 10f;
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            PlayerInfo playerInfo = (PlayerInfo)target;
+
+            if (EditorApplication.isPlaying)
+            {
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("체력 조정", EditorStyles.boldLabel);
+
+                healAmount = EditorGUILayout.IntSlider("회복량", healAmount, 20, 150);
+                if (GUILayout.Button("체력 회복"))
+                {
+                    playerInfo.UsePotion(PotionType.HP, healAmount);
+                }
+
+                EditorGUILayout.Space();
+
+                damageAmount = EditorGUILayout.IntSlider("데미지", damageAmount, 1, 100);
+                if (GUILayout.Button("데미지 입히기"))
+                {
+                    playerInfo.TakeDamage(damageAmount);
+                }
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("스태미너 조정", EditorStyles.boldLabel);
+
+                staminaRecoverAmount = EditorGUILayout.Slider("스태미너 회복량", staminaRecoverAmount, 1f, 100f);
+                if (GUILayout.Button("스태미너 회복"))
+                {
+                    playerInfo.UsePotion(PotionType.Stamina, staminaRecoverAmount);
+                }
+
+                staminaUseAmount = EditorGUILayout.Slider("스태미너 사용량", staminaUseAmount, 1f, 100f);
+                if (GUILayout.Button("스태미너 사용"))
+                {
+                    playerInfo.UseStamina(staminaUseAmount);
+                }
+            }
+            else
+            {
+                EditorGUILayout.HelpBox("플레이 모드에서만 사용할 수 있습니다.", MessageType.Warning);
+            }
+        }
+    }
+}
