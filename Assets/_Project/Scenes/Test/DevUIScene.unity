@@ -680,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 170164682324678799, guid: 4ecdfa5909fb64fb1a983e892fa011c1,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.19414231
+      value: 0.1941423
       objectReference: {fileID: 0}
     - target: {fileID: 170164682324678799, guid: 4ecdfa5909fb64fb1a983e892fa011c1,
         type: 3}
@@ -695,7 +695,7 @@ PrefabInstance:
     - target: {fileID: 170164682324678799, guid: 4ecdfa5909fb64fb1a983e892fa011c1,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.10210706
+      value: -0.10210708
       objectReference: {fileID: 0}
     - target: {fileID: 2955504818382055964, guid: 4ecdfa5909fb64fb1a983e892fa011c1,
         type: 3}
@@ -797,6 +797,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemSpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 5524334504431369855, guid: ca8d817d7cfdf93498fbb15be733a815,
+        type: 3}
+      propertyPath: itemDataList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5524334504431369855, guid: ca8d817d7cfdf93498fbb15be733a815,
+        type: 3}
+      propertyPath: itemDataList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: e85ce89e9149d5648a501a40b0149a4f,
+        type: 2}
+    - target: {fileID: 5524334504431369855, guid: ca8d817d7cfdf93498fbb15be733a815,
+        type: 3}
+      propertyPath: itemDataList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: f74b06198bea9294286120f323a376cf,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
