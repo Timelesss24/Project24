@@ -16,6 +16,6 @@ MonoBehaviour:
   ItemDescription: "\uD604\uC7AC \uC2A4\uD0DC\uBBF8\uB108\uB97C 50% \uD68C\uBCF5\uD569\uB2C8\uB2E4."
   ItemIcon: {fileID: 21300000, guid: d1e9d87d8d6c4054f821c20494c629ca, type: 3}
   Stack: 10
-  effect: {fileID: 11400000, guid: 11e51a3ac95c2b84bb4f9ad000e5c878, type: 2}
   effectValue: 50
   duration: 0
+  type: 1
