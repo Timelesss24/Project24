@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,9 +9,6 @@ namespace Timelesss
     {
         [SerializeField] Slider hpBar;
         [SerializeField] Slider staminaBar;
-
-        [SerializeField] EventChannel<float> hpChannel;
-        [SerializeField] EventChannel<float> mpChannel;
 
         public void SetHPBar(float amount)
         {

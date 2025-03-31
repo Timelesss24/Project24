@@ -1331,6 +1331,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1794831227543549897}
   - component: {fileID: 2399359909637182362}
+  - component: {fileID: 4488806706101164932}
+  - component: {fileID: 3275489831468254723}
   m_Layer: 5
   m_Name: PlayerConditionBar
   m_TagString: Untagged
@@ -1373,8 +1375,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 2701877493910910500}
   staminaBar: {fileID: 6634464991048220039}
-  hpChannel: {fileID: 0}
-  mpChannel: {fileID: 0}
+--- !u!114 &4488806706101164932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437081206131738995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc7bf4365b84f068c2cea6053d0c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventChannel: {fileID: 11400000, guid: 4adb4291f26f5a2478ad2e9c521afe46, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2399359909637182362}
+        m_TargetAssemblyTypeName: Timelesss.PlayerConditionUI, Assembly-CSharp
+        m_MethodName: SetHPBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3275489831468254723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7437081206131738995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc7bf4365b84f068c2cea6053d0c05b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventChannel: {fileID: 11400000, guid: 807abd78625d55143bbbe8bd83fa8373, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2399359909637182362}
+        m_TargetAssemblyTypeName: Timelesss.PlayerConditionUI, Assembly-CSharp
+        m_MethodName: SetStaminaBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7850924380773380782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1649,7 +1705,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 3592936055138034062}
   m_HandleRect: {fileID: 0}
@@ -1834,7 +1890,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1860,7 +1916,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 936881360384347322}
   m_HandleRect: {fileID: 0}
