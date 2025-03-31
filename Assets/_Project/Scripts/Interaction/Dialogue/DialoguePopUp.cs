@@ -75,7 +75,6 @@ namespace Timelesss
                 int questID = QuestManager.Instance.GetQuestID(npcID);
                 if (questID != 0)
                 {
-                    Debug.Log("Has Quest");
                     QuestData questData = QuestManager.Instance.GetQuestData(questID);
                     AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
                     popUp.SetQuestInfo(questData);
