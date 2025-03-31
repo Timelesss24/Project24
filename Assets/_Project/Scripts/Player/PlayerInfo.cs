@@ -9,38 +9,54 @@ namespace Timelesss
     {
         private string playerName;
 
-        private int currentHealth = 100;
-        private int maxHealth = 100;
+        private int playerLevel = 1;
 
-        private float currentStamina = 100;
+        private int totalMaxHealth { get => baseMaxHealth + equipmentMaxHealth; }
+        private int baseMaxHealth = 100;
+        private int equipmentMaxHealth = 0;
+        private int currentHealth = 100;
+
         private float maxStamina = 100;
+        private float currentStamina = 100;
+
+        public int totalDeffence { get => baseDeffence + equipmentDeffecne; }
+        private int baseDeffence = 5;
+        private int equipmentDeffecne = 0;
+
+        public int totalAttack { get => baseAttack + equipmentAttack; }
+        private int baseAttack = 10;
+        private int equipmentAttack = 0;
+
+        private int currentExp = 0;
+        private int requiredExp = 100;
 
         [SerializeField] private EventChannel<float> hpChangedEvent;
         [SerializeField] private EventChannel<float> staminaChangedEvent;
 
-        public void TakeDamage(int damage)
+        public void ApplyEquipStatus(EquipItemData itemdata)
         {
-            currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
-            hpChangedEvent?.Invoke((float)currentHealth);
-            Debug.Log($"{damage}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{maxHealth}");
+            // 장비 아이템 스탯 적용
+            // equipmentMaxHealth +=
+            // equipmentDeffecne +=
+            // equipmentAttack += 
         }
 
-        public void UsePotion(PotionType potionType, float effectValue, float duration = 0)
+        public void RemoveEquipStatus(EquipItemData itemdata)
         {
-            switch (potionType)
-            {
-                case PotionType.HP:
-                    RestoreHealth(effectValue);
-                    break;
+            // 장비 아이템 스탯 적용
+            // equipmentMaxHealth -=
+            // equipmentDeffecne -=
+            // equipmentAttack -=
+        }
 
-                case PotionType.Stamina:
-                    RestoreStamina(effectValue);
-                    break;
+        public void TakeDamage(int damage)
+        {
+            float damageReductionFactor = (float)damage / (damage + totalDeffence);
+            int reducedDamage = Mathf.RoundToInt(damage * damageReductionFactor);
 
-                default:
-                    Debug.LogWarning("알 수 없는 포션 타입입니다.");
-                    break;
-            }
+            currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
+            hpChangedEvent?.Invoke(currentHealth);
+            Debug.Log($"{damage}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
         }
 
         public void UseStamina(float value)
@@ -52,9 +68,9 @@ namespace Timelesss
 
         public void RestoreHealth(float value)
         {
-            currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, maxHealth);
-            hpChangedEvent?.Invoke((float)currentHealth);
-            Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{maxHealth}");
+            currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, totalMaxHealth);
+            hpChangedEvent?.Invoke(currentHealth);
+            Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
         }
 
         public void RestoreStamina(float value)
@@ -63,6 +79,33 @@ namespace Timelesss
             staminaChangedEvent?.Invoke(currentStamina);
             Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
         }
+
+        public void IncreasedExp(int value)
+        {
+            currentExp += value;
+
+            Debug.Log($"{value} 경험치를 획득하였습니다. 현재 경험치: {currentExp}/{requiredExp}");
+
+            while (currentExp >= requiredExp)
+            {
+                currentExp -= requiredExp;
+                LevelUp();
+            }
+        }
+
+        private void LevelUp()
+        {
+            baseMaxHealth = (int)((float)baseMaxHealth * 1.15f);
+            maxStamina += 10f;
+
+            baseAttack = Mathf.Max((int)(baseAttack * 1.15f), 1);
+            baseDeffence = Mathf.Max((int)(baseDeffence * 1.15f), 1);
+
+            playerLevel++;
+            requiredExp = (int)((float)requiredExp * 1.25f);
+
+            Debug.Log($"레벨업. 현재 레벨: {playerLevel} / 현재 경험치: {currentExp}/{requiredExp}");
+        }
     }
 
     [CustomEditor(typeof(PlayerInfo))]
@@ -70,6 +113,7 @@ namespace Timelesss
     {
         private int healAmount = 10;
         private int damageAmount = 10;
+        private int expAmount;
 
         private float staminaRecoverAmount = 10f;
         private float staminaUseAmount = 10f;
@@ -88,7 +132,7 @@ namespace Timelesss
                 healAmount = EditorGUILayout.IntSlider("회복량", healAmount, 20, 150);
                 if (GUILayout.Button("체력 회복"))
                 {
-                    playerInfo.UsePotion(PotionType.HP, healAmount);
+                    playerInfo.RestoreHealth(healAmount);
                 }
 
                 EditorGUILayout.Space();
@@ -105,13 +149,22 @@ namespace Timelesss
                 staminaRecoverAmount = EditorGUILayout.Slider("스태미너 회복량", staminaRecoverAmount, 1f, 100f);
                 if (GUILayout.Button("스태미너 회복"))
                 {
-                    playerInfo.UsePotion(PotionType.Stamina, staminaRecoverAmount);
+                    playerInfo.RestoreStamina(staminaRecoverAmount);
                 }
 
                 staminaUseAmount = EditorGUILayout.Slider("스태미너 사용량", staminaUseAmount, 1f, 100f);
                 if (GUILayout.Button("스태미너 사용"))
                 {
                     playerInfo.UseStamina(staminaUseAmount);
+                }
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("경험치 획득", EditorStyles.boldLabel);
+
+                expAmount = EditorGUILayout.IntSlider("경험치 획득량", expAmount, 50, 150);
+                if (GUILayout.Button("경험치 증가"))
+                {
+                    playerInfo.IncreasedExp(expAmount);
                 }
             }
             else

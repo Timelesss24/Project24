@@ -3,19 +3,31 @@
     {
       "key": 1,
       "npcID": 1,
-      "dialogueText": "안녕하세요! 처음 뵙겠습니다.",
+      "dialogueText": "안녕하세요, 모험가님.",
       "nextDialogueID": 2
     },
     {
       "key": 2,
       "npcID": 1,
-      "dialogueText": "테스트 텍스트A",
+      "dialogueText": "지금은 부탁드릴 일이 없는 것 같군요.",
       "nextDialogueID": 3
     },
     {
       "key": 3,
       "npcID": 1,
-      "dialogueText": "테스트 텍스트B",
+      "dialogueText": "나중에 다시 한 번 찾아와 주세요.",
+      "nextDialogueID": 0
+    },
+    {
+      "key": 4,
+      "npcID": 2,
+      "dialogueText": "마을에 있는 포탈과 상호작용하면 던전에 입장할 수 있습니다.",
+      "nextDialogueID": 5
+    },
+    {
+      "key": 5,
+      "npcID": 2,
+      "dialogueText": "던전에는 강력한 몬스터들이 있으니 조심하세요.",
       "nextDialogueID": 0
     }
   ]
