@@ -1,0 +1,52 @@
+{
+  "Items": [
+    {
+      "key": 1,
+      "npcID": 1,
+      "questDescription": "테스트 퀘스트1",
+      "questType": 1,
+      "enabledQuestID": 0,
+      "targetID": 0,
+      "targetNum": 5,
+      "rewardExp": 100,
+      "rewardItemID": 1,
+      "rewardItemNum": 3
+    },
+    {
+      "key": 2,
+      "npcID": 1,
+      "questDescription": "테스트 퀘스트2",
+      "questType": 0,
+      "enabledQuestID": 1,
+      "targetID": 0,
+      "targetNum": 1,
+      "rewardExp": 250,
+      "rewardItemID": 1,
+      "rewardItemNum": 5
+    },
+    {
+      "key": 3,
+      "npcID": 2,
+      "questDescription": "테스트 퀘스트3",
+      "questType": 2,
+      "enabledQuestID": 2,
+      "targetID": 2,
+      "targetNum": 3,
+      "rewardExp": 400,
+      "rewardItemID": 2,
+      "rewardItemNum": 1
+    },
+    {
+      "key": 4,
+      "npcID": 2,
+      "questDescription": "테스트 퀘스트4",
+      "questType": 1,
+      "enabledQuestID": 3,
+      "targetID": 2,
+      "targetNum": 1,
+      "rewardExp": 500,
+      "rewardItemID": 2,
+      "rewardItemNum": 3
+    }
+  ]
+}
