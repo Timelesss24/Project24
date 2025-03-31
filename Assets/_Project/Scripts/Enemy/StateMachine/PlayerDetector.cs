@@ -29,7 +29,7 @@ namespace Timelesss
         public Transform Target { get; private set; }
 
         // 탐지 대상(플레이어)의 Health 컴포넌트 (체력 관리)
-        //public Health TargetHealth { get; private set; }
+        public PlayerInfo TargetInfo { get; private set; }
 
         // 감지 쿨타임을 구현한 카운트다운 타이머 객체
         CountdownTimer detectionTimer;
@@ -47,7 +47,7 @@ namespace Timelesss
             Target = GameObject.FindGameObjectWithTag("Player").transform;
 
             // Target으로부터 Health 컴포넌트를 가져옵니다.
-            //TargetHealth = Target.GetComponent<Health>();
+            TargetInfo = Target.GetComponent<PlayerInfo>();
         }
 
         /// <summary>
