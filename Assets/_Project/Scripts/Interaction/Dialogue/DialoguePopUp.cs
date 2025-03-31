@@ -1,4 +1,4 @@
-using Managers;
+﻿using Managers;
 using Scripts.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +23,17 @@ namespace Timelesss
         private Coroutine typewriterCoroutine;
         private float typewriterSpeed = 0.05f;
 
+        private PlayerInfo playerInfo;
+
+        private void Awake()
+        {
+            playerInfo = FindObjectOfType<PlayerInfo>();
+
+            if (playerInfo == null)
+            {
+                Debug.Log("playerInfo를 찾을 수 없습니다.");
+            }
+        }
 
         public void ShowDialogue(string text, bool hasNextDialogue)
         {
@@ -38,7 +49,9 @@ namespace Timelesss
         private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue)
         {
             dialogueText.text = "";
-            int totalCharacters = text.Length;
+
+            text = text.Replace("모험가", $"{playerInfo.GetName()}");
+            Debug.Log(text);
 
             foreach (char letter in text)
             {

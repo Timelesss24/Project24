@@ -23,9 +23,9 @@ namespace Timelesss
             player.RotatePlayerToTargetDirection(false);
 
             // AnimationSystem에서 콜백으로 상태 전이
-            player.AnimationSystem.PlayOneShot(player.RollClip, () =>
-            {
-                stateMachine.ChangeState(returnState);
+            player.AnimationSystem.PlayOneShot(player.RollClip, () => {
+                if (stateMachine.CurrentState == this)
+                    stateMachine.ChangeState(returnState);
             });
         }
 

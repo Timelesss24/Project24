@@ -60,10 +60,10 @@ namespace Timelesss
             switch (context.phase)
             {
                 case InputActionPhase.Started:
-                    EnableMouseControlCamera?.Invoke();
+                    DisableMouseControlCamera?.Invoke();
                     break;
                 case InputActionPhase.Canceled:
-                    DisableMouseControlCamera?.Invoke();
+                    EnableMouseControlCamera?.Invoke();
                     break;
             }
         }

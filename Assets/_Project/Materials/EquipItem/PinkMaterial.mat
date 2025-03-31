@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PinkSword
+  m_Name: PinkMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 45b2c1cdfa01be147bb172856196fc17,
     type: 3}
   m_Parent: {fileID: 0}

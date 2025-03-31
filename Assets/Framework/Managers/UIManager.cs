@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Scripts.UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityUtils;
@@ -24,7 +23,8 @@ namespace Managers
 
 
         private int _currentOrder = 10; // 현재까지 최근에 사용된 오더
-        private readonly Dictionary<string, UIBase> _activeUIs = new();
+        private readonly Dictionary<string, UIPopup> _activeUIs = new();
+        public int CurrentPopupCount => _activeUIs.Count;
 
         public UIScene CurrentSceneUI { get; private set; }
 
@@ -36,6 +36,7 @@ namespace Managers
                 return root;
             }
         }
+        
 
         public void SetCanvas(GameObject go, bool sort = true)
         {
@@ -46,21 +47,21 @@ namespace Managers
             go.GetOrAdd<GraphicRaycaster>();
         }
 
-        public T ShowUI<T>( UICategory category = UICategory.SceneUI) where T : UIBase
+        public T ShowUI<T>( UICategory category = UICategory.SceneUI) where T : UIScene
         {
-            return ShowUI(typeof(T).Name,category) as T;
+            return ShowUI<T>(typeof(T).Name,category) as T;
         }
 
-        public T ShowPopup<T>( UICategory category = UICategory.PopupUI) where T : UIBase
+        public T ShowPopup<T>( UICategory category = UICategory.PopupUI) where T : UIPopup
         {
-            return ShowUI(typeof(T).Name,category) as T;
+            return ShowUI<T>(typeof(T).Name,category);
         }
-        public UIBase ShowUI(string uiName, UICategory category = UICategory.PopupUI)
+        T ShowUI<T>(string uiName, UICategory category = UICategory.PopupUI) where T : UIBase
         {
             if (_activeUIs.TryGetValue(uiName, out var existingUI))
             {
                 existingUI.Show();
-                return existingUI;
+                return existingUI as T;
             }
 
             string uiPath = _uiPrefixes[category];
@@ -68,14 +69,14 @@ namespace Managers
             if (prefab == null)
                 return null;
 
-            return CreateUIInstance(prefab, uiName);
+            return CreateUIInstance<T>(prefab, uiName);
         }
 
-        private UIBase CreateUIInstance(GameObject prefab, string uiName)
+        private T CreateUIInstance<T>(GameObject prefab, string uiName) where T : UIBase
         {
-            var instance = Instantiate(prefab, Root.transform);
-            instance.name = uiName;
-            var uiComponent = EnableUIComponent<UIBase>(instance, uiName);
+            var obj = Instantiate(prefab, Root.transform);
+            obj.name = uiName;
+            var uiComponent = EnableUIComponent<T>(obj, uiName);
             
 
             return uiComponent;
@@ -96,6 +97,10 @@ namespace Managers
             if (_activeUIs.TryGetValue(uiName, out var ui))
             {
                 ui.Hide();
+            }
+            else if(CurrentSceneUI is T)
+            {
+                CurrentSceneUI.Hide();
             }
             else
             {
@@ -138,7 +143,7 @@ namespace Managers
             
             //ClosePopup(ui);
         }
-        public void ClosePopup(UIBase ui)
+        public void ClosePopup(UIPopup ui)
         {
             Debug.Log($"Close UI: {ui.name}");
             _activeUIs.Remove(ui.name);
@@ -150,7 +155,7 @@ namespace Managers
         {
             foreach (var key in _activeUIs.Keys)
             {
-                if (_activeUIs[key] is UIPopup popup)
+                if (_activeUIs[key] is { } popup)
                 {
                     ClosePopup(popup);
                 }

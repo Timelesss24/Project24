@@ -102,7 +102,7 @@ namespace Timelesss
         IPredicate RollingPredicate => new FuncPredicate(() => IsRoll);
         IPredicate IsAttacking => new FuncPredicate(() => combatController.IsAttacking && stateMachine.CurrentState is not AttackState);
 
-        bool IsBusy => stateMachine.CurrentState != locomotionState || animationSystem.IsSynced;
+        bool IsBusy => stateMachine.CurrentState != locomotionState || animationSystem.IsSynced || IsDie; 
         public bool CanHit 
             => stateMachine.CurrentState != rollState 
                && combatController.AttackState != AttackStates.Impact 
@@ -143,7 +143,7 @@ namespace Timelesss
             At(attackState, locomotionState,new FuncPredicate( ()=>combatController.AttackState == AttackStates.Idle));
             At(locomotionState, interactState, new FuncPredicate(() => isInteract));
             At(interactState, locomotionState, new FuncPredicate(() => !isInteract));
-            Any(deathState, new FuncPredicate(() => IsDie));
+            At(hitState,deathState, new FuncPredicate(() => IsDie));
             Any(exhaustedState, new FuncPredicate(() => exhaustedTimer.IsRunning));
             Any(hitState, new ActionPredicate(ref onHit));
             At(exhaustedState,locomotionState, new FuncPredicate(() => !exhaustedTimer.IsRunning));
@@ -189,7 +189,6 @@ namespace Timelesss
             playerInfo.OnDamageTaken += () => onHit.Invoke();
             playerInfo.DeathAction += () => {
                 IsDie = true;
-                controller.enabled = false;
                 input.DisablePlayerActions();
             };
         }
@@ -217,7 +216,7 @@ namespace Timelesss
 
         void OnAttack()
         {
-            if (IsBusy && stateMachine.CurrentState != attackState) return;
+            if ((IsBusy && stateMachine.CurrentState != attackState) || Cursor.lockState != CursorLockMode.Locked) return;
 
             combatController?.TryAttack();
         }

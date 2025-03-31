@@ -42,20 +42,55 @@ namespace Timelesss
 
         private IEnumerator staminaCoroutine;
 
+        private void Start()
+        {
+            GetName();
+        }
+
+        public string GetName()
+        {
+            if (PlayerName != null) return PlayerName;
+
+            PlayerName = PlayerPrefs.GetString("PlayerName", string.Empty);
+
+            if (PlayerName == string.Empty)
+                PlayerName = "유니티24조";
+
+            return PlayerName;
+        }
+
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
-            // 장비 아이템 스탯 적용
-            // equipmentMaxHealth +=
-            // equipmentDeffecne +=
-            // equipmentAttack += 
+            switch (itemdata.equipType)
+            {
+                case EquipType.Null:
+                    break;
+                case EquipType.Sword:
+                    equipmentAttack = (int)itemdata.equipValue;
+                    break;
+                case EquipType.Helmet:
+                    equipmentMaxHealth = (int)itemdata.equipValue;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void RemoveEquipStatus(EquipItemData itemdata)
         {
-            // 장비 아이템 스탯 적용
-            // equipmentMaxHealth -=
-            // equipmentDeffecne -=
-            // equipmentAttack -=
+            switch (itemdata.equipType)
+            {
+                case EquipType.Null:
+                    break;
+                case EquipType.Sword:
+                    equipmentAttack = 0;
+                    break;
+                case EquipType.Helmet:
+                    equipmentMaxHealth = 0;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public event Action OnDamageTaken;
@@ -68,8 +103,9 @@ namespace Timelesss
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
-            Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
             if (reducedDamage > 0) OnDamageTaken?.Invoke();
+            if(currentHealth <= 0f)
+                DeathAction?.Invoke();
         }
 
         public bool UseStamina(float value)

@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
-public class TestDialogueData
+public class DialogueData
 {
     /// <summary>
     /// DialogueID
@@ -26,18 +26,23 @@ public class TestDialogueData
     /// </summary>
     public int nextDialogueID;
 
-}
-public class TestDialogueDataLoader
-{
-    public List<TestDialogueData> ItemsList { get; private set; }
-    public Dictionary<int, TestDialogueData> ItemsDict { get; private set; }
+    /// <summary>
+    /// HasQuest
+    /// </summary>
+    public bool hasQuest;
 
-    public TestDialogueDataLoader(string path = "JSON/TestDialogueData")
+}
+public class DialogueDataLoader
+{
+    public List<DialogueData> ItemsList { get; private set; }
+    public Dictionary<int, DialogueData> ItemsDict { get; private set; }
+
+    public DialogueDataLoader(string path = "JSON/DialogueData")
     {
         string jsonData;
         jsonData = Resources.Load<TextAsset>(path).text;
         ItemsList = JsonUtility.FromJson<Wrapper>(jsonData).Items;
-        ItemsDict = new Dictionary<int, TestDialogueData>();
+        ItemsDict = new Dictionary<int, DialogueData>();
         foreach (var item in ItemsList)
         {
             ItemsDict.Add(item.key, item);
@@ -47,10 +52,10 @@ public class TestDialogueDataLoader
     [Serializable]
     private class Wrapper
     {
-        public List<TestDialogueData> Items;
+        public List<DialogueData> Items;
     }
 
-    public TestDialogueData GetByKey(int key)
+    public DialogueData GetByKey(int key)
     {
         if (ItemsDict.ContainsKey(key))
         {
@@ -58,7 +63,7 @@ public class TestDialogueDataLoader
         }
         return null;
     }
-    public TestDialogueData GetByIndex(int index)
+    public DialogueData GetByIndex(int index)
     {
         if (index >= 0 && index < ItemsList.Count)
         {

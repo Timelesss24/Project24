@@ -27,6 +27,10 @@ namespace Timelesss
             {
                 playerEquipSlot.Add(equipItemData.equipType, equipItemData);
             }
+            else
+            {
+                playerEquipSlot[equipItemData.equipType] = equipItemData;
+            }
         }
     }
 }
