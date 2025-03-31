@@ -11,6 +11,7 @@ namespace Managers
         public enum GameState
         {
             TitleScene,
+            Village,
             Gameplay,
         }
 
@@ -69,6 +70,7 @@ namespace Managers
             return state switch
             {
                 GameState.TitleScene => "TitleScene",
+                GameState.Village => "Village",
                 GameState.Gameplay => "Gameplay",
                 _ => string.Empty,
             };

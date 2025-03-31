@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    public class PlayerInfo : MonoBehaviour
+    public class PlayerInfo : MonoBehaviour, IDamageable
     {
         private string playerName;
 
@@ -49,14 +49,14 @@ namespace Timelesss
             // equipmentAttack -=
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(int value)
         {
-            float damageReductionFactor = (float)damage / (damage + totalDeffence);
-            int reducedDamage = Mathf.RoundToInt(damage * damageReductionFactor);
+            float damageReductionFactor = (float)value / (value + totalDeffence);
+            int reducedDamage = Mathf.RoundToInt(value * damageReductionFactor);
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
-            Debug.Log($"{damage}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
+            Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
         }
 
         public void UseStamina(float value)
@@ -98,8 +98,8 @@ namespace Timelesss
             baseMaxHealth = (int)((float)baseMaxHealth * 1.15f);
             maxStamina += 10f;
 
-            baseAttack = Mathf.Max((int)(baseAttack * 1.15f), 1);
-            baseDeffence = Mathf.Max((int)(baseDeffence * 1.15f), 1);
+            baseAttack += Mathf.Max((int)(baseAttack * 0.15f), 1);
+            baseDeffence += Mathf.Max((int)(baseDeffence * 0.15f), 1);
 
             playerLevel++;
             requiredExp = (int)((float)requiredExp * 1.25f);

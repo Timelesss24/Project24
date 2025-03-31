@@ -11,7 +11,7 @@ namespace Managers
     /// <summary>
     /// 씬 로딩 및 전환을 관리하는 클래스.
     /// </summary>
-    public class SceneLoader : Singleton<SceneLoader>
+    public class SceneLoader : PersistentSingleton<SceneLoader>
     {
         [Header("Fade Settings")] [SerializeField]
         private CanvasGroup fadeCanvasGroup; // 페이드 효과용 CanvasGroup

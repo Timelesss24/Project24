@@ -25,7 +25,7 @@ namespace Timelesss
             if (PlayerPrefs.HasKey(PlayerNameKey))
             {
                 ClosePopup();
-                GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);
+                GameStateManager.Instance.SetGameState(GameStateManager.GameState.Village);
                 return;
             }
         }
@@ -42,7 +42,7 @@ namespace Timelesss
 
             SavePlayerName(playerName);
             ClosePopup();
-            GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);
+            GameStateManager.Instance.SetGameState(GameStateManager.GameState.Village);
         }
 
         private void OnClickCloseButton()
