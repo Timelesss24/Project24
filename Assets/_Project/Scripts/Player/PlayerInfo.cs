@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -33,6 +34,8 @@ namespace Timelesss
         [SerializeField] private EventChannel<float> hpChangedEvent;
         [SerializeField] private EventChannel<float> staminaChangedEvent;
 
+        public event Action ExhanstedAction;
+
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
             // 장비 아이템 스탯 적용
@@ -49,6 +52,7 @@ namespace Timelesss
             // equipmentAttack -=
         }
 
+        public event Action OnDamageTaken;
         public void TakeDamage(int value)
         {
             float damageReductionFactor = (float)value / (value + totalDeffence);
@@ -57,13 +61,20 @@ namespace Timelesss
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
             Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
+            if(reducedDamage > 0) OnDamageTaken?.Invoke();
         }
 
-        public void UseStamina(float value)
+        public bool UseStamina(float value)
         {
+            if (currentStamina <= 0f)
+            {
+                ExhanstedAction?.Invoke();
+                return false;
+            }
+
             currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);
-            Debug.Log($"스태미너가 {value}만큼 소모되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+            return true;
         }
 
         public void RestoreHealth(float value)
