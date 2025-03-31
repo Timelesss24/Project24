@@ -31,6 +31,7 @@ namespace Timelesss
         public override void OnUseItem()
         {
             PlayerManager.Instance.Player.GetComponent<CombatController>().EquipWeapon(this);
+            PlayerManager.Instance.Player.GetComponent<PlayerInfo>().ApplyEquipStatus(this);
         }
     }
 }

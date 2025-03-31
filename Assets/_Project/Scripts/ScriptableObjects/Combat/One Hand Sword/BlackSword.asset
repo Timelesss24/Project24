@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d24eb60a2b379f94c809c85fb240de3c, type: 3}
-  m_Name: PinkWord
+  m_Name: BlackSword
   m_EditorClassIdentifier: 
-  ItemName: "\uBD84\uD64D\uC0C9 \uAC80"
-  ItemDescription: "\uBD84\uD64D\uC0C9 \uAC80\uC774\uB2E4"
-  ItemIcon: {fileID: 21300000, guid: 56bc255d3be298e4da0f9aa3b8304988, type: 3}
+  ItemName: "\uD751\uB3C4"
+  ItemDescription: "\uBB34\uC7A5\uC0C9 \uD328\uAE30\uB97C \uB450\uB978 \uD751\uB3C4"
+  ItemIcon: {fileID: 21300000, guid: 91518c6ea3655a54e8a0528166c53d18, type: 3}
   itemType: 1
+  equipType: 1
+  equipValue: 15
   Stack: 0
-  equipType: 0
-  <WeaponModel>k__BackingField: {fileID: 1380736215264169070, guid: 57c1532ccb55e0a47ac46823c720e289,
+  <WeaponModel>k__BackingField: {fileID: 1380736215264169070, guid: 263da137a0263fa47ad84e7c4fb85c88,
     type: 3}
   <LocalPosition>k__BackingField: {x: -0.007, y: 0.007, z: -0.094}
   <LocalRotation>k__BackingField: {x: 0, y: 270, z: 180}

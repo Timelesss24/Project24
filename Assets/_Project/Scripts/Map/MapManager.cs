@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Timelesss
@@ -12,33 +12,43 @@ namespace Timelesss
         [SerializeField] GameObject[] rightroomPrefabs;
         List<Vector3> roomJoint;
 
+        public List<GameObject> rooms;
+        public List<GameObject> enemyPrefabs;
+
+        NavMeshSurface navMeshSurface;
+
         private void Awake()
         {
+            rooms = new List<GameObject>();
             Instance = this;
             roomJoint = new List<Vector3>();
             SetLeftJointTransform();
             SetRightJointTransform();
-        }
-
-        private void Start()
-        {
+            navMeshSurface = GetComponent<NavMeshSurface>();
             CreateLeftRoom();
             CreateRightRoom();
         }
 
+        private void Start()
+        {
+            navMeshSurface.BuildNavMesh();
+            SetEnemy();
+        }
+
+
         void CreateLeftRoom()
         {
             int randRoomJoint = Random.Range(0, 2);
-            Instantiate(leftroomPrefabs[0], roomJoint[randRoomJoint], Quaternion.identity);
-            Instantiate(leftroomPrefabs[1], roomJoint[randRoomJoint + 2], leftroomPrefabs[1].transform.rotation);
+            rooms.Add(Instantiate(leftroomPrefabs[0], roomJoint[randRoomJoint], Quaternion.identity, transform));
+            rooms.Add(Instantiate(leftroomPrefabs[1], roomJoint[randRoomJoint + 2], leftroomPrefabs[1].transform.rotation, transform));
 
         }
 
         void CreateRightRoom()
         {
             int randRoomJoint = Random.Range(0, 2);
-            Instantiate(rightroomPrefabs[0], roomJoint[randRoomJoint + 4], Quaternion.identity);
-            Instantiate(rightroomPrefabs[1], roomJoint[randRoomJoint + 6], Quaternion.identity);
+            rooms.Add(Instantiate(rightroomPrefabs[0], roomJoint[randRoomJoint + 4], Quaternion.identity,transform));
+            rooms.Add(Instantiate(rightroomPrefabs[1], roomJoint[randRoomJoint + 6], Quaternion.identity, transform));
 
         }
 
@@ -58,6 +68,20 @@ namespace Timelesss
 
             roomJoint.Add(new Vector3(-33.91f, - 6.62f, 31.24f));
             roomJoint.Add(new Vector3(7.23f, 0, 31.02f));
+        }
+
+        void SetEnemy()
+        {
+            foreach(GameObject room in rooms)
+            {
+                int randInt = Random.Range(1,5);
+
+                for(int i = 0; i<randInt; i++)
+                {
+                    int randEnemy = Random.Range(0, 3);
+                    Instantiate(enemyPrefabs[randEnemy], room.transform.GetChild(1).position, Quaternion.identity, room.transform);
+                }
+            }
         }
     }
 }
