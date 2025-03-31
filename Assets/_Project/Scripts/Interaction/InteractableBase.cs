@@ -35,6 +35,8 @@ namespace Timelesss
             {
                 Debug.LogWarning("TextMeshPro를 찾을 수 없습니다.");
             }
+
+            clip.frameRate = 90f;
         }
 
         protected virtual void OnTriggerEnter(Collider other)

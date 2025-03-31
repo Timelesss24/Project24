@@ -15,7 +15,6 @@ namespace Timelesss
         [SerializeField] private State doorState;
 
         [SerializeField] private Transform[] doorTransforms;
-        private Transform playerTransform;
 
         private bool isOpen;
 
@@ -45,7 +44,7 @@ namespace Timelesss
             isOpen = true;
             interactionText.text = string.Empty;
 
-            float rotationTime = 0.5f;
+            float rotationTime = Clip.averageDuration;
             float time = 0f;
 
             float initialRotationY = transform.rotation.eulerAngles.y;
@@ -111,9 +110,6 @@ namespace Timelesss
         protected override void OnTriggerEnter(Collider other)
         {
             if (isOpen) return;
-
-            if (other.CompareTag(PlayerTag))
-                playerTransform = other.transform;
 
             base.OnTriggerEnter(other);
         }
