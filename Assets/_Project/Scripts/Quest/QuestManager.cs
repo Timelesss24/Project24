@@ -12,10 +12,12 @@ namespace Timelesss
         private Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
 
         private List<ActiveQuestInfo> activeQuestList = new List<ActiveQuestInfo>();
-        public List<ActiveQuestInfo> ActiveQuestList { get { return activeQuestList; } }
+
+        public List<ActiveQuestInfo> ActiveQuestList => activeQuestList;
 
         private List<int> completeQuestList = new List<int>();
-        public List<int> CompleteQuestList { get { return completeQuestList; } }
+
+        public List<int> CompleteQuestList => completeQuestList;
 
         private QuestType questType;
 
@@ -30,9 +32,9 @@ namespace Timelesss
             foreach (var quest in questDict.Values)
             {
                 if (quest.npcID == npcID &&
-                     !activeQuestList.Exists(x => x.questID == quest.key) &&
-                     !completeQuestList.Contains(quest.key) &&
-                     (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
+                    !activeQuestList.Exists(x => x.questID == quest.key) &&
+                    !completeQuestList.Contains(quest.key) &&
+                    (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
                 {
                     return quest.key;
                 }
@@ -47,6 +49,7 @@ namespace Timelesss
             {
                 return questData;
             }
+
             return null;
         }
 
@@ -97,7 +100,29 @@ namespace Timelesss
             Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
         }
 
-        public bool GetIsComplete(int questId) => activeQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
+        public bool GetIsComplete(int questId) =>
+            activeQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
+
+        public bool GetIsCompleteToNpc(int npcId) => activeQuestList.Exists(x =>
+        {
+            QuestData questData = GetQuestData(x.questID);
+            return questData != null &&
+                   questData.npcID == npcId &&
+                   x.progress >= x.goal;
+        });
+
+        public int FindCompletedQuestID(int npcID)
+        {
+            ActiveQuestInfo completedQuest = activeQuestList.Find(x =>
+            {
+                QuestData questData = GetQuestData(x.questID);
+                return questData != null &&
+                       questData.npcID == npcID && 
+                       x.IsComplete();           
+            });
+
+            return completedQuest == null ? 0 : completedQuest.questID;
+        }
 
         public void UpdateProgress(object type)
         {
