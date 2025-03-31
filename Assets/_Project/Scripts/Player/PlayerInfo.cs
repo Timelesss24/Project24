@@ -40,6 +40,8 @@ namespace Timelesss
         public event Action ExhanstedAction;
         public event Action DeathAction;
 
+        private IEnumerator staminaCoroutine;
+
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
             // 장비 아이템 스탯 적용
@@ -67,7 +69,7 @@ namespace Timelesss
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
             Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
-            if(reducedDamage > 0) OnDamageTaken?.Invoke();
+            if (reducedDamage > 0) OnDamageTaken?.Invoke();
         }
 
         public bool UseStamina(float value)
@@ -77,6 +79,15 @@ namespace Timelesss
                 ExhanstedAction?.Invoke();
                 return false;
             }
+
+            if (staminaCoroutine != null)
+            {
+                StopCoroutine(staminaCoroutine);
+                staminaCoroutine = null;
+            }
+
+            staminaCoroutine = RestoreStaminaCoroutine();
+            StartCoroutine(staminaCoroutine);
 
             currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);
@@ -96,7 +107,25 @@ namespace Timelesss
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);
-            Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+
+            if (value > 1)
+                Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+        }
+
+        private IEnumerator RestoreStaminaCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+
+            float restoreValue = 0.2f;
+            float waitTime = 0.03f;
+
+            while (currentHealth <= maxStamina)
+            {
+                RestoreStamina(restoreValue);
+                yield return new WaitForSeconds(waitTime);
+            }
+
+            staminaCoroutine = null;
         }
 
         public void IncreasedExp(int value)
