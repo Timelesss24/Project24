@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Timelesss
 {
@@ -20,6 +19,8 @@ namespace Timelesss
         [field: SerializeField]
         public AnimatorOverrideController OverrideController { get; private set; } // 애니메이터 오버라이드 컨트롤러
 
+
+        public override EquipType EquipType => EquipType.Sword;
         // 초기화 메서드
         public void InIt()
         {

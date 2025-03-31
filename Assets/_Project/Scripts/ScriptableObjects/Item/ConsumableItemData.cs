@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Timelesss
 {
@@ -16,6 +15,7 @@ namespace Timelesss
         public float duration;      // 지속 시간 (0이면 즉시 효과)
         public PotionType type;
 
+        public override ItemType ItemType => ItemType.UseableItem;
         public override void OnUseItem()
         {
             switch (type)
