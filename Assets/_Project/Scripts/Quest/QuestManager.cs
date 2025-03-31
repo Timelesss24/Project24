@@ -19,7 +19,7 @@ namespace Timelesss
             questDict = questDataLoader.ItemsDict;
         }
 
-        public int GetQuest(int npcID)
+        public int GetQuestID(int npcID)
         {
             foreach (var quest in questDict.Values)
             {
@@ -28,12 +28,20 @@ namespace Timelesss
                     !completeQuests.Contains(quest.key) &&
                     (quest.enabledQuestID == 0 || completeQuests.Contains(quest.enabledQuestID)))
                 {
-                    StartQuest(quest.key);
                     return quest.key;
                 }
             }
 
             return 0;
+        }
+
+        public QuestData GetQuestData(int questID)
+        {
+            if (questDict.TryGetValue(questID, out var questData))
+            {
+                return questData;
+            }
+            return null; 
         }
 
         public void StartQuest(int questID)
@@ -60,12 +68,6 @@ namespace Timelesss
                 {
                     Debug.Log($"퀘스트 완료: {completedQuest.questDescription}");
                     RewardPlayer(completedQuest.rewardExp, completedQuest.rewardItemID, completedQuest.rewardItemNum);
-
-                    if (completedQuest.enabledQuestID != 0)
-                    {
-                        Debug.Log($"후속 퀘스트 활성화: {completedQuest.enabledQuestID}");
-                        StartQuest(completedQuest.enabledQuestID);
-                    }
                 }
                 else
                 {
@@ -80,7 +82,7 @@ namespace Timelesss
 
         private void RewardPlayer(int exp, int itemId, int itemNum)
         {
-            Debug.Log($"플레이어에게 보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+            Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
         }
     }
 }

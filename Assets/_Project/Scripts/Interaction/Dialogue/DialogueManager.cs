@@ -28,8 +28,7 @@ namespace Timelesss
         {
             this.npcID = npcInfo.ID;
 
-            QuestManager questManager = FindObjectOfType<QuestManager>();
-            int questID = questManager.GetQuest(npcInfo.ID);
+            int questID = QuestManager.Instance.GetQuestID(npcInfo.ID);
 
             currentDialogueID = FindFirstDialogueID(npcInfo.ID, questID != 0);
 
@@ -50,7 +49,10 @@ namespace Timelesss
 
 
             if (dialoguePopUp == null)
+            {
                 dialoguePopUp = UIManager.Instance.ShowPopup<DialoguePopUp>();
+                dialoguePopUp.SetNpcID(npcInfo.ID);
+            }
 
             dialoguePopUp.Show();
             dialoguePopUp.SetNPCNameText(npcInfo.Name);
@@ -77,7 +79,7 @@ namespace Timelesss
 
             bool hasNextDialogue = dialogue.nextDialogueID != 0;
 
-            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue);
+            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
 
             if (hasNextDialogue)
             {

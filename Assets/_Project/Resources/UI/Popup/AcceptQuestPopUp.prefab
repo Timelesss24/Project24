@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 6612711388381184973}
   - component: {fileID: 9034786077221639643}
   - component: {fileID: 5893341353769271587}
+  - component: {fileID: 4766903502774214263}
   m_Layer: 5
   m_Name: AcceptQuestPopUp
   m_TagString: Untagged
@@ -722,6 +723,24 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4766903502774214263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2702927430073010468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74d5a258168b6ab49b34897447ffe58d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptButton: {fileID: 2174522825299264718}
+  declineButton: {fileID: 7065003378498034739}
+  questNameText: {fileID: 5490117931348431003}
+  questDescriptionText: {fileID: 1544162192263683339}
+  questTargetText: {fileID: 2778061853270349694}
+  questRewardText: {fileID: 335471436707853068}
 --- !u!1 &2895867508711587174
 GameObject:
   m_ObjectHideFlags: 0
