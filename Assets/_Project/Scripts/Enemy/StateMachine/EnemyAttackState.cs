@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,49 +7,49 @@ namespace Timelesss
 {
     public class EnemyAttackState : EnemyBaseState
     {
-        // ÀûÀÇ ÀÌµ¿°ú °æ·Î Å½»öÀ» ´ã´çÇÏ´Â NavMeshAgent ÄÄÆ÷³ÍÆ®
+        // ì ì˜ ì´ë™ê³¼ ê²½ë¡œ íƒìƒ‰ì„ ë‹´ë‹¹í•˜ëŠ” NavMeshAgent ì»´í¬ë„ŒíŠ¸
         readonly NavMeshAgent agent;
 
-        // °ø°İ ´ë»óÀÎ ÇÃ·¹ÀÌ¾îÀÇ Transform
+        // ê³µê²© ëŒ€ìƒì¸ í”Œë ˆì´ì–´ì˜ Transform
         readonly Transform target;
 
-        /// EnemyAttackState »ı¼ºÀÚ:
-        /// Àû °³Ã¼, ¾Ö´Ï¸ŞÀÌÅÍ, NavMeshAgent, °ø°İ Å¸°ÙÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        /// EnemyAttackState ìƒì„±ì:
+        /// ì  ê°œì²´, ì• ë‹ˆë©”ì´í„°, NavMeshAgent, ê³µê²© íƒ€ê²Ÿì„ ì´ˆê¸°í™”í•©ë‹ˆë‹¤.
         /// </summary>
-        /// <param name="enemy">ÇöÀç Àû °´Ã¼</param>
-        /// <param name="animator">ÀûÀÇ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» Á¦¾îÇÏ´Â Animator</param>
-        /// <param name="agent">ÀûÀÇ ÀÌµ¿°ú °æ·Î Å½»öÀ» ´ã´çÇÏ´Â NavMeshAgent</param>
-        /// <param name="target">ÀûÀÌ °ø°İÇÒ ´ë»ó (ÇÃ·¹ÀÌ¾îÀÇ Transform)</param>
+        /// <param name="enemy">í˜„ì¬ ì  ê°ì²´</param>
+        /// <param name="animator">ì ì˜ ì• ë‹ˆë©”ì´ì…˜ì„ ì œì–´í•˜ëŠ” Animator</param>
+        /// <param name="agent">ì ì˜ ì´ë™ê³¼ ê²½ë¡œ íƒìƒ‰ì„ ë‹´ë‹¹í•˜ëŠ” NavMeshAgent</param>
+        /// <param name="target">ì ì´ ê³µê²©í•  ëŒ€ìƒ (í”Œë ˆì´ì–´ì˜ Transform)</param>
         public EnemyAttackState(Enemy enemy, Animator animator, NavMeshAgent agent, Transform target)
-            : base(enemy, animator) // ºÎ¸ğ Å¬·¡½ºÀÇ »ı¼ºÀÚ È£Ãâ
+            : base(enemy, animator) // ë¶€ëª¨ í´ë˜ìŠ¤ì˜ ìƒì„±ì í˜¸ì¶œ
         {
-            this.agent = agent; // NavMeshAgent ÃÊ±âÈ­
-            this.target = target; // °ø°İ ´ë»ó ÃÊ±âÈ­
+            this.agent = agent; // NavMeshAgent ì´ˆê¸°í™”
+            this.target = target; // ê³µê²© ëŒ€ìƒ ì´ˆê¸°í™”
         }
 
-        /// »óÅÂ°¡ È°¼ºÈ­(ÁøÀÔ)µÉ ¶§ ½ÇÇàµË´Ï´Ù.
-        /// °ø°İ »óÅÂ ÁøÀÔ ½Ã, °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ½ÇÇàÇÕ´Ï´Ù.
+        /// ìƒíƒœê°€ í™œì„±í™”(ì§„ì…)ë  ë•Œ ì‹¤í–‰ë©ë‹ˆë‹¤.
+        /// ê³µê²© ìƒíƒœ ì§„ì… ì‹œ, ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì„ ì‹¤í–‰í•©ë‹ˆë‹¤.
         public override void OnEnter()
         {
-            // Attack ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ºÎµå·´°Ô ½ÃÀÛ (CrossFade »ç¿ë)
+            // Attack ì• ë‹ˆë©”ì´ì…˜ì„ ë¶€ë“œëŸ½ê²Œ ì‹œì‘ (CrossFade ì‚¬ìš©)
             animator.CrossFade(AttackHash, crossFadeDuration);
-            Debug.Log("°ø°İ");
+            Debug.Log("ê³µê²©");
         }
 
         /// <summary>
-        /// »óÅÂ°¡ È°¼ºÈ­µÇ¾î ÀÖ´Â µ¿¾È ¸Å ÇÁ·¹ÀÓ È£ÃâµË´Ï´Ù.
-        /// ÀûÀº °ø°İ ´ë»óÀ» ¹Ù¶óº¸¸ç, °ø°İ µ¿ÀÛÀ» ¼öÇàÇÕ´Ï´Ù.
+        /// ìƒíƒœê°€ í™œì„±í™”ë˜ì–´ ìˆëŠ” ë™ì•ˆ ë§¤ í”„ë ˆì„ í˜¸ì¶œë©ë‹ˆë‹¤.
+        /// ì ì€ ê³µê²© ëŒ€ìƒì„ ë°”ë¼ë³´ë©°, ê³µê²© ë™ì‘ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
         /// </summary>
         public override void Update()
         {
-            // Å¸°ÙÀÇ À§Ä¡¸¦ NavMeshAgentÀÇ ³ôÀÌ¿Í µ¿ÀÏÇÏ°Ô º¸Á¤ÇÑ À§Ä¡·Î ¼³Á¤
+            // íƒ€ê²Ÿì˜ ìœ„ì¹˜ë¥¼ NavMeshAgentì˜ ë†’ì´ì™€ ë™ì¼í•˜ê²Œ ë³´ì •í•œ ìœ„ì¹˜ë¡œ ì„¤ì •
             var targetPosition = new Vector3(target.position.x, agent.transform.position.y, target.position.z);
 
-            // Àû(NavMeshAgent)ÀÌ Å¸°ÙÀ» ¹Ù¶óº¸µµ·Ï ¼³Á¤
+            // ì (NavMeshAgent)ì´ íƒ€ê²Ÿì„ ë°”ë¼ë³´ë„ë¡ ì„¤ì •
             agent.transform.LookAt(targetPosition);
 
-            // ÀûÀÇ °ø°İ µ¿ÀÛ ¼öÇà
-            enemy.Attack();
+            // ì ì˜ ê³µê²© ë™ì‘ ìˆ˜í–‰
+            //enemy.Attack();
         }
     }
 }

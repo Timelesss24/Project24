@@ -33,6 +33,10 @@ namespace Timelesss
         {
             inputActions.Enable();
         }
+        public void DisablePlayerActions()
+        {
+            inputActions.Disable();
+        }
 
         public void OnMove(InputAction.CallbackContext context)
         {

@@ -18,6 +18,7 @@ namespace Timelesss
         {
             Debug.Log("RollEnter");
 
+            player.IsRoll = false;
             player.ResetVelocity();
             player.RotatePlayerToTargetDirection(false);
 

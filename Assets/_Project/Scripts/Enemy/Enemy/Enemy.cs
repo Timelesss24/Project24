@@ -39,8 +39,7 @@ namespace Timelesss
         /// 에디터에서 컴포넌트가 설정되었는지 유효성 검사 및 자동 설정.
 
         private float enemyHp;
-
-        public event System.Action OnDamageTaken;
+        public bool isDie = false;
 
         void OnValidate() => this.ValidateRefs();
 
@@ -113,6 +112,7 @@ namespace Timelesss
         /// </summary>
         public void Attack()
         {
+            if (isDie == true) return;
             if (attackTimer.IsRunning) return; // 타이머에 따라 공격 간 간격 유지
 
             // 공격 실행
@@ -130,6 +130,7 @@ namespace Timelesss
         }
         void OnDie()
         {
+            isDie = true;
             animator.SetTrigger("Die");
 
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
