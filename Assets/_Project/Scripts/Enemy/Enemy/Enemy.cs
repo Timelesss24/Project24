@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
@@ -14,91 +14,93 @@ namespace Timelesss
     public class Enemy : MonoBehaviour, IDamageable
     {
         //[SerializeField] public EnemyOS Date;
-        // NavMeshAgent °´Ã¼: ÀûÀÇ °æ·Î Å½»ö ¹× ÀÌµ¿ Ã³¸®¸¦ ´ã´ç
+        // NavMeshAgent ê°ì²´: ì ì˜ ê²½ë¡œ íƒìƒ‰ ë° ì´ë™ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹
         [SerializeField, Self] NavMeshAgent agent;
 
-        // PlayerDetector °´Ã¼: ÇÃ·¹ÀÌ¾î Å½Áö¿Í °ø°İ ¹üÀ§¸¦ °ü¸®
+        // PlayerDetector ê°ì²´: í”Œë ˆì´ì–´ íƒì§€ì™€ ê³µê²© ë²”ìœ„ë¥¼ ê´€ë¦¬
         [SerializeField, Self] PlayerDetector playerDetector;
 
-        // Animator °´Ã¼: ÀûÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °ü¸®
+        // Animator ê°ì²´: ì ì˜ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê´€ë¦¬
         [SerializeField, Child] Animator animator;
 
-        // ÀûÀÇ ¹«ÀÛÀ§ ÀÌµ¿ ¹İ°æ (wander radius)À» Á¤ÀÇ
+        // ì ì˜ ë¬´ì‘ìœ„ ì´ë™ ë°˜ê²½ (wander radius)ì„ ì •ì˜
         //[SerializeField] float wanderRadius = 10f;
 
-        // °ø°İ ´ë±â ½Ã°£ (½Ã°£ °£°İ ¼³Á¤)
-        //[SerializeField] float timeBetweenAttacks = 1f; // ÃßÈÄ ¹«±â ½ºÅ©¸³Æ®·Î ´ëÃ¼ °¡´É¼º ÀÖÀ½
+        // ê³µê²© ëŒ€ê¸° ì‹œê°„ (ì‹œê°„ ê°„ê²© ì„¤ì •)
+        //[SerializeField] float timeBetweenAttacks = 1f; // ì¶”í›„ ë¬´ê¸° ìŠ¤í¬ë¦½íŠ¸ë¡œ ëŒ€ì²´ ê°€ëŠ¥ì„± ìˆìŒ
 
-        // »óÅÂ ±â°è(State Machine) °´Ã¼: ÀûÀÇ »óÅÂ ÀüÈ¯ ¹× µ¿ÀÛ °ü¸®
+        // ìƒíƒœ ê¸°ê³„(State Machine) ê°ì²´: ì ì˜ ìƒíƒœ ì „í™˜ ë° ë™ì‘ ê´€ë¦¬
         StateMachine stateMachine;
 
-        // Ä«¿îÆ®´Ù¿î Å¸ÀÌ¸Ó °´Ã¼: °ø°İ °£ °£°İÀ» ÃßÀû
+        // ì¹´ìš´íŠ¸ë‹¤ìš´ íƒ€ì´ë¨¸ ê°ì²´: ê³µê²© ê°„ ê°„ê²©ì„ ì¶”ì 
         CountdownTimer attackTimer;
 
-        /// UnityÀÇ OnValidate ¸Ş¼­µå:
-        /// ¿¡µğÅÍ¿¡¼­ ÄÄÆ÷³ÍÆ®°¡ ¼³Á¤µÇ¾ú´ÂÁö À¯È¿¼º °Ë»ç ¹× ÀÚµ¿ ¼³Á¤.
+        /// Unityì˜ OnValidate ë©”ì„œë“œ:
+        /// ì—ë””í„°ì—ì„œ ì»´í¬ë„ŒíŠ¸ê°€ ì„¤ì •ë˜ì—ˆëŠ”ì§€ ìœ íš¨ì„± ê²€ì‚¬ ë° ìë™ ì„¤ì •.
 
         private float enemyHp;
 
+        public event System.Action OnDamageTaken;
+
         void OnValidate() => this.ValidateRefs();
 
-        /// UnityÀÇ Start ¸Ş¼­µå:
-        /// Àû Å¬·¡½ºÀÇ ÃÊ±âÈ­¸¦ ¼öÇàÇÏ¸ç, »óÅÂ ±â°è¿Í °ø°İ Å¸ÀÌ¸Ó ¼³Á¤À» Ã³¸®ÇÕ´Ï´Ù.
+        /// Unityì˜ Start ë©”ì„œë“œ:
+        /// ì  í´ë˜ìŠ¤ì˜ ì´ˆê¸°í™”ë¥¼ ìˆ˜í–‰í•˜ë©°, ìƒíƒœ ê¸°ê³„ì™€ ê³µê²© íƒ€ì´ë¨¸ ì„¤ì •ì„ ì²˜ë¦¬í•©ë‹ˆë‹¤.
         void Start()
         {
-            // °ø°İ Å¸ÀÌ¸Ó ÃÊ±âÈ­
+            // ê³µê²© íƒ€ì´ë¨¸ ì´ˆê¸°í™”
             attackTimer = new CountdownTimer(playerDetector.Date.timeBetweenAttacks);
 
-            // »óÅÂ ±â°è ÃÊ±âÈ­
+            // ìƒíƒœ ê¸°ê³„ ì´ˆê¸°í™”
             stateMachine = new StateMachine();
 
-            // »óÅÂ Á¤ÀÇ (Àû AIÀÇ ÁÖ¿ä µ¿ÀÛµé ±¸Çö)
-            var wanderState = new EnemyWanderState(this, animator, agent, playerDetector.Date.wanderRadius); // ¹«ÀÛÀ§ ¹æÈ² »óÅÂ
-            var chaseState = new EnemyChaseState(this, animator, agent, playerDetector.Target); // ÇÃ·¹ÀÌ¾î ÃßÀû »óÅÂ
-            var attackState = new EnemyAttackState(this, animator, agent, playerDetector.Target); // ÇÃ·¹ÀÌ¾î °ø°İ »óÅÂ
+            // ìƒíƒœ ì •ì˜ (ì  AIì˜ ì£¼ìš” ë™ì‘ë“¤ êµ¬í˜„)
+            var wanderState = new EnemyWanderState(this, animator, agent, playerDetector.Date.wanderRadius); // ë¬´ì‘ìœ„ ë°©í™© ìƒíƒœ
+            var chaseState = new EnemyChaseState(this, animator, agent, playerDetector.Target); // í”Œë ˆì´ì–´ ì¶”ì  ìƒíƒœ
+            var attackState = new EnemyAttackState(this, animator, agent, playerDetector.Target); // í”Œë ˆì´ì–´ ê³µê²© ìƒíƒœ
 
-            // »óÅÂ ÀüÈ¯ Á¶°Ç Á¤ÀÇ
-            At(wanderState, chaseState, new FuncPredicate(() => playerDetector.CanDetectPlayer())); // ÇÃ·¹ÀÌ¾î Å½Áö ½Ã °ø°İ
-            At(chaseState, wanderState, new FuncPredicate(() => !playerDetector.CanDetectPlayer())); // Å½Áö ½ÇÆĞ ½Ã ¹æÈ²
-            At(chaseState, attackState, new FuncPredicate(() => playerDetector.CanAttackPlayer())); // °ø°İ °¡´É ½Ã °ø°İ »óÅÂ ÁøÀÔ
-            At(attackState, chaseState, new FuncPredicate(() => !playerDetector.CanAttackPlayer())); // °ø°İ ºÒ°¡ ½Ã ÃßÀû
+            // ìƒíƒœ ì „í™˜ ì¡°ê±´ ì •ì˜
+            At(wanderState, chaseState, new FuncPredicate(() => playerDetector.CanDetectPlayer())); // í”Œë ˆì´ì–´ íƒì§€ ì‹œ ê³µê²©
+            At(chaseState, wanderState, new FuncPredicate(() => !playerDetector.CanDetectPlayer())); // íƒì§€ ì‹¤íŒ¨ ì‹œ ë°©í™©
+            At(chaseState, attackState, new FuncPredicate(() => playerDetector.CanAttackPlayer())); // ê³µê²© ê°€ëŠ¥ ì‹œ ê³µê²© ìƒíƒœ ì§„ì…
+            At(attackState, chaseState, new FuncPredicate(() => !playerDetector.CanAttackPlayer())); // ê³µê²© ë¶ˆê°€ ì‹œ ì¶”ì 
 
             enemyHp = playerDetector.Date.maxHp;
-            // ÃÊ±â »óÅÂ ¼³Á¤ (¹æÈ² »óÅÂ·Î ½ÃÀÛ)
+            // ì´ˆê¸° ìƒíƒœ ì„¤ì • (ë°©í™© ìƒíƒœë¡œ ì‹œì‘)
             stateMachine.SetState(wanderState);
         }
 
         /// <summary>
-        /// µÎ »óÅÂ °£ÀÇ ÀüÈ¯ Á¶°ÇÀ» Ãß°¡ÇÏ´Â ÇïÆÛ ¸Ş¼­µå.
+        /// ë‘ ìƒíƒœ ê°„ì˜ ì „í™˜ ì¡°ê±´ì„ ì¶”ê°€í•˜ëŠ” í—¬í¼ ë©”ì„œë“œ.
         /// </summary>
-        /// <param name="from">ÀÌÀü »óÅÂ</param>
-        /// <param name="to">´ÙÀ½ »óÅÂ</param>
-        /// <param name="condition">ÀüÈ¯ Á¶°Ç</param>
+        /// <param name="from">ì´ì „ ìƒíƒœ</param>
+        /// <param name="to">ë‹¤ìŒ ìƒíƒœ</param>
+        /// <param name="condition">ì „í™˜ ì¡°ê±´</param>
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
 
         /// <summary>
-        /// ¾î¶² »óÅÂ¿¡¼­µç Æ¯Á¤ »óÅÂ·Î ÀüÈ¯ÀÌ °¡´ÉÇÏµµ·Ï ¼³Á¤ÇÏ´Â ¸Ş¼­µå.
+        /// ì–´ë–¤ ìƒíƒœì—ì„œë“  íŠ¹ì • ìƒíƒœë¡œ ì „í™˜ì´ ê°€ëŠ¥í•˜ë„ë¡ ì„¤ì •í•˜ëŠ” ë©”ì„œë“œ.
         /// </summary>
-        /// <param name="to">´ÙÀ½ »óÅÂ</param>
-        /// <param name="conditions">ÀüÈ¯ Á¶°Ç</param>
+        /// <param name="to">ë‹¤ìŒ ìƒíƒœ</param>
+        /// <param name="conditions">ì „í™˜ ì¡°ê±´</param>
         void Any(IState to, IPredicate conditions) => stateMachine.AddAnyTransition(to, conditions);
 
         /// <summary>
-        /// UnityÀÇ Update ¸Ş¼­µå:
-        /// ¸Å ÇÁ·¹ÀÓ¸¶´Ù »óÅÂ ±â°è ¾÷µ¥ÀÌÆ® ¹× °ø°İ Å¸ÀÌ¸Ó °»½Å
+        /// Unityì˜ Update ë©”ì„œë“œ:
+        /// ë§¤ í”„ë ˆì„ë§ˆë‹¤ ìƒíƒœ ê¸°ê³„ ì—…ë°ì´íŠ¸ ë° ê³µê²© íƒ€ì´ë¨¸ ê°±ì‹ 
         /// </summary>
         void Update()
         {
-            // »óÅÂ ±â°èÀÇ ÇöÀç »óÅÂ ¾÷µ¥ÀÌÆ®
+            // ìƒíƒœ ê¸°ê³„ì˜ í˜„ì¬ ìƒíƒœ ì—…ë°ì´íŠ¸
             stateMachine.Update();
 
-            // °ø°İ Å¸ÀÌ¸Ó ½Ã°£ °è»ê
+            // ê³µê²© íƒ€ì´ë¨¸ ì‹œê°„ ê³„ì‚°
             attackTimer.Tick(Time.deltaTime);
         }
 
         /// <summary>
-        /// UnityÀÇ FixedUpdate ¸Ş¼­µå:
-        /// ¹°¸®ÀûÀÎ µ¿ÀÛ ¹× »óÅÂ ¾÷µ¥ÀÌÆ®¸¦ ÇÁ·¹ÀÓ ´ÜÀ§·Î Ã³¸®
+        /// Unityì˜ FixedUpdate ë©”ì„œë“œ:
+        /// ë¬¼ë¦¬ì ì¸ ë™ì‘ ë° ìƒíƒœ ì—…ë°ì´íŠ¸ë¥¼ í”„ë ˆì„ ë‹¨ìœ„ë¡œ ì²˜ë¦¬
         /// </summary>
         void FixedUpdate()
         {
@@ -106,16 +108,16 @@ namespace Timelesss
         }
 
         /// <summary>
-        /// °ø°İ µ¿ÀÛÀ» Ã³¸®ÇÏ´Â ¸Ş¼­µå. 
-        /// Å¸ÀÌ¸Ó°¡ ½ÇÇà ÁßÀÎ °æ¿ì °ø°İÀ» ½ÇÇàÇÏÁö ¾ÊÀ½.
+        /// ê³µê²© ë™ì‘ì„ ì²˜ë¦¬í•˜ëŠ” ë©”ì„œë“œ. 
+        /// íƒ€ì´ë¨¸ê°€ ì‹¤í–‰ ì¤‘ì¸ ê²½ìš° ê³µê²©ì„ ì‹¤í–‰í•˜ì§€ ì•ŠìŒ.
         /// </summary>
         public void Attack()
         {
-            if (attackTimer.IsRunning) return; // Å¸ÀÌ¸Ó¿¡ µû¶ó °ø°İ °£ °£°İ À¯Áö
+            if (attackTimer.IsRunning) return; // íƒ€ì´ë¨¸ì— ë”°ë¼ ê³µê²© ê°„ ê°„ê²© ìœ ì§€
 
-            // °ø°İ ½ÇÇà
+            // ê³µê²© ì‹¤í–‰
             attackTimer.Start();
-            playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // ÇÃ·¹ÀÌ¾î¿¡°Ô ÇÇÇØ (ÀÓ½Ã·Î 10 ÇÇÇØ)
+            playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // í”Œë ˆì´ì–´ì—ê²Œ í”¼í•´ (ì„ì‹œë¡œ 10 í”¼í•´)
         }
         void OnHit()
         {
@@ -153,7 +155,7 @@ namespace Timelesss
 
             if (EditorApplication.isPlaying)
             {
-                if (GUILayout.Button("1000 µ¥¹ÌÁö"))
+                if (GUILayout.Button("1000 ë°ë¯¸ì§€"))
                 {
                     ((Enemy)target).TakeDamage(1000);
                 }
