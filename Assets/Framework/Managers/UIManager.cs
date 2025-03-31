@@ -54,6 +54,8 @@ namespace Managers
 
         public T ShowPopup<T>( UICategory category = UICategory.PopupUI) where T : UIPopup
         {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             return ShowUI<T>(typeof(T).Name,category);
         }
         T ShowUI<T>(string uiName, UICategory category = UICategory.PopupUI) where T : UIBase
@@ -145,6 +147,8 @@ namespace Managers
         }
         public void ClosePopup(UIPopup ui)
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             Debug.Log($"Close UI: {ui.name}");
             _activeUIs.Remove(ui.name);
             Destroy(ui.gameObject);

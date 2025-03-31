@@ -406,10 +406,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3095105201198039733, guid: c47657c0c8374a7449d894cec0aa7294,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095105201198039733, guid: c47657c0c8374a7449d894cec0aa7294,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095105201198039733, guid: c47657c0c8374a7449d894cec0aa7294,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -27
+      objectReference: {fileID: 0}
     - target: {fileID: 6536882554421665507, guid: c47657c0c8374a7449d894cec0aa7294,
         type: 3}
       propertyPath: m_Name
       value: BlueBoarCustom
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174637172123202149, guid: c47657c0c8374a7449d894cec0aa7294,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 3.55
       objectReference: {fileID: 0}
     - target: {fileID: 7398076106706017865, guid: c47657c0c8374a7449d894cec0aa7294,
         type: 3}
@@ -637,6 +657,8 @@ MonoBehaviour:
   rightroomPrefabs:
   - {fileID: 6971758438424921021, guid: 0b974a90ec038104da04a4180c11af49, type: 3}
   - {fileID: 894823524309872588, guid: ff60899ac33b2814f859ffc5b7cafd36, type: 3}
+  rooms: []
+  enemyPrefabs: []
 --- !u!4 &835481653
 Transform:
   m_ObjectHideFlags: 0
