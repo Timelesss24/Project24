@@ -34,7 +34,7 @@ namespace Timelesss
             }
             else if (doorState == State.Double)
             {
-                RotateDoubleDoor();
+                StartCoroutine(RotateDoubleDoor());
             }
         }
 
@@ -45,19 +45,19 @@ namespace Timelesss
             isOpen = true;
             interactionText.text = string.Empty;
 
-            float rotationDuration = 0.5f;
-            float elapsedTime = 0f;
+            float rotationTime = 0.5f;
+            float time = 0f;
 
             float initialRotationY = transform.rotation.eulerAngles.y;
             float targetRotationY = transform.rotation.eulerAngles.y - 90f;
 
-            while (elapsedTime < rotationDuration)
+            while (time < rotationTime)
             {
-                float newRotationY = Mathf.Lerp(initialRotationY, targetRotationY, elapsedTime / rotationDuration);
+                float newRotationY = Mathf.Lerp(initialRotationY, targetRotationY, time / rotationTime);
 
                 transform.rotation = Quaternion.Euler(0, newRotationY, 0);
 
-                elapsedTime += Time.deltaTime;
+                time += Time.deltaTime;
                 yield return null;
             }
 
@@ -66,18 +66,45 @@ namespace Timelesss
             transform.rotation = Quaternion.Euler(0, targetRotationY, 0);
         }
 
-        private void RotateDoubleDoor()
+        private IEnumerator RotateDoubleDoor()
         {
+            if (isOpen) yield break;
+
             isOpen = true;
+            interactionText.text = string.Empty;
 
-            foreach (var doorTransform in doorTransforms)
+            float rotationTime = 0.5f; 
+            float time = 0f;
+
+            List<Quaternion> initialRotations = new List<Quaternion>();
+            List<Quaternion> targetRotations = new List<Quaternion>();
+
+            for (int i = 0; i < doorTransforms.Length; i++)
             {
-                Vector3 directionToPlayer = playerTransform.position - doorTransform.position;
-
-                float rotationY = directionToPlayer.x >= 0 ? -90f : 90f;
-
-                doorTransform.localRotation = Quaternion.Euler(0, rotationY, 0);
+                initialRotations.Add(doorTransforms[i].localRotation);
+                targetRotations.Add(Quaternion.Euler(0, i == 0 ? -90f : 90f, 0));
             }
+
+            while (time < rotationTime)
+            {
+                for (int i = 0; i < doorTransforms.Length; i++)
+                {
+                    doorTransforms[i].localRotation = Quaternion.Lerp(
+                        initialRotations[i],
+                        targetRotations[i],
+                        time / rotationTime
+                    );
+                }
+
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            for (int i = 0; i < doorTransforms.Length; i++)
+            {
+                doorTransforms[i].localRotation = targetRotations[i];
+            }
+
             InteractionManager.Instance.EndInteraction();
         }
 
