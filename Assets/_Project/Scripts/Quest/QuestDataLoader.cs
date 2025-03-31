@@ -24,6 +24,11 @@ public class QuestData
     public int npcID;
 
     /// <summary>
+    /// QuestName
+    /// </summary>
+    public string questName;
+
+    /// <summary>
     /// QuestDescription
     /// </summary>
     public string questDescription;
@@ -42,6 +47,11 @@ public class QuestData
     /// TargetID
     /// </summary>
     public int targetID;
+
+    /// <summary>
+    /// TargetName
+    /// </summary>
+    public string targetName;
 
     /// <summary>
     /// TargetNum
