@@ -7,6 +7,9 @@ namespace Timelesss
     [CreateAssetMenu(fileName = "EnemyOS", menuName = "Enemy/EnemyOS")]
     public class EnemyOS : ScriptableObject
     {
+        public float maxHp =100;
+        public int attackDamage = 10;
+        public int exp = 30;
         public float wanderRadius = 10f;
         public float timeBetweenAttacks = 1f;
         public float detectionAngle = 60f;
@@ -14,7 +17,6 @@ namespace Timelesss
         public float innerDetectionRadius = 5f;
         public float detectionCooldown = 1f;
         public float attackRange = 2f;
-        public float attackDamage = 10f;
     }
 }
 
