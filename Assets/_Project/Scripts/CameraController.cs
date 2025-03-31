@@ -41,7 +41,7 @@ namespace Timelesss
         
         void OnLook(Vector2 cameraMovement, bool isDeviceMouse)
         {
-            if (cameraMovementLock) return;
+            if (cameraMovementLock || Cursor.lockState != CursorLockMode.Locked) return;
             
             if(isDeviceMouse && !isRMBPressed) return;
             
