@@ -16,16 +16,26 @@ namespace Timelesss
         [SerializeField] private Image itemIcon;
         [SerializeField] private Button useItemButton;
         [SerializeField] private PlayerInfo playerInfo;
-        public Action<PlayerInfo> UseItemAction;
+        [SerializeField] private EquipinventoryPopUp equipinventoryPopUp;
+        public Action UseItemAction;
 
         private void Start()
         {
             itemIcon.sprite = itemData.ItemIcon;
             itemDescriptionObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = itemData.ItemName;
             itemDescriptionObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemData.ItemDescription;
-            useItemButton.onClick.AddListener(OnClickUseItemButton);
-            UseItemAction += itemData.OnUseItem;
             playerInfo = FindObjectOfType<PlayerInfo>();
+            equipinventoryPopUp = FindObjectOfType<EquipinventoryPopUp>();
+            if (itemData.itemType == ItemType.EquipableItem)
+            {
+                useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "장착";
+                useItemButton.onClick.AddListener(OnClickEquipItemButton);
+            }
+            else
+            {
+                useItemButton.onClick.AddListener(OnClickUseItemButton);
+            }
+            UseItemAction += itemData.OnUseItem;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -49,8 +59,14 @@ namespace Timelesss
 
         public void OnClickUseItemButton()
         {
-            UseItemAction?.Invoke(playerInfo);
+            UseItemAction?.Invoke();
             Destroy(gameObject);
+        }
+
+        public void OnClickEquipItemButton()
+        {
+            UseItemAction?.Invoke();
+            equipinventoryPopUp.OnEquipItem(itemData);
         }
 
     }
