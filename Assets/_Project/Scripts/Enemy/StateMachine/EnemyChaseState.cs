@@ -36,6 +36,7 @@ namespace Timelesss
         {
             // Run 애니메이션 실행 (CrossFade: 자연스러운 애니메이션 전환)
             animator.CrossFade(RunHash, crossFadeDuration);
+            Debug.Log("추적");
         }
 
         /// <summary>

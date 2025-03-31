@@ -40,6 +40,7 @@ namespace Timelesss
         {
             // Walk 애니메이션 실행
             animator.CrossFade(WalkHash, crossFadeDuration);
+            Debug.Log("방황");
         }
 
         /// <summary>

@@ -13,10 +13,10 @@ namespace Timelesss
         protected readonly Animator animator;
 
         // 애니메이션 상태 해시 (성능 최적화를 위해 Hash 값 사용)
-        protected static readonly int IdleHash = Animator.StringToHash("IdleNormal"); // Idle 상태
-        protected static readonly int RunHash = Animator.StringToHash("RunFWD"); // 달리기 상태
-        protected static readonly int WalkHash = Animator.StringToHash("WalkFWD"); // 걷기 상태
-        protected static readonly int AttackHash = Animator.StringToHash("Attack01"); // 공격 상태
+        protected static readonly int IdleHash = Animator.StringToHash("Idle"); // Idle 상태
+        protected static readonly int RunHash = Animator.StringToHash("Run"); // 달리기 상태
+        protected static readonly int WalkHash = Animator.StringToHash("Walk"); // 걷기 상태
+        protected static readonly int AttackHash = Animator.StringToHash("Basic Attack"); // 공격 상태
         protected static readonly int DieHash = Animator.StringToHash("Die"); // 사망 상태
 
         // 애니메이션 전환 시 자연스러운 전환을 위한 CrossFade 지속 시간
