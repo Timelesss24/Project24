@@ -1,12 +1,13 @@
+using System;
 using Managers;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityUtils;
 
 namespace Timelesss
 {
-    public class DialogueManager : Singleton<DialogueManager>
+    public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
         private TestDialogueDataLoader dataLoader;
         private int currentDialogueID;
@@ -23,14 +24,15 @@ namespace Timelesss
             npcCamera = GetComponentInChildren<Camera>();
         }
 
-        public void StartDialogue(NPCInfo npcInfo, Transform npcTransform)
+        public void StartDialogue(NPCInfo npcInfo, Transform npcTransform, Action onComplete = null)
         {
             this.npcID = npcInfo.ID;
             currentDialogueID = FindFirstDialogueID(npcInfo.ID);
 
             if (currentDialogueID == -1)
             {
-                Debug.LogWarning($"NPC {npcInfo.ID}ÀÇ ´ëÈ­ µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                onComplete?.Invoke();
+                Debug.LogWarning($"NPC {npcInfo.ID}ï¿½ï¿½ ï¿½ï¿½È­ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
                 return;
             }
 
@@ -49,13 +51,22 @@ namespace Timelesss
             dialoguePopUp.SetNPCNameText(npcInfo.Name);
 
             ShowCurrentDialogue();
+
+            StartCoroutine(TrackingDialogue(onComplete));
+        }
+
+        IEnumerator TrackingDialogue(Action onComplete = null)
+        {
+            yield return new WaitWhile(() => dialoguePopUp != null);
+            
+            onComplete?.Invoke();
         }
 
         public void ShowCurrentDialogue()
         {
             if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out var dialogue))
             {
-                Debug.LogWarning($"ÇöÀç ´ëÈ­ ID {currentDialogueID}¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogWarning($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ ID {currentDialogueID}ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
                 return;
             }
 

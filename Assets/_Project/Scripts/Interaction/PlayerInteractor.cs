@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using System;
+using Core;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,38 +8,27 @@ namespace Timelesss
     public class PlayerInteractor : MonoBehaviour
     {
         private List<IInteractable> interactableList = new List<IInteractable>();
+        public InteractableBase CurrentInteractable { get; private set; }
 
-        AnimationSystem animationSystem;
-        [SerializeField] InputReader inputReader;
-
-        private void Start()
+        public void Start()
         {
-            animationSystem = GetComponent<PlayerController>().AnimationSystem;
+            InteractionManager.Instance.OnInteractionStart += interacterble => { CurrentInteractable = interacterble; };
+            InteractionManager.Instance.OnInteractionEnd += () => { CurrentInteractable = null; };
         }
 
-        private void OnEnable()
-        {
-            inputReader.InterAction += OnInteraction;
-        }
-
-        private void OnDisable()
-        {
-            inputReader.InterAction -= OnInteraction;
-        }
-
-        void OnInteraction()
+        public void TryInteraction()
         {
             if (interactableList.Count > 0)
             {
-
                 IInteractable interactableObj = interactableList[interactableList.Count - 1];
-                animationSystem.PlayOneShot(interactableObj.Clip);
+                //animationSystem.PlayOneShot(interactableObj.Clip);
                 interactableObj.Interact();
 
                 if (interactableObj is DropItem)
                     interactableList.Remove(interactableObj);
             }
         }
+
 
         public void AddInteractable(IInteractable interactable)
         {

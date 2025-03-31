@@ -22,6 +22,7 @@ namespace Timelesss
         [SerializeField, Self] AnimationSystem animationSystem;
         [SerializeField, Anywhere] CinemachineFreeLook freeLookVCam;
         [SerializeField, Anywhere] InputReader input;
+        [SerializeField, Self] PlayerInteractor playerInteractor;
 
         [Header("Movement Settings")]
         [SerializeField] float moveSpeed = 2f;
@@ -51,6 +52,7 @@ namespace Timelesss
 
         bool isSprint;
         bool isAttackPressed;
+        bool isInteract;
         
         public Vector3 Movement {get; private set;}
         Vector3 velocity;
@@ -64,6 +66,7 @@ namespace Timelesss
         StateMachine stateMachine;
 
         Action onRoll;
+        Action onInteract;
 
         public AnimationSystem AnimationSystem => animationSystem;
 
@@ -80,13 +83,13 @@ namespace Timelesss
         IState inAir;
         IState attackState;
         IState rollState;
+        IState interactState;
 
         IPredicate RollingPredicate => new ActionPredicate(ref onRoll);
         IPredicate IsAttacking => new FuncPredicate(() => combatController.IsAttacking && stateMachine.CurrentState is not AttackState);
 
         bool IsBusy => stateMachine.CurrentState != locomotionState;
         
-
         void Awake()
         {
             if (Camera.main != null) mainCam = Camera.main.transform;
@@ -98,8 +101,8 @@ namespace Timelesss
             
             SetupTimers();
             SetupStateMachine();
-
         }
+        
         void SetupStateMachine()
         {
             stateMachine = new StateMachine();
@@ -109,10 +112,13 @@ namespace Timelesss
              inAir = new InAir(this, animator);
              attackState = new AttackState(this, animator, combatController, stateMachine, locomotionState);
              rollState = new RollState(this, animator,stateMachine, locomotionState);
+             interactState = new InteractState(this, animator, playerInteractor);
 
             // Define transitions
             At(locomotionState,rollState, RollingPredicate);
             At(locomotionState, attackState, IsAttacking);
+            At(locomotionState, interactState, new FuncPredicate(() => isInteract));
+            At(interactState, locomotionState, new FuncPredicate(() => !isInteract));
             Any(inAir, new FuncPredicate(() => !groundChecker.IsGrounded));
             At(inAir, locomotionState, new FuncPredicate(() => groundChecker.IsGrounded));
 
@@ -141,6 +147,7 @@ namespace Timelesss
             input.Roll += OnRoll;
             input.Dash += OnDash;
             input.Attack += OnAttack;
+            input.InterAction += OnInteraction;
         }
 
         void OnDisable()
@@ -148,6 +155,12 @@ namespace Timelesss
             input.Roll -= OnRoll;
             input.Dash -= OnDash;
             input.Attack -= OnAttack;
+            input.InterAction -= OnInteraction;
+        }
+        void OnInteraction()
+        {
+            if (IsBusy) return;
+            playerInteractor.TryInteraction();
         }
 
         void OnAttack()
@@ -179,7 +192,16 @@ namespace Timelesss
             }
         }
 
-        void Start() => input.EnablePlayerActions();
+        void Start()
+        {
+            input.EnablePlayerActions();
+
+            InteractionManager.Instance.OnInteractionStart += interacterble => {
+                if (interacterble.Clip) animationSystem.PlayOneShot(interacterble.Clip);
+                isInteract = true;
+            };
+            InteractionManager.Instance.OnInteractionEnd += () => {isInteract = false;};
+        }
 
         void Update()
         {
@@ -243,7 +265,7 @@ namespace Timelesss
 
             if (Movement != Vector3.zero)
             {
-                RotatePlayerToMovementDirection();
+                RotatePlayerToTargetDirection();
             }
 
             Vector3 targetDirection = CalculateTargetDirection();
@@ -300,13 +322,26 @@ namespace Timelesss
 
         }
 
-        public void RotatePlayerToMovementDirection(bool isSmooth = true)
+        public void RotatePlayerToTargetDirection(bool isSmooth = true)
         {
-            float targetRotation = Mathf.Atan2(Movement.x, Movement.z) * Mathf.Rad2Deg + mainCam.transform.eulerAngles.y;
-            float smoothRotation = targetRotation;
-            if (isSmooth)
-                 smoothRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity, RotationSmoothTime);
+            // 주어진 타겟 방향을 기준으로 회전 각도 계산
+            float targetRotation = Mathf.Atan2(Movement.x, Movement.z) * Mathf.Rad2Deg
+                                   + mainCam.transform.eulerAngles.y;
 
+            float smoothRotation = targetRotation;
+
+            // 부드러운 회전 여부 확인
+            if (isSmooth)
+            {
+                smoothRotation = Mathf.SmoothDampAngle(
+                    transform.eulerAngles.y,
+                    targetRotation,
+                    ref rotationVelocity,
+                    RotationSmoothTime
+                );
+            }
+
+            // 최종적으로 회전 적용
             transform.rotation = Quaternion.Euler(ZeroF, smoothRotation, ZeroF);
         }
 
