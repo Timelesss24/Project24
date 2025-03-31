@@ -7,48 +7,47 @@ namespace Timelesss
 {
     public class EnemyAttackState : EnemyBaseState
     {
-        // ÀûÀÇ ÀÌµ¿°ú °æ·Î Å½»öÀ» ´ã´çÇÏ´Â NavMeshAgent ÄÄÆ÷³ÍÆ®
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ NavMeshAgent ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         readonly NavMeshAgent agent;
 
-        // °ø°Ý ´ë»óÀÎ ÇÃ·¹ÀÌ¾îÀÇ Transform
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform
         readonly Transform target;
 
-        /// EnemyAttackState »ý¼ºÀÚ:
-        /// Àû °³Ã¼, ¾Ö´Ï¸ÞÀÌÅÍ, NavMeshAgent, °ø°Ý Å¸°ÙÀ» ÃÊ±âÈ­ÇÕ´Ï´Ù.
+        /// EnemyAttackState ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:
+        /// ï¿½ï¿½ ï¿½ï¿½Ã¼, ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½, NavMeshAgent, ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Õ´Ï´ï¿½.
         /// </summary>
-        /// <param name="enemy">ÇöÀç Àû °´Ã¼</param>
-        /// <param name="animator">ÀûÀÇ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» Á¦¾îÇÏ´Â Animator</param>
-        /// <param name="agent">ÀûÀÇ ÀÌµ¿°ú °æ·Î Å½»öÀ» ´ã´çÇÏ´Â NavMeshAgent</param>
-        /// <param name="target">ÀûÀÌ °ø°ÝÇÒ ´ë»ó (ÇÃ·¹ÀÌ¾îÀÇ Transform)</param>
+        /// <param name="enemy">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ã¼</param>
+        /// <param name="animator">ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ Animator</param>
+        /// <param name="agent">ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Å½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ NavMeshAgent</param>
+        /// <param name="target">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ Transform)</param>
         public EnemyAttackState(Enemy enemy, Animator animator, NavMeshAgent agent, Transform target)
-            : base(enemy, animator) // ºÎ¸ð Å¬·¡½ºÀÇ »ý¼ºÀÚ È£Ãâ
+            : base(enemy, animator) // ï¿½Î¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
         {
-            this.agent = agent; // NavMeshAgent ÃÊ±âÈ­
-            this.target = target; // °ø°Ý ´ë»ó ÃÊ±âÈ­
+            this.agent = agent; // NavMeshAgent ï¿½Ê±ï¿½È­
+            this.target = target; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         }
 
-        /// »óÅÂ°¡ È°¼ºÈ­(ÁøÀÔ)µÉ ¶§ ½ÇÇàµË´Ï´Ù.
-        /// °ø°Ý »óÅÂ ÁøÀÔ ½Ã, °ø°Ý ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ½ÇÇàÇÕ´Ï´Ù.
+        /// ï¿½ï¿½ï¿½Â°ï¿½ È°ï¿½ï¿½È­(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½.
+        /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         public override void OnEnter()
         {
-            // Attack ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ºÎµå·´°Ô ½ÃÀÛ (CrossFade »ç¿ë)
+            // Attack ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½Îµå·´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (CrossFade ï¿½ï¿½ï¿½)
             animator.CrossFade(AttackHash, crossFadeDuration);
-            Debug.Log("°ø°Ý");
         }
 
         /// <summary>
-        /// »óÅÂ°¡ È°¼ºÈ­µÇ¾î ÀÖ´Â µ¿¾È ¸Å ÇÁ·¹ÀÓ È£ÃâµË´Ï´Ù.
-        /// ÀûÀº °ø°Ý ´ë»óÀ» ¹Ù¶óº¸¸ç, °ø°Ý µ¿ÀÛÀ» ¼öÇàÇÕ´Ï´Ù.
+        /// ï¿½ï¿½ï¿½Â°ï¿½ È°ï¿½ï¿½È­ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½Ë´Ï´ï¿½.
+        /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸¸ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         /// </summary>
         public override void Update()
         {
-            // Å¸°ÙÀÇ À§Ä¡¸¦ NavMeshAgentÀÇ ³ôÀÌ¿Í µ¿ÀÏÇÏ°Ô º¸Á¤ÇÑ À§Ä¡·Î ¼³Á¤
+            // Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ NavMeshAgentï¿½ï¿½ ï¿½ï¿½ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             var targetPosition = new Vector3(target.position.x, agent.transform.position.y, target.position.z);
 
-            // Àû(NavMeshAgent)ÀÌ Å¸°ÙÀ» ¹Ù¶óº¸µµ·Ï ¼³Á¤
+            // ï¿½ï¿½(NavMeshAgent)ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶óº¸µï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             agent.transform.LookAt(targetPosition);
 
-            // ÀûÀÇ °ø°Ý µ¿ÀÛ ¼öÇà
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             enemy.Attack();
         }
     }
