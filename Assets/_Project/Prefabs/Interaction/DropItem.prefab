@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1587216ac1f89b44698beab6a676a4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 7400000, guid: 0e577bfe0ea58094eb6eb94acbd700b8, type: 2}
+  clip: {fileID: 7400000, guid: 20cea11e38c97274693615133029f9e1, type: 2}
   interactionText: {fileID: 2255543586792949235}
   itemData: {fileID: 0}
   itemEventChannel: {fileID: 11400000, guid: 6249c79a41d4d7d48a8f955e05f4db90, type: 2}

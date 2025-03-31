@@ -48,14 +48,7 @@ namespace Timelesss
 
             // Target으로부터 Health 컴포넌트를 가져옵니다.
             TargetInfo = Target.GetComponent<PlayerInfo>();
-        }
 
-        /// <summary>
-        /// Start: 게임 시작 시 실행.
-        /// 타이머 객체 및 기본 탐지 전략(ConeDetectionStrategy)을 초기화합니다.
-        /// </summary>
-        void Start()
-        {
             // Timer 객체 초기화 (감지 쿨타임 설정)
             detectionTimer = new CountdownTimer(Date.detectionCooldown);
 

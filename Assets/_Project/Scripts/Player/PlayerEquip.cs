@@ -35,16 +35,13 @@ namespace Timelesss
         void EquipWeaponObject(EquipItemData data)
         {
             var holder = animator.GetBoneTransform(data.GetHolder());
-            GameObject obj;
+            GameObject obj = null;
             if (data.EquipType == EquipType.Sword)
                 GetComponent<CombatController>().EquipWeapon((WeaponData)data);
-            
             else
+                obj = Instantiate(data.EquipPrefab, holder, true);   
             
-                Instantiate(data.EquipPrefab, holder, true);   
-            }
-         
-            EquipItems[data].Add();
+            EquipItems[data] = obj;
         }
         
         void UnEquipWeaponObject(EquipItemData data)
