@@ -1,13 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using KBCore.Refs;
 using UnityEditor;
 using UnityEngine;
 
 namespace Timelesss
 {
-    public class PlayerInfo : MonoBehaviour, IDamageable
+    public class PlayerInfo : ValidatedMonoBehaviour, IDamageable
     {
-        private string playerName;
+        [SerializeField, Self] PlayerController playerController;
+
+        public string PlayerName { get; private set; }
 
         private int playerLevel = 1;
 
@@ -24,7 +28,7 @@ namespace Timelesss
         private int equipmentDeffecne = 0;
 
         public int totalAttack { get => baseAttack + equipmentAttack; }
-        private int baseAttack = 10;
+        private int baseAttack = 1000000;
         private int equipmentAttack = 0;
 
         private int currentExp = 0;
@@ -32,6 +36,11 @@ namespace Timelesss
 
         [SerializeField] private EventChannel<float> hpChangedEvent;
         [SerializeField] private EventChannel<float> staminaChangedEvent;
+
+        public event Action ExhanstedAction;
+        public event Action DeathAction;
+
+        private IEnumerator staminaCoroutine;
 
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
@@ -49,27 +58,48 @@ namespace Timelesss
             // equipmentAttack -=
         }
 
+        public event Action OnDamageTaken;
         public void TakeDamage(int value)
         {
+            if(!playerController.CanHit) return;
+            
             float damageReductionFactor = (float)value / (value + totalDeffence);
             int reducedDamage = Mathf.RoundToInt(value * damageReductionFactor);
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
             Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
+            if (reducedDamage > 0) OnDamageTaken?.Invoke();
         }
 
-        public void UseStamina(float value)
+        public bool UseStamina(float value)
         {
+            if (currentStamina <= 0f)
+            {
+                ExhanstedAction?.Invoke();
+                return false;
+            }
+
+            if (staminaCoroutine != null)
+            {
+                StopCoroutine(staminaCoroutine);
+                staminaCoroutine = null;
+            }
+
+            staminaCoroutine = RestoreStaminaCoroutine();
+            StartCoroutine(staminaCoroutine);
+
             currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);
-            Debug.Log($"스태미너가 {value}만큼 소모되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+            return true;
         }
 
         public void RestoreHealth(float value)
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
+            if(currentHealth <= 0f)
+                DeathAction?.Invoke();
             Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
         }
 
@@ -77,7 +107,25 @@ namespace Timelesss
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
             staminaChangedEvent?.Invoke(currentStamina);
-            Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+
+            if (value > 1)
+                Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
+        }
+
+        private IEnumerator RestoreStaminaCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+
+            float restoreValue = 0.2f;
+            float waitTime = 0.03f;
+
+            while (currentHealth <= maxStamina)
+            {
+                RestoreStamina(restoreValue);
+                yield return new WaitForSeconds(waitTime);
+            }
+
+            staminaCoroutine = null;
         }
 
         public void IncreasedExp(int value)

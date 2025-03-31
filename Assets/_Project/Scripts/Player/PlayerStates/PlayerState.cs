@@ -9,6 +9,8 @@ namespace Timelesss
         
         protected static readonly int LocomotionHash = Animator.StringToHash("Locomotion");
         protected static readonly int InAirHash = Animator.StringToHash("InAir");
+        protected static readonly int ExhaustedHash = Animator.StringToHash("Exhausted");
+        protected static readonly int DeathHash = Animator.StringToHash("Death");
         
         protected const float crossFadeDuration = 0.1f;
 

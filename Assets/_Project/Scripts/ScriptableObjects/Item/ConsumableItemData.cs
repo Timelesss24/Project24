@@ -16,17 +16,15 @@ namespace Timelesss
         public float duration;      // 지속 시간 (0이면 즉시 효과)
         public PotionType type;
 
-        public ItemType itemType = ItemType.UseableItem;
-
-        public override void OnUseItem(PlayerInfo playerInfo)
+        public override void OnUseItem()
         {
             switch (type)
             {
                 case PotionType.HP:
-                    playerInfo.RestoreHealth(effectValue);
+                    PlayerManager.Instance.Player.GetComponent<PlayerInfo>().RestoreHealth(effectValue);
                     break;
                 case PotionType.Stamina:
-                    playerInfo.RestoreStamina(effectValue);
+                    PlayerManager.Instance.Player.GetComponent<PlayerInfo>().RestoreStamina(effectValue);
                     break;
             }
         }

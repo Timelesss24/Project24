@@ -5,7 +5,7 @@ namespace Timelesss
 {
     // 무기 데이터를 생성하기 위한 ScriptableObject
     [CreateAssetMenu(menuName = "Combat/Create Weapon")]
-    public class WeaponData : ScriptableObject
+    public class WeaponData : EquipItemData
     {
         [Tooltip("무기 오브젝트")]
         [field: SerializeField] public GameObject WeaponModel { get; private set; } // 애니메이터 오버라이드 컨트롤러
@@ -19,13 +19,18 @@ namespace Timelesss
         [Tooltip("무기에 특화된 움직임 애니메이션을 관리하기 위한 애니메이터 오버라이드 컨트롤러입니다.")]
         [field: SerializeField]
         public AnimatorOverrideController OverrideController { get; private set; } // 애니메이터 오버라이드 컨트롤러
-        
+
         // 초기화 메서드
         public void InIt()
         {
             // 모든 공격 데이터를 탐색하며 각 AttackSlot에 해당 컨테이너를 설정
             foreach (var attack in AttacksContainer.Attacks)
                 attack.Container = AttacksContainer;
+        }
+
+        public override void OnUseItem()
+        {
+            PlayerManager.Instance.Player.GetComponent<CombatController>().EquipWeapon(this);
         }
     }
 }
