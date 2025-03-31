@@ -10,8 +10,12 @@ namespace Timelesss
         private QuestDataLoader questDataLoader;
 
         private Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
-        private List<int> activeQuests = new List<int>();
-        private List<int> completeQuests = new List<int>();
+
+        private List<int> activeQuestList = new List<int>();
+        public List<int> ActiveQuestList { get { return activeQuestList; } }
+
+        private List<int> completeQuestList = new List<int>();
+        public List<int> CompleteQuestList { get { return completeQuestList; } }
 
         private void Start()
         {
@@ -19,16 +23,15 @@ namespace Timelesss
             questDict = questDataLoader.ItemsDict;
         }
 
-        public int GetQuest(int npcID)
+        public int GetQuestID(int npcID)
         {
             foreach (var quest in questDict.Values)
             {
                 if (quest.npcID == npcID &&
-                    !activeQuests.Contains(quest.key) &&
-                    !completeQuests.Contains(quest.key) &&
-                    (quest.enabledQuestID == 0 || completeQuests.Contains(quest.enabledQuestID)))
+                    !activeQuestList.Contains(quest.key) &&
+                    !completeQuestList.Contains(quest.key) &&
+                    (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
                 {
-                    StartQuest(quest.key);
                     return quest.key;
                 }
             }
@@ -36,11 +39,20 @@ namespace Timelesss
             return 0;
         }
 
+        public QuestData GetQuestData(int questID)
+        {
+            if (questDict.TryGetValue(questID, out var questData))
+            {
+                return questData;
+            }
+            return null; 
+        }
+
         public void StartQuest(int questID)
         {
-            if (!activeQuests.Contains(questID) && questDict.ContainsKey(questID))
+            if (!activeQuestList.Contains(questID) && questDict.ContainsKey(questID))
             {
-                activeQuests.Add(questID);
+                activeQuestList.Add(questID);
                 Debug.Log($"퀘스트 시작: {questDict[questID].questDescription}");
             }
             else
@@ -51,21 +63,15 @@ namespace Timelesss
 
         public void CompleteQuest(int questID)
         {
-            if (activeQuests.Contains(questID))
+            if (activeQuestList.Contains(questID))
             {
-                activeQuests.Remove(questID);
-                completeQuests.Add(questID);
+                activeQuestList.Remove(questID);
+                completeQuestList.Add(questID);
 
                 if (questDict.TryGetValue(questID, out var completedQuest))
                 {
                     Debug.Log($"퀘스트 완료: {completedQuest.questDescription}");
                     RewardPlayer(completedQuest.rewardExp, completedQuest.rewardItemID, completedQuest.rewardItemNum);
-
-                    if (completedQuest.enabledQuestID != 0)
-                    {
-                        Debug.Log($"후속 퀘스트 활성화: {completedQuest.enabledQuestID}");
-                        StartQuest(completedQuest.enabledQuestID);
-                    }
                 }
                 else
                 {
@@ -80,7 +86,27 @@ namespace Timelesss
 
         private void RewardPlayer(int exp, int itemId, int itemNum)
         {
-            Debug.Log($"플레이어에게 보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+            Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+        }
+
+        public void AddActiveQuest(QuestData questData)
+        {
+            int key = -1;
+
+            foreach (KeyValuePair<int, QuestData> quest in questDict)
+            {
+                if(quest.Value == questData)
+                {
+                    key = quest.Key;    
+                }
+            }
+
+            if(key == -1)
+            {
+                Debug.LogWarning("퀘스트 활성화에 실패했습니다.");
+            }
+
+            activeQuestList.Add(key);
         }
     }
 }

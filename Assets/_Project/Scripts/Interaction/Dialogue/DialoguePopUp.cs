@@ -25,6 +25,8 @@ namespace Timelesss
 
         private PlayerInfo playerInfo;
 
+        private int npcID;
+
         private void Awake()
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
@@ -33,9 +35,14 @@ namespace Timelesss
             {
                 Debug.Log("playerInfo를 찾을 수 없습니다.");
             }
+
+            nextButton.onClick.AddListener(OnClickNextButton);
+            closeButton.onClick.AddListener(OnClickCloseButton);
         }
 
-        public void ShowDialogue(string text, bool hasNextDialogue)
+        public void SetNpcID(int id) => npcID = id;
+
+        public void ShowDialogue(string text, bool hasNextDialogue, bool hasQuest)
         {
             nextButton.gameObject.SetActive(false);
             closeButton.gameObject.SetActive(false);
@@ -43,10 +50,10 @@ namespace Timelesss
             if (typewriterCoroutine != null)
                 StopCoroutine(typewriterCoroutine);
 
-            typewriterCoroutine = StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue));
+            typewriterCoroutine = StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest));
         }
 
-        private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue)
+        private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest)
         {
             dialogueText.text = "";
 
@@ -62,14 +69,22 @@ namespace Timelesss
             if (hasNextDialogue)
             {
                 nextButton.gameObject.SetActive(true);
-                nextButton.onClick.RemoveAllListeners();
-                nextButton.onClick.AddListener(OnClickNextButton);
             }
-            else
+            else if (!hasNextDialogue && hasQuest)
+            {
+                int questID = QuestManager.Instance.GetQuestID(npcID);
+                if (questID != 0)
+                {
+                    Debug.Log("Has Quest");
+                    QuestData questData = QuestManager.Instance.GetQuestData(questID);
+                    AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
+                    popUp.SetQuestInfo(questData);
+                }
+
+            }
+            else if (!hasNextDialogue && !hasQuest)
             {
                 closeButton.gameObject.SetActive(true);
-                closeButton.onClick.RemoveAllListeners();
-                closeButton.onClick.AddListener(OnClickCloseButton);
             }
         }
 
