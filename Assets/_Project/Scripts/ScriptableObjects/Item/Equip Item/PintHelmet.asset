@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a098e0d2a0e31964184983eac30c5feb, type: 3}
+  m_Name: PintHelmet
+  m_EditorClassIdentifier: 
+  ItemName: "\uD551\uD06C\uC0C9 \uD5EC\uBA67"
+  ItemDescription: "\uBC29\uC5B4\uB825\uC744 \uC62C\uB824\uC900\uB2E4"
+  ItemIcon: {fileID: -8245681991730210575, guid: e48adbf0233bd3748bf697c59dc0d44e,
+    type: 3}
+  itemType: 1
+  equipType: 2
+  equipValue: 10
+  Stack: 0
+  Material: {fileID: 2100000, guid: aa06e958fa15fa8479f6c788dca02624, type: 2}

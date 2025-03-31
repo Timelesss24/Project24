@@ -40,18 +40,36 @@ namespace Timelesss
 
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
-            // 장비 아이템 스탯 적용
-            // equipmentMaxHealth +=
-            // equipmentDeffecne +=
-            // equipmentAttack += 
+            switch (itemdata.equipType)
+            {
+                case EquipType.Null:
+                    break;
+                case EquipType.Sword:
+                    equipmentAttack = (int)itemdata.equipValue;
+                    break;
+                case EquipType.Helmet:
+                    equipmentMaxHealth = (int)itemdata.equipValue;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void RemoveEquipStatus(EquipItemData itemdata)
         {
-            // 장비 아이템 스탯 적용
-            // equipmentMaxHealth -=
-            // equipmentDeffecne -=
-            // equipmentAttack -=
+            switch (itemdata.equipType)
+            {
+                case EquipType.Null:
+                    break;
+                case EquipType.Sword:
+                    equipmentAttack = 0;
+                    break;
+                case EquipType.Helmet:
+                    equipmentMaxHealth = 0;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public event Action OnDamageTaken;
