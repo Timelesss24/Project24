@@ -17,20 +17,20 @@ namespace Timelesss
         [SerializeField] private Transform[] doorTransforms;
         private Transform playerTransform;
 
+        private bool isOpen;
+
         public override void Interact()
         {
             base.Interact();
 
             RotateDoor();
-
-            InteractionManager.Instance.EndInteraction();
         }
 
         private void RotateDoor()
         {
             if (doorState == State.Single)
             {
-                RotateSingleDoor();
+                StartCoroutine(RotateSingleDoor());
             }
             else if (doorState == State.Double)
             {
@@ -38,29 +38,53 @@ namespace Timelesss
             }
         }
 
-        private void RotateSingleDoor()
+        private IEnumerator RotateSingleDoor()
         {
-            Vector3 directionToPlayer = playerTransform.position - transform.position;
+            if (isOpen) yield break;
 
-            float rotationY = directionToPlayer.x >= 0 ? -180f : 180f;
+            isOpen = true;
+            interactionText.text = string.Empty;
 
-            transform.rotation = Quaternion.Euler(0, rotationY, 0);
+            float rotationDuration = 0.5f;
+            float elapsedTime = 0f;
+
+            float initialRotationY = transform.rotation.eulerAngles.y;
+            float targetRotationY = transform.rotation.eulerAngles.y - 90f;
+
+            while (elapsedTime < rotationDuration)
+            {
+                float newRotationY = Mathf.Lerp(initialRotationY, targetRotationY, elapsedTime / rotationDuration);
+
+                transform.rotation = Quaternion.Euler(0, newRotationY, 0);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            InteractionManager.Instance.EndInteraction();
+
+            transform.rotation = Quaternion.Euler(0, targetRotationY, 0);
         }
 
         private void RotateDoubleDoor()
         {
+            isOpen = true;
+
             foreach (var doorTransform in doorTransforms)
             {
                 Vector3 directionToPlayer = playerTransform.position - doorTransform.position;
 
-                float rotationY = directionToPlayer.x >= 0 ? -180f : 180f;
+                float rotationY = directionToPlayer.x >= 0 ? -90f : 90f;
 
-                doorTransform.rotation = Quaternion.Euler(0, rotationY, 0);
+                doorTransform.localRotation = Quaternion.Euler(0, rotationY, 0);
             }
+            InteractionManager.Instance.EndInteraction();
         }
 
         protected override void OnTriggerEnter(Collider other)
         {
+            if (isOpen) return;
+
             if (other.CompareTag(PlayerTag))
                 playerTransform = other.transform;
 
