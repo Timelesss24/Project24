@@ -59,7 +59,9 @@ namespace Timelesss
         bool isSprint;
         bool isAttackPressed;
         bool isInteract;
-        
+        public bool IsRoll;
+        public bool IsDie;
+
         public Vector3 Movement {get; private set;}
         Vector3 velocity;
 
@@ -74,6 +76,7 @@ namespace Timelesss
 
         Action onRoll;
         Action onInteract;
+        Action onHit;
 
         public AnimationSystem AnimationSystem => animationSystem;
 
@@ -86,7 +89,6 @@ namespace Timelesss
         float Gravity => -15f;
         public AnimationClip RollClip;
         public AnimationClip HitClip;
-        public AnimationClip ExhaustedClip;
 
         IState locomotionState;
         IState inAir;
@@ -94,12 +96,18 @@ namespace Timelesss
         IState rollState;
         IState interactState;
         IState exhaustedState;
+        IState hitState;
+        IState deathState;
 
-        IPredicate RollingPredicate => new ActionPredicate(ref onRoll);
+        IPredicate RollingPredicate => new FuncPredicate(() => IsRoll);
         IPredicate IsAttacking => new FuncPredicate(() => combatController.IsAttacking && stateMachine.CurrentState is not AttackState);
 
         bool IsBusy => stateMachine.CurrentState != locomotionState || animationSystem.IsSynced;
-
+        public bool CanHit 
+            => stateMachine.CurrentState != rollState 
+               && combatController.AttackState != AttackStates.Impact 
+               && stateMachine.CurrentState != hitState 
+               && stateMachine.CurrentState != deathState; 
 
         void Awake()
         {
@@ -125,14 +133,19 @@ namespace Timelesss
              rollState = new RollState(this, animator,stateMachine, locomotionState);
              interactState = new InteractState(this, animator, playerInteractor);
              exhaustedState = new ExhaustedState(this, animator);
+             hitState = new HitState(this, animator, stateMachine, locomotionState);
+             deathState = new DeathState(this, animator);
 
             // Define transitions
             At(locomotionState,rollState, RollingPredicate);
+            At(attackState,rollState, RollingPredicate);
             At(locomotionState, attackState, IsAttacking);
             At(attackState, locomotionState,new FuncPredicate( ()=>combatController.AttackState == AttackStates.Idle));
             At(locomotionState, interactState, new FuncPredicate(() => isInteract));
             At(interactState, locomotionState, new FuncPredicate(() => !isInteract));
+            Any(deathState, new FuncPredicate(() => IsDie));
             Any(exhaustedState, new FuncPredicate(() => exhaustedTimer.IsRunning));
+            Any(hitState, new ActionPredicate(ref onHit));
             At(exhaustedState,locomotionState, new FuncPredicate(() => !exhaustedTimer.IsRunning));
             Any(inAir, new FuncPredicate(() => !groundChecker.IsGrounded));
             At(inAir, locomotionState, new FuncPredicate(() => groundChecker.IsGrounded));
@@ -158,6 +171,29 @@ namespace Timelesss
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
         void Any(IState to, IPredicate conditions) => stateMachine.AddAnyTransition(to, conditions);
 
+        
+        void Start()
+        {
+            input.EnablePlayerActions();
+
+            InteractionManager.Instance.OnInteractionStart += interacterble => {
+                if (interacterble.Clip) animationSystem.PlayOneShot(interacterble.Clip);
+                isInteract = true;
+            };
+            InteractionManager.Instance.OnInteractionEnd += () => {isInteract = false;};
+            playerInfo.ExhanstedAction += () => {
+                exhaustedTimer.Start();
+                isSprint = false;
+            };
+
+            playerInfo.OnDamageTaken += () => onHit.Invoke();
+            playerInfo.DeathAction += () => {
+                IsDie = true;
+                controller.enabled = false;
+                input.DisablePlayerActions();
+            };
+        }
+        
         void OnEnable()
         {
             input.Roll += OnRoll;
@@ -188,15 +224,14 @@ namespace Timelesss
 
         void OnRoll()
         {
-            if (IsBusy || rollCooldownTimer.IsRunning ) return;
+            if (stateMachine.CurrentState == rollState || rollCooldownTimer.IsRunning ) return;
             if (!playerInfo.UseStamina(rollStaminaCost)) return;
-            onRoll?.Invoke();
+            IsRoll = true;
             rollCooldownTimer.Start();
         }
 
         void OnDash(bool performed)
         {
-            if(isSprint) return;
             if (performed)
             {
                 isSprint = true;
@@ -209,20 +244,6 @@ namespace Timelesss
             }
         }
 
-        void Start()
-        {
-            input.EnablePlayerActions();
-
-            InteractionManager.Instance.OnInteractionStart += interacterble => {
-                if (interacterble.Clip) animationSystem.PlayOneShot(interacterble.Clip);
-                isInteract = true;
-            };
-            InteractionManager.Instance.OnInteractionEnd += () => {isInteract = false;};
-            playerInfo.ExhanstedAction += () => {
-                exhaustedTimer.Start();
-                isSprint = false;
-            };
-        }
 
         void Update()
         {

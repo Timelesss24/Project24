@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using KBCore.Refs;
 using UnityEditor;
 using UnityEngine;
 
 namespace Timelesss
 {
-    public class PlayerInfo : MonoBehaviour, IDamageable
+    public class PlayerInfo : ValidatedMonoBehaviour, IDamageable
     {
-        private string playerName;
+        [SerializeField, Self] PlayerController playerController;
+
+        public string PlayerName { get; private set; }
 
         private int playerLevel = 1;
 
@@ -25,7 +28,7 @@ namespace Timelesss
         private int equipmentDeffecne = 0;
 
         public int totalAttack { get => baseAttack + equipmentAttack; }
-        private int baseAttack = 10;
+        private int baseAttack = 1000000;
         private int equipmentAttack = 0;
 
         private int currentExp = 0;
@@ -35,6 +38,7 @@ namespace Timelesss
         [SerializeField] private EventChannel<float> staminaChangedEvent;
 
         public event Action ExhanstedAction;
+        public event Action DeathAction;
 
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
@@ -55,6 +59,8 @@ namespace Timelesss
         public event Action OnDamageTaken;
         public void TakeDamage(int value)
         {
+            if(!playerController.CanHit) return;
+            
             float damageReductionFactor = (float)value / (value + totalDeffence);
             int reducedDamage = Mathf.RoundToInt(value * damageReductionFactor);
 
@@ -81,6 +87,8 @@ namespace Timelesss
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
+            if(currentHealth <= 0f)
+                DeathAction?.Invoke();
             Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
         }
 
