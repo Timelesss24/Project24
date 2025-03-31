@@ -75,6 +75,7 @@ namespace Timelesss
 
         private void OnClickNextButton()
         {
+            Debug.Log("Next Button");
             DialogueManager.Instance.ShowCurrentDialogue();
         }
 

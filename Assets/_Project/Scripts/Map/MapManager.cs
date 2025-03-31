@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityUtils;
 
 namespace Timelesss
 {
-    public class MapManager : MonoBehaviour
+    public class MapManager : Singleton<MapManager>
     {
-        public static MapManager Instance;
-
         [SerializeField] GameObject[] leftroomPrefabs;
         [SerializeField] GameObject[] rightroomPrefabs;
         List<Vector3> roomJoint;
@@ -17,10 +16,11 @@ namespace Timelesss
 
         NavMeshSurface navMeshSurface;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             rooms = new List<GameObject>();
-            Instance = this;
             roomJoint = new List<Vector3>();
             SetLeftJointTransform();
             SetRightJointTransform();

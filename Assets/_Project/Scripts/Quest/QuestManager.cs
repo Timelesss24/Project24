@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityUtils;
 
 namespace Timelesss
 {
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : PersistentSingleton<QuestManager>
     {
         private QuestDataLoader questDataLoader;
 

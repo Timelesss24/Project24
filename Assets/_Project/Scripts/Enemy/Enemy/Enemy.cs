@@ -137,7 +137,7 @@ namespace Timelesss
             animator.SetTrigger("Die");
 
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
-            StartCoroutine(DelayDie(2));
+            //StartCoroutine(DelayDie(2));
         }
 
         public void TakeDamage(int value)
