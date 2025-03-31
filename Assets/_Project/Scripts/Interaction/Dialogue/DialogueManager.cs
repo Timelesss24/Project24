@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace Timelesss
 {
     public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
-        private TestDialogueDataLoader dataLoader;
+        private DialogueDataLoader dataLoader;
         private int currentDialogueID;
         private int npcID;
 
@@ -19,7 +19,7 @@ namespace Timelesss
 
         private void Start()
         {
-            dataLoader = new TestDialogueDataLoader();
+            dataLoader = new DialogueDataLoader();
 
             npcCamera = GetComponentInChildren<Camera>();
         }
@@ -27,16 +27,21 @@ namespace Timelesss
         public void StartDialogue(NPCInfo npcInfo, Transform npcTransform, Action onComplete = null)
         {
             this.npcID = npcInfo.ID;
-            currentDialogueID = FindFirstDialogueID(npcInfo.ID);
+
+            QuestManager questManager = FindObjectOfType<QuestManager>();
+            int questID = questManager.GetQuest(npcInfo.ID);
+
+            currentDialogueID = FindFirstDialogueID(npcInfo.ID, questID != 0);
+
 
             if (currentDialogueID == -1)
             {
                 onComplete?.Invoke();
-                Debug.LogWarning($"NPC {npcInfo.ID}�� ��ȭ �����͸� ã�� �� �����ϴ�.");
+                Debug.LogWarning($"NPC {npcInfo.ID}의 대화 데이터를 찾을 수 없습니다.");
                 return;
             }
 
-            if(npcCamera != null)
+            if (npcCamera != null)
             {
                 npcCamera.transform.parent = npcTransform;
                 npcCamera.transform.localPosition = new Vector3(0, 1.7f, 1f);
@@ -44,7 +49,7 @@ namespace Timelesss
             }
 
 
-            if(dialoguePopUp == null)
+            if (dialoguePopUp == null)
                 dialoguePopUp = UIManager.Instance.ShowPopup<DialoguePopUp>();
 
             dialoguePopUp.Show();
@@ -58,7 +63,7 @@ namespace Timelesss
         IEnumerator TrackingDialogue(Action onComplete = null)
         {
             yield return new WaitWhile(() => dialoguePopUp != null);
-            
+
             onComplete?.Invoke();
         }
 
@@ -66,7 +71,7 @@ namespace Timelesss
         {
             if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out var dialogue))
             {
-                Debug.LogWarning($"���� ��ȭ ID {currentDialogueID}�� �ش��ϴ� �����͸� ã�� �� �����ϴ�.");
+                Debug.LogWarning($"현재 대화 ID {currentDialogueID}에 해당하는 데이터를 찾을 수 없습니다.");
                 return;
             }
 
@@ -76,7 +81,7 @@ namespace Timelesss
 
             if (hasNextDialogue)
             {
-                currentDialogueID = dialogue.nextDialogueID; 
+                currentDialogueID = dialogue.nextDialogueID;
             }
             else
             {
@@ -84,11 +89,11 @@ namespace Timelesss
             }
         }
 
-        private int FindFirstDialogueID(int npcID)
+        private int FindFirstDialogueID(int npcID, bool hasQuest)
         {
             foreach (var data in dataLoader.ItemsDict.Values)
             {
-                if (data.npcID == npcID)
+                if (data.npcID == npcID && data.hasQuest == hasQuest)
                 {
                     return data.key;
                 }
@@ -99,7 +104,7 @@ namespace Timelesss
 
         private void ResetToFirstDialogue()
         {
-            currentDialogueID = FindFirstDialogueID(npcID);
+            currentDialogueID = 0;
         }
     }
 }

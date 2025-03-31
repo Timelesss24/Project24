@@ -42,6 +42,23 @@ namespace Timelesss
 
         private IEnumerator staminaCoroutine;
 
+        private void Start()
+        {
+            GetName();
+        }
+
+        public string GetName()
+        {
+            if (PlayerName != null) return PlayerName;
+
+            PlayerName = PlayerPrefs.GetString("PlayerName", string.Empty);
+
+            if (PlayerName == string.Empty)
+                PlayerName = "유니티24조";
+
+            return PlayerName;
+        }
+
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
             switch (itemdata.equipType)
