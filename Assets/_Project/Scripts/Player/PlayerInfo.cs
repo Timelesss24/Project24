@@ -42,6 +42,23 @@ namespace Timelesss
 
         private IEnumerator staminaCoroutine;
 
+        private void Start()
+        {
+            GetName();
+        }
+
+        public string GetName()
+        {
+            if (PlayerName != null) return PlayerName;
+
+            PlayerName = PlayerPrefs.GetString("PlayerName", string.Empty);
+
+            if (PlayerName == string.Empty)
+                PlayerName = "유니티24조";
+
+            return PlayerName;
+        }
+
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
             switch (itemdata.equipType)
@@ -86,8 +103,9 @@ namespace Timelesss
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
-            Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
             if (reducedDamage > 0) OnDamageTaken?.Invoke();
+            if(currentHealth <= 0f)
+                DeathAction?.Invoke();
         }
 
         public bool UseStamina(float value)

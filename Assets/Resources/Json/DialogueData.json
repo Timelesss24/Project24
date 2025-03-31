@@ -1,0 +1,67 @@
+{
+  "Items": [
+    {
+      "key": 1,
+      "npcID": 1,
+      "dialogueText": "안녕하세요, 모험가님.",
+      "nextDialogueID": 2,
+      "hasQuest": false
+    },
+    {
+      "key": 2,
+      "npcID": 1,
+      "dialogueText": "지금은 부탁드릴 일이 없는 것 같군요.",
+      "nextDialogueID": 3,
+      "hasQuest": false
+    },
+    {
+      "key": 3,
+      "npcID": 1,
+      "dialogueText": "나중에 다시 한 번 찾아와 주세요.",
+      "nextDialogueID": 0,
+      "hasQuest": false
+    },
+    {
+      "key": 4,
+      "npcID": 1,
+      "dialogueText": "안녕하세요, 모험가님.",
+      "nextDialogueID": 5,
+      "hasQuest": true
+    },
+    {
+      "key": 5,
+      "npcID": 1,
+      "dialogueText": "괜찮으시다면 저를 도와주실 수 있으신가요?",
+      "nextDialogueID": 0,
+      "hasQuest": true
+    },
+    {
+      "key": 6,
+      "npcID": 2,
+      "dialogueText": "마을에 있는 포탈과 상호작용하면 던전에 입장할 수 있습니다.",
+      "nextDialogueID": 7,
+      "hasQuest": false
+    },
+    {
+      "key": 7,
+      "npcID": 2,
+      "dialogueText": "던전에는 강력한 몬스터들이 있으니 조심하세요.",
+      "nextDialogueID": 0,
+      "hasQuest": false
+    },
+    {
+      "key": 8,
+      "npcID": 2,
+      "dialogueText": "모험가님, 제 부탁을 들어주실 수 있으실까요?",
+      "nextDialogueID": 9,
+      "hasQuest": true
+    },
+    {
+      "key": 9,
+      "npcID": 2,
+      "dialogueText": "모험가님의 힘을 빌리고 싶습니다.",
+      "nextDialogueID": 0,
+      "hasQuest": true
+    }
+  ]
+}

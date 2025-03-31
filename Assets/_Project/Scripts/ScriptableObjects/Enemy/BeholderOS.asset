@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f88ffd27bd4ec4c9007b4930e0d9a1, type: 3}
   m_Name: BeholderOS
   m_EditorClassIdentifier: 
+  enemyCode: 0
   maxHp: 100
   attackDamage: 4
   exp: 10
@@ -21,4 +22,4 @@ MonoBehaviour:
   detectionRadius: 10
   innerDetectionRadius: 5
   detectionCooldown: 1
-  attackRange: 1
+  attackRange: 1.25

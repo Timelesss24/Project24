@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using Cinemachine;
 using KBCore.Refs;
+using Managers;
 using UnityEngine;
 
 namespace Timelesss
@@ -17,6 +19,11 @@ namespace Timelesss
 
         bool isRMBPressed;
         bool cameraMovementLock;
+
+        void Start()
+        {
+            OnEnableMouseControlCamera();    
+        }
 
         void OnEnable()
         {
@@ -48,11 +55,10 @@ namespace Timelesss
 
         void OnEnableMouseControlCamera()
         {
+            
             isRMBPressed = true;
 
-            // Lock the cursor to the center of the screen and hide it
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+           
 
             StartCoroutine(DisableMouseForFrame());
         }
@@ -72,8 +78,15 @@ namespace Timelesss
         
         IEnumerator DisableMouseForFrame()
         {
+            
             cameraMovementLock = true;
             yield return new WaitForEndOfFrame();
+            yield return new WaitWhile(() => UIManager.Instance.CurrentPopupCount > 0);
+            
+            // Lock the cursor to the center of the screen and hide it
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            
             cameraMovementLock = false;
         }
         

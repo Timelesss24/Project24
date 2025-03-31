@@ -41,6 +41,8 @@ namespace Timelesss
         private float enemyHp;
         public bool isDie = false;
 
+        public event System.Action OnDamageTaken;
+
         void OnValidate() => this.ValidateRefs();
 
         /// Unity의 Start 메서드:
@@ -91,7 +93,8 @@ namespace Timelesss
         void Update()
         {
             // 상태 기계의 현재 상태 업데이트
-            stateMachine.Update();
+            if (isDie != true)
+            { stateMachine.Update(); }
 
             // 공격 타이머 시간 계산
             attackTimer.Tick(Time.deltaTime);
@@ -134,6 +137,7 @@ namespace Timelesss
             animator.SetTrigger("Die");
 
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
+            StartCoroutine(DelayDie(2));
         }
 
         public void TakeDamage(int value)
@@ -143,10 +147,17 @@ namespace Timelesss
             int damage = Random.Range(min, max + 1);
 
             enemyHp -= damage;
+            Debug.Log($"{damage}피해를 받았다!");
 
             OnHit();
         }
+        private IEnumerator DelayDie(int count)
+        {
+            yield return new WaitForSeconds(count);
+            Destroy(this.gameObject);
+        }
     }
+
     [CustomEditor(typeof(Enemy))]
     public class EnemyDie : Editor
     {
