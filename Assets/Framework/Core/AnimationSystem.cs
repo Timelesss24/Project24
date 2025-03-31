@@ -14,14 +14,15 @@ namespace Core
 
         AnimationMixerPlayable _topLevelMixer;
         AnimationMixerPlayable _baseMixer;
-        AnimationMixerPlayable _latestActionMixer;
 
         AnimationPlayableOutput _playableOutput;
 
         readonly List<Coroutine> _blendCoroutines = new();
         List<AnimationMixerPlayable> _oneShotMixers = new();
-        
-        public bool IsSynced => _oneShotMixers.Count != 0; 
+
+        readonly Dictionary<AnimationMixerPlayable, Coroutine> _mixerToBlendOut = new();
+
+        public bool IsSynced => _oneShotMixers.Count != 0;
 
         void Start()
         {
@@ -34,15 +35,12 @@ namespace Core
             _playableGraph = PlayableGraph.Create("AnimationSystem");
             _playableGraph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
 
-            // 기본 AnimatorController를 Playable로 변환
             _animatorControllerPlayable = AnimatorControllerPlayable.Create(_playableGraph, animator.runtimeAnimatorController);
 
-            // baseMixer는 항상 존재하며, 이동/Idle 등을 포함
             _baseMixer = AnimationMixerPlayable.Create(_playableGraph, 1);
             _baseMixer.SetInputWeight(0, 1f);
             _playableGraph.Connect(_animatorControllerPlayable, 0, _baseMixer, 0);
 
-            // topLevelMixer는 출력으로 향하는 최상위 Mixer
             _topLevelMixer = AnimationMixerPlayable.Create(_playableGraph, 2);
             _topLevelMixer.ConnectInput(0, _baseMixer, 0);
             _topLevelMixer.SetInputWeight(0, 1f);
@@ -62,14 +60,12 @@ namespace Core
                 return;
             }
 
-            // 이전 믹서를 기준으로 새 믹서를 연결
             Playable previous = _oneShotMixers.Count > 0 ? (Playable)_oneShotMixers[^1] : _baseMixer;
 
             if (_topLevelMixer.GetInputCount() > 0 && _topLevelMixer.GetInput(0).IsValid())
                 _topLevelMixer.DisconnectInput(0);
 
             var clipPlayable = AnimationClipPlayable.Create(_playableGraph, clip);
-
             var oneShotMixer = AnimationMixerPlayable.Create(_playableGraph, 2);
             oneShotMixer.ConnectInput(0, previous, 0);
             oneShotMixer.ConnectInput(1, clipPlayable, 0);
@@ -84,39 +80,70 @@ namespace Core
 
             float blendDuration = Mathf.Max(0.1f, Mathf.Min(clip.length * 0.1f, clip.length / 2));
 
-            Coroutine blendIn = StartCoroutine(Blend(blendDuration, t => {
+            // ▶ Blend In
+            Coroutine blendIn = StartCoroutine(Blend(blendDuration, t =>
+            {
                 float weight = Mathf.Lerp(1f, 0f, t);
                 oneShotMixer.SetInputWeight(0, weight);
                 oneShotMixer.SetInputWeight(1, 1f - weight);
+            }, 0f, () =>
+            {
+                // ✅ 블렌드 인 끝나면 이전 믹서 weight = 0, 코루틴 정지
+                for (int i = 0; i < _oneShotMixers.Count - 1; i++)
+                {
+                    var prev = _oneShotMixers[i];
+                    if (prev.IsValid())
+                    {
+                        prev.SetInputWeight(0, 1f);
+                        prev.SetInputWeight(1, 0f);
+                    }
+
+                    if (_mixerToBlendOut.TryGetValue(prev, out var co))
+                    {
+                        if (co != null)
+                            StopCoroutine(co);
+                    }
+                }
             }));
 
-            Coroutine blendOut = StartCoroutine(Blend(blendDuration, t => {
+            // ▶ Blend Out
+            Coroutine blendOut = StartCoroutine(Blend(blendDuration, t =>
+            {
                 float weight = Mathf.Lerp(0f, 1f, t);
                 oneShotMixer.SetInputWeight(0, weight);
                 oneShotMixer.SetInputWeight(1, 1f - weight);
-            }, clip.length - blendDuration, () => {
-               
+            }, clip.length - blendDuration, () =>
+            {
                 _playableGraph.DestroyPlayable(clipPlayable);
-                
-                // 마지막 원샷 믹서가 사라지면 baseMixer 다시 연결
+
+                // 마지막 mixer일 때만 정리
                 if (!_oneShotMixers[^1].Equals(oneShotMixer)) return;
+
                 foreach (var mixer in _oneShotMixers)
                 {
                     _playableGraph.DestroyPlayable(mixer);
                 }
-                _oneShotMixers = new();
+                _oneShotMixers.Clear();
+                _mixerToBlendOut.Clear();
 
-                if (_topLevelMixer.GetInputCount() > 0 && _topLevelMixer.GetInput(0).IsValid())
-                    _topLevelMixer.DisconnectInput(0);
+                if (_topLevelMixer.IsValid() && _topLevelMixer.GetInputCount() > 0)
+                {
+                    var input = _topLevelMixer.GetInput(0);
+                    if (input.IsValid())
+                    {
+                        _topLevelMixer.DisconnectInput(0);
+                    }
+                }
 
                 _topLevelMixer.ConnectInput(0, _baseMixer, 0);
                 _topLevelMixer.SetInputWeight(0, 1f);
-                
+
                 onComplte?.Invoke();
             }));
 
             _blendCoroutines.Add(blendIn);
             _blendCoroutines.Add(blendOut);
+            _mixerToBlendOut[oneShotMixer] = blendOut;
         }
 
         IEnumerator Blend(float duration, Action<float> blendCallback, float delay = 0f, Action finishedCallback = null)
