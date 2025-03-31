@@ -8,7 +8,7 @@ namespace Timelesss
 
         public override void OnEnter()
         {
-            animator.CrossFade(ExhaustedHash, crossFadeDuration);
+            animator.CrossFade(DeathHash, crossFadeDuration);
             player.ResetVelocity();
         }
 
