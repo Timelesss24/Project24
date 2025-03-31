@@ -53,7 +53,7 @@ namespace Timelesss
             DialogueManager.Instance.ShowQuestDialogue(true);
 
             if (questData != null)
-                QuestManager.Instance.AddActiveQuest(questData);
+                QuestManager.Instance.StartQuest(questData.key);
 
             ClosePopup();
         }
