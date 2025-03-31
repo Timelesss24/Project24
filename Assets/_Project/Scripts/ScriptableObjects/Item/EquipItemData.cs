@@ -2,16 +2,19 @@
 
 namespace Timelesss
 {
+    public enum EquipType
+    {
+        Sword
+    }
+
     [CreateAssetMenu(fileName = "New Equip Item Data", menuName = "Item/Equip Item Data")]
     public class EquipItemData : ItemData
     {
-        public ItemType itemType = ItemType.EquipableItem;
+        public EquipType equipType;
 
-        public Material Material;
-
-        public override void OnUseItem(PlayerInfo playerInfo)
+        public override void OnUseItem()
         {
-            throw new System.NotImplementedException();
+
         }
     }
 }

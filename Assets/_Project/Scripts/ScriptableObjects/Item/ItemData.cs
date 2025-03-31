@@ -13,9 +13,10 @@ namespace Timelesss
         public string ItemName;
         public string ItemDescription;
         public Sprite ItemIcon;
+        public ItemType itemType;
 
         public int Stack = 0;
 
-        public abstract void OnUseItem(PlayerInfo playerInfo);
+        public abstract void OnUseItem();
     }
 }
