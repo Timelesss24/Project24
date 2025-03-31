@@ -19,7 +19,7 @@ namespace Timelesss
             Debug.Log("RollEnter");
 
             player.ResetVelocity();
-            player.RotatePlayerToMovementDirection(false);
+            player.RotatePlayerToTargetDirection(false);
 
             // AnimationSystem에서 콜백으로 상태 전이
             player.AnimationSystem.PlayOneShot(player.RollClip, () =>

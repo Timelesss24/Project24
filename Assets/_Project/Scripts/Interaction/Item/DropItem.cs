@@ -17,16 +17,18 @@ namespace Timelesss
 
         public override void Interact()
         {
-            Debug.Log($"{itemData} 획득");
-
-            // 아이템 줍기 애니메이션
-
-            // UI 프롬프트 띄워주기 (XX 를 획득했습니다.)
-
+            base.Interact();
+            StartCoroutine(PickupItem());
+        }
+        IEnumerator PickupItem()
+        {
+            if(Clip != null) yield return new WaitForSeconds(Clip.length);
+            
             itemEventChannel.Invoke(itemData);
 
-
             spawner.ReturnItem(this);
+            
+            InteractionManager.Instance.EndInteraction();
         }
 
         public void Initialize(ItemData data)

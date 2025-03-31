@@ -1,12 +1,13 @@
-﻿using Managers;
+using System;
+using Managers;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityUtils;
 
 namespace Timelesss
 {
-    public class DialogueManager : Singleton<DialogueManager>
+    public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
         private TestDialogueDataLoader dataLoader;
         private int currentDialogueID;
@@ -23,14 +24,15 @@ namespace Timelesss
             npcCamera = GetComponentInChildren<Camera>();
         }
 
-        public void StartDialogue(NPCInfo npcInfo, Transform npcTransform)
+        public void StartDialogue(NPCInfo npcInfo, Transform npcTransform, Action onComplete = null)
         {
             this.npcID = npcInfo.ID;
             currentDialogueID = FindFirstDialogueID(npcInfo.ID);
 
             if (currentDialogueID == -1)
             {
-                Debug.LogWarning($"NPC {npcInfo.ID}의 대화 데이터를 찾을 수 없습니다.");
+                onComplete?.Invoke();
+                Debug.LogWarning($"NPC {npcInfo.ID}�� ��ȭ �����͸� ã�� �� �����ϴ�.");
                 return;
             }
 
@@ -49,13 +51,22 @@ namespace Timelesss
             dialoguePopUp.SetNPCNameText(npcInfo.Name);
 
             ShowCurrentDialogue();
+
+            StartCoroutine(TrackingDialogue(onComplete));
+        }
+
+        IEnumerator TrackingDialogue(Action onComplete = null)
+        {
+            yield return new WaitWhile(() => dialoguePopUp != null);
+            
+            onComplete?.Invoke();
         }
 
         public void ShowCurrentDialogue()
         {
             if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out var dialogue))
             {
-                Debug.LogWarning($"현재 대화 ID {currentDialogueID}에 해당하는 데이터를 찾을 수 없습니다.");
+                Debug.LogWarning($"���� ��ȭ ID {currentDialogueID}�� �ش��ϴ� �����͸� ã�� �� �����ϴ�.");
                 return;
             }
 
