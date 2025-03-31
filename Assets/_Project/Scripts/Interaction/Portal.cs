@@ -11,11 +11,13 @@ namespace Timelesss
 
         public override void Interact()
         {
+            base.Interact();
             // 입장 확인 팝업 띄워주기
 
             // ConfirmPopup.SetUp("던전으로 입장하시겠습니까?, () => SceneLoader.Instance.LoadScene(targetSceneName)");
 
             Debug.Log($"{targetSceneName} 던전 입장");
+            InteractionManager.Instance.EndInteraction();
             //SceneLoader.Instance.LoadScene(targetSceneName); // 테스트용
         }
     }

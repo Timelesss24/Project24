@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -12,12 +13,17 @@ namespace Timelesss
 
         [SerializeField] private AnimationClip clip;
         public AnimationClip Clip => clip;
-
-        public abstract void Interact();
+        
 
         [SerializeField] protected TextMeshPro interactionText;
         protected Coroutine textRotateCoroutine;
 
+
+        public virtual void Interact()
+        {
+            InteractionManager.Instance.StartInteraction(this);
+        }
+        
         private void Awake()
         {
             if (interactionText != null)

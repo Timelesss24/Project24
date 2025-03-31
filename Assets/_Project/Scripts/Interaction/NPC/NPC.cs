@@ -36,6 +36,7 @@ namespace Timelesss
 
         public override void Interact()
         {
+            base.Interact();
             // 플레이어 조작 불가능 하도록 변경
 
             if (playerTransform == null)
@@ -54,7 +55,8 @@ namespace Timelesss
 
             rotationCoroutine = StartCoroutine(RotatingToTarget(playerTransform.position));
 
-            DialogueManager.Instance.StartDialogue(npcInfo, transform);
+            DialogueManager.Instance.StartDialogue(npcInfo, transform, () =>
+                InteractionManager.Instance.EndInteraction());
 
             // UI 프롬프트 지워주기
 
