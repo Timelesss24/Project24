@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Timelesss
@@ -26,7 +23,7 @@ namespace Timelesss
             itemDescriptionObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemData.ItemDescription;
             playerInfo = FindObjectOfType<PlayerInfo>();
             equipinventoryPopUp = FindObjectOfType<EquipinventoryPopUp>();
-            if (itemData.itemType == ItemType.EquipableItem)
+            if (itemData.ItemType == ItemType.EquipableItem)
             {
                 useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "장착";
                 useItemButton.onClick.AddListener(OnClickEquipItemButton);
@@ -66,7 +63,7 @@ namespace Timelesss
         public void OnClickEquipItemButton()
         {
             UseItemAction?.Invoke();
-            equipinventoryPopUp.OnEquipItem(itemData);
+            equipinventoryPopUp.OnEquipItem((EquipItemData)itemData);
         }
 
     }

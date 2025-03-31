@@ -61,15 +61,15 @@ namespace Timelesss
 
         public void ApplyEquipStatus(EquipItemData itemdata)
         {
-            switch (itemdata.equipType)
+            switch (itemdata.EquipType)
             {
                 case EquipType.Null:
                     break;
                 case EquipType.Sword:
-                    equipmentAttack = (int)itemdata.equipValue;
+                    equipmentAttack = (int)itemdata.EquipValue;
                     break;
                 case EquipType.Helmet:
-                    equipmentMaxHealth = (int)itemdata.equipValue;
+                    equipmentMaxHealth = (int)itemdata.EquipValue;
                     break;
                 default:
                     break;
@@ -78,7 +78,7 @@ namespace Timelesss
 
         public void RemoveEquipStatus(EquipItemData itemdata)
         {
-            switch (itemdata.equipType)
+            switch (itemdata.EquipType)
             {
                 case EquipType.Null:
                     break;
