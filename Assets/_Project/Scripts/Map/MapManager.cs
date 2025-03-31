@@ -78,7 +78,7 @@ namespace Timelesss
 
                 for(int i = 0; i<randInt; i++)
                 {
-                    int randEnemy = Random.Range(0, 3);
+                    int randEnemy = Random.Range(0, enemyPrefabs.Count);
                     Instantiate(enemyPrefabs[randEnemy], room.transform.GetChild(1).position, Quaternion.identity, room.transform);
                 }
             }
