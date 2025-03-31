@@ -8,21 +8,13 @@ namespace Timelesss
         EquipableItem,
         QuestItem,
     }
-
-    public enum EquipType
-    {
-        Null,
-        Sword,
-        Helmet,
-    }
+    
     public abstract class ItemData : ScriptableObject
     {
-        public string ItemName;
-        public string ItemDescription;
-        public Sprite ItemIcon;
-        public ItemType itemType;
-        public EquipType equipType;
-        public float equipValue;
+          [field: SerializeField] public string ItemName { get; protected set; }
+          [field: SerializeField] public string ItemDescription{ get; protected set; }
+          [field: SerializeField] public Sprite ItemIcon{ get; protected set; }
+          public abstract ItemType ItemType{ get; }
 
         public int Stack = 0;
 

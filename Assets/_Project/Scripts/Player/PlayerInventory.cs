@@ -1,6 +1,4 @@
-﻿using Managers;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Timelesss
@@ -23,13 +21,13 @@ namespace Timelesss
 
         public void EquipItem(EquipItemData equipItemData)
         {
-            if (!playerEquipSlot.ContainsKey(equipItemData.equipType))
+            if (!playerEquipSlot.ContainsKey(equipItemData.EquipType))
             {
-                playerEquipSlot.Add(equipItemData.equipType, equipItemData);
+                playerEquipSlot.Add(equipItemData.EquipType, equipItemData);
             }
             else
             {
-                playerEquipSlot[equipItemData.equipType] = equipItemData;
+                playerEquipSlot[equipItemData.EquipType] = equipItemData;
             }
         }
     }
