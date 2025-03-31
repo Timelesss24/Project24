@@ -103,8 +103,9 @@ namespace Timelesss
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
             hpChangedEvent?.Invoke(currentHealth);
-            Debug.Log($"{value}의 데미지를 입었습니다. 현재 체력 : {currentHealth}/{totalMaxHealth}");
             if (reducedDamage > 0) OnDamageTaken?.Invoke();
+            if(currentHealth <= 0f)
+                DeathAction?.Invoke();
         }
 
         public bool UseStamina(float value)
