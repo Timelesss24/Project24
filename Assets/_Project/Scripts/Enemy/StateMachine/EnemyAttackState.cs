@@ -33,6 +33,7 @@ namespace Timelesss
         {
             // Attack 애니메이션을 부드럽게 시작 (CrossFade 사용)
             animator.CrossFade(AttackHash, crossFadeDuration);
+            Debug.Log("공격");
         }
 
         /// <summary>
