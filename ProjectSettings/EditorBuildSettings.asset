@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Title.unity
     guid: 427dbce755fed4207b70e4d80a33293a
   - enabled: 1
-    path: Assets/_Project/Scenes/Gameplay.unity
-    guid: b437e614aa959467bb7533a05536ea8e
+    path: Assets/_Project/Scenes/Village.unity
+    guid: bce2bdc07650d1f4987146a644f4cb69
   - enabled: 1
-    path: Assets/_Project/Scenes/Test/Sandbox.unity
-    guid: 61511ca6001ea41e5b1cc67feef0ad50
+    path: Assets/_Project/Scenes/Gameplay.unity
+    guid: 989b1c84a46d4794f80b4bfcc19ad9a9
   m_configObjects: {}

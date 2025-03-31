@@ -98,8 +98,8 @@ namespace Timelesss
             baseMaxHealth = (int)((float)baseMaxHealth * 1.15f);
             maxStamina += 10f;
 
-            baseAttack = Mathf.Max((int)(baseAttack * 1.15f), 1);
-            baseDeffence = Mathf.Max((int)(baseDeffence * 1.15f), 1);
+            baseAttack += Mathf.Max((int)(baseAttack * 0.15f), 1);
+            baseDeffence += Mathf.Max((int)(baseDeffence * 0.15f), 1);
 
             playerLevel++;
             requiredExp = (int)((float)requiredExp * 1.25f);

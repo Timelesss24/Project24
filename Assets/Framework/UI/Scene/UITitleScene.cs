@@ -1,6 +1,7 @@
 using System;
 using Managers;
 using Scripts.UI;
+using Timelesss;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,8 @@ namespace _01_Scripts.UI.Scene
 
         private void OnClickedStartBtn()
         {
-            GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);
+            //GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);\
+            UIManager.Instance.ShowPopup<NameSettingPopUp>();
         }
 
         private void OnClickedExitBtn()
