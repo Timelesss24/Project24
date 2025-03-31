@@ -17,6 +17,8 @@ namespace Timelesss
         [SerializeField] private TextMeshProUGUI questTargetText;
         [SerializeField] private TextMeshProUGUI questRewardText;
 
+        private QuestData questData;
+
         private void Start()
         {
             acceptButton.onClick.AddListener(OnClickAcceptButton);
@@ -25,10 +27,12 @@ namespace Timelesss
 
         public void SetQuestInfo(QuestData questData)
         {
+            this.questData = questData;
+
             questNameText.text = questData.questName;
             questDescriptionText.text = questData.questDescription;
-            
-            switch(questData.questType)
+
+            switch (questData.questType)
             {
                 case QuestType.DungeonClear:
                     questTargetText.text = $"{questData.targetName} 클리어하기 0/{questData.targetNum}";
@@ -46,12 +50,18 @@ namespace Timelesss
 
         private void OnClickAcceptButton()
         {
-            Debug.Log("수락하기");
+            DialogueManager.Instance.ShowQuestDialogue(true);
+
+            if (questData != null)
+                QuestManager.Instance.AddActiveQuest(questData);
+
+            ClosePopup();
         }
 
         private void OnClickDeclineButton()
         {
-            Debug.Log("거절하기");
+            DialogueManager.Instance.ShowQuestDialogue(false);
+            ClosePopup();
         }
     }
 }

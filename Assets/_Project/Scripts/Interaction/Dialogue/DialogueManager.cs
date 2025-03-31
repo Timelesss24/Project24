@@ -10,7 +10,7 @@ namespace Timelesss
     public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
         private DialogueDataLoader dataLoader;
-        private int currentDialogueID;
+        public int currentDialogueID;
         private int npcID;
 
         private DialoguePopUp dialoguePopUp;
@@ -82,13 +82,7 @@ namespace Timelesss
             dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
 
             if (hasNextDialogue)
-            {
                 currentDialogueID = dialogue.nextDialogueID;
-            }
-            else
-            {
-                ResetToFirstDialogue();
-            }
         }
 
         private int FindFirstDialogueID(int npcID, bool hasQuest)
@@ -104,9 +98,24 @@ namespace Timelesss
             return -1;
         }
 
-        private void ResetToFirstDialogue()
+        public void ShowQuestDialogue(bool isAccept)
         {
-            currentDialogueID = 0;
+            if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out DialogueData currentDialogue))
+            {
+                Debug.LogWarning($"현재 대화 ID {currentDialogueID}에 해당하는 데이터를 찾을 수 없습니다.");
+                return;
+            }
+
+            DialogueData questDialogue = 
+                dataLoader.ItemsDict.TryGetValue
+                (isAccept ? currentDialogue.acceptDialogueID : currentDialogue.declineDialogueID,
+                out var dialogue) ? dialogue : null;
+
+            bool hasNextDialogue = dialogue.nextDialogueID != 0;
+
+            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
+
+            currentDialogueID = hasNextDialogue ? currentDialogue.nextDialogueID : 0;
         }
     }
 }
