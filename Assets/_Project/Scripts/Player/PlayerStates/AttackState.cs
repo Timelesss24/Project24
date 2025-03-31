@@ -39,6 +39,7 @@ namespace Timelesss
 
         void OnAttackEnd()
         {
+            if(stateMachine.CurrentState == this)
             stateMachine.ChangeState(returnState);
         }
     }
