@@ -17,6 +17,8 @@ namespace Timelesss
         private List<int> completeQuestList = new List<int>();
         public List<int> CompleteQuestList { get { return completeQuestList; } }
 
+        private QuestType questType;
+
         private void Start()
         {
             questDataLoader = new QuestDataLoader();
@@ -28,7 +30,7 @@ namespace Timelesss
             foreach (var quest in questDict.Values)
             {
                 if (quest.npcID == npcID &&
-                     !activeQuestList.Exists(q => q.questID == quest.key) &&
+                     !activeQuestList.Exists(x => x.questID == quest.key) &&
                      !completeQuestList.Contains(quest.key) &&
                      (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
                 {
@@ -45,12 +47,12 @@ namespace Timelesss
             {
                 return questData;
             }
-            return null; 
+            return null;
         }
 
         public void StartQuest(int questID)
         {
-            if (!activeQuestList.Exists(q => q.questID == questID) && questDict.ContainsKey(questID))
+            if (!activeQuestList.Exists(x => x.questID == questID) && questDict.ContainsKey(questID))
             {
                 QuestData questData = GetQuestData(questID);
                 if (questData != null)
@@ -67,7 +69,7 @@ namespace Timelesss
 
         public void CompleteQuest(int questID)
         {
-            ActiveQuestInfo activeQuest = activeQuestList.Find(q => q.questID == questID);
+            ActiveQuestInfo activeQuest = activeQuestList.Find(x => x.questID == questID);
 
             if (activeQuest != null)
             {
@@ -93,6 +95,45 @@ namespace Timelesss
         private void RewardPlayer(int exp, int itemId, int itemNum)
         {
             Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+        }
+
+        public bool GetIsComplete(int questId) => activeQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
+
+        public void UpdateProgress(object type)
+        {
+            int id = 0;
+
+            Debug.Log("진행도 업데이트 호출");
+
+            if (type is EnemyOS enemy)
+            {
+                questType = QuestType.MonsterKill;
+                id = enemy.enemyCode;
+            }
+
+            else if (type is ItemData item)
+            {
+                questType = QuestType.MaterialGather;
+                // 아이템 아이디 가져오기
+            }
+            else
+                questType = QuestType.DungeonClear;
+
+            ActiveQuestInfo activeQuest = activeQuestList.Find(x =>
+            {
+                QuestData questData = GetQuestData(x.questID);
+                return questData != null &&
+                       questData.questType == questType &&
+                       questData.targetID == id;
+            });
+
+            if (activeQuest != null)
+            {
+                if (activeQuest.progress < activeQuest.goal)
+                    activeQuest.progress++;
+
+                Debug.Log($"퀘스트 진행 업데이트: {activeQuest.progress}/{activeQuest.goal}");
+            }
         }
     }
 }

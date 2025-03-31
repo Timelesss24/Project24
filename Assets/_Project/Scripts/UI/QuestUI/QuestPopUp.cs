@@ -68,17 +68,18 @@ namespace Timelesss
 
             ActiveQuestInfo activeQuest = questManager.ActiveQuestList.Find(q => q.questID == questData.key);
             int currentProgress = activeQuest != null ? activeQuest.progress : 0;
+            bool isClear = activeQuest.progress >= activeQuest.goal;
 
             switch (questData.questType)
             {
                 case QuestType.DungeonClear:
-                    progressText.text = $"{questData.targetName} 클리어하기 {currentProgress}/{questData.targetNum}";
+                    progressText.text = $"{questData.targetName} 클리어하기" + (isClear ? "(완료)" : $"{currentProgress}/{questData.targetNum}");
                     break;
                 case QuestType.MonsterKill:
-                    progressText.text = $"{questData.targetName} 처치하기 {currentProgress}/{questData.targetNum}";
+                    progressText.text = $"{questData.targetName} 처치하기" + (isClear ? "(완료)" : $"{currentProgress}/{questData.targetNum}");
                     break;
                 case QuestType.MaterialGather:
-                    progressText.text = $"{questData.targetName} 수집하기 {currentProgress}/{questData.targetNum}";
+                    progressText.text = $"{questData.targetName} 수집하기" + (isClear ? "(완료)" : $"{currentProgress}/{questData.targetNum}");
                     break;
             }
 

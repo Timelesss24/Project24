@@ -19,7 +19,6 @@ namespace Timelesss
         [SerializeField] private TextMeshProUGUI dialogueText;
         [SerializeField] private TextMeshProUGUI npcNameText;
 
-
         private Coroutine typewriterCoroutine;
         private float typewriterSpeed = 0.05f;
 
@@ -99,5 +98,6 @@ namespace Timelesss
         }
 
         public void SetNPCNameText(string name) => npcNameText.text = name;
+
     }
 }

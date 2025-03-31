@@ -26,6 +26,8 @@ namespace Timelesss
             this.questData = questData;
             questPopup = popUp;
             questNameText.text = this.questData.questName;
+
+            completeCheckIcon.enabled = QuestManager.Instance.GetIsComplete(questData.key);
         }
     }
 }

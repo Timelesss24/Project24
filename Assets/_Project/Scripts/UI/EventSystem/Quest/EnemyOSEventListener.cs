@@ -4,9 +4,7 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    [CreateAssetMenu(menuName = "Event/EnemyEventChannel")]
-
-    public class EnemyEventChannel : EventChannel<EnemyOS>
+    public class EnemyOSEventListener : EventListener<EnemyOS>
     {
         
     }
