@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e74040edfeac28848af55ad182e6bfb3, type: 3}
-  m_Name: ItemEventChannel
+  m_Name: DropItemEventChannel
   m_EditorClassIdentifier: 
