@@ -26,7 +26,7 @@ namespace Timelesss
         [FormerlySerializedAs("weaponData")]
         [FormerlySerializedAs("weapon")]
         [SerializeField, Anywhere] WeaponData defaultWeaponData;
-        
+
         [SerializeField] LayerMask hitboxLayer;
 
 
@@ -103,7 +103,7 @@ namespace Timelesss
                 AttackState = AttackStates.Idle;
                 yield break;
             }
-            
+
             AttackState = AttackStates.Windup;
 
             var attackList = currentWeaponData.AttacksContainer.Attacks;
@@ -195,15 +195,15 @@ namespace Timelesss
                 var orientation = activeBoxCollider.transform.rotation;
 
                 // 현재 Collider 중심에서 Box 크기만큼의 Overlap 체크를 수행 (충돌 감지)
-                var checkCollision = Physics.OverlapBox(prevColliderPos, halfExtents, orientation,hitboxLayer);
+                var checkCollision = Physics.OverlapBox(prevColliderPos, halfExtents, orientation, hitboxLayer);
                 BoxCastDebug.DrawBoxCastBox(prevColliderPos, halfExtents, orientation, direction, distance, Color.red);
                 // 충돌이 발생했으나 이전에 처리한 게임 오브젝트가 아닌 경우만 처리
                 if (checkCollision.Length > 0 && prevGameObj != checkCollision[0].gameObject)
                 {
                     // todo 충돌 대상의 부모 오브젝트에서 `IDamageable` 컴포넌트를 찾아 처리
-                    
-                    checkCollision[0].TryGetComponent(out IDamageable damageable);
-                    damageable.TakeDamage(playerInfo.totalAttack);
+
+                    if (checkCollision[0].TryGetComponent(out IDamageable damageable))
+                        damageable.TakeDamage(playerInfo.totalAttack);
 
                     // 현재 충돌한 오브젝트를 기록하여 중복 처리 방지
                     prevGameObj = checkCollision[0].gameObject;
@@ -230,8 +230,8 @@ namespace Timelesss
                     if (isHit && prevGameObj != hit.transform.gameObject)
                     {
                         // todo 충돌 대상의 부모 오브젝트에서 `IDamageable` 컴포넌트를 찾아 처리
-                        hit.transform.gameObject.TryGetComponent(out IDamageable damageable);
-                        damageable.TakeDamage(playerInfo.totalAttack);
+                        if (hit.transform.gameObject.TryGetComponent(out IDamageable damageable))
+                            damageable.TakeDamage(playerInfo.totalAttack);
 
                         // 충돌한 게임 오브젝트를 기록하여 중복 처리 방지
                         prevGameObj = hit.transform.gameObject;
@@ -289,7 +289,7 @@ namespace Timelesss
         {
             currentWeaponObject?.SetActive(enableWeapon);
         }
-        
+
         void OnGUI()
         {
             // 공격 상태를 디버깅하기 위한 간단한 UI 작성
@@ -298,11 +298,11 @@ namespace Timelesss
                 fontSize = 20,
                 normal = { textColor = Color.white }
             };
-        
+
             // 왼쪽 상단 구석에 현재 상태와 정보 표시
             GUILayout.BeginArea(new Rect(10, 10, 300, 150));
             GUILayout.Label($"Attack State: {AttackState}", debugStyle);
-        
+
             // var attack = weaponData.AttacksContainer.Attacks[comboCount].Attack;
             // GUILayout.Label($"Attack Length: {attack.Clip.length}", debugStyle);
             // GUILayout.Label($"Attack Progress: {attackTimer.Progress}", debugStyle);

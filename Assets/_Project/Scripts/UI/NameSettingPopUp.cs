@@ -22,6 +22,8 @@ namespace Timelesss
             startButton.onClick.AddListener(OnClickStartButton);
             closeButton.onClick.AddListener(OnClickCloseButton);
 
+            PlayerPrefs.DeleteKey(PlayerNameKey);
+
             if (PlayerPrefs.HasKey(PlayerNameKey))
             {
                 ClosePopup();

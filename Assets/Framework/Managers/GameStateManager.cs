@@ -34,6 +34,7 @@ namespace Managers
         /// <param name="newState">새로운 게임 상태</param>
         public void SetGameState(GameState newState)
         {
+            Debug.Log(currentState);
             if (currentState == newState) return;
             Debug.Log("Changing Game State:" + newState);
 
