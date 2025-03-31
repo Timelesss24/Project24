@@ -196,7 +196,7 @@ namespace Timelesss
 
         void OnDash(bool performed)
         {
-            if(isSprint) return;
+            if(IsBusy) return;
             if (performed)
             {
                 isSprint = true;
