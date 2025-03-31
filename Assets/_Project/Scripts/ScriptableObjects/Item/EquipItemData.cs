@@ -7,6 +7,8 @@ namespace Timelesss
     {
         public ItemType itemType = ItemType.EquipableItem;
 
+        public Material Material;
+
         public override void OnUseItem(PlayerInfo playerInfo)
         {
             throw new System.NotImplementedException();
