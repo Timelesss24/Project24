@@ -6,7 +6,7 @@ namespace Managers
     /// <summary>
     /// 게임 상태 및 전체 흐름을 관리하는 기본 GameManager 클래스.
     /// </summary>
-    public class GameStateManager : RegulatorSingleton<GameStateManager>
+    public class GameStateManager : PersistentSingleton<GameStateManager>
     {
         public enum GameState
         {
@@ -35,6 +35,7 @@ namespace Managers
         public void SetGameState(GameState newState)
         {
             if (currentState == newState) return;
+            Debug.Log("Changing Game State:" + newState);
 
             currentState = newState;
             LoadSceneByGameState(currentState);

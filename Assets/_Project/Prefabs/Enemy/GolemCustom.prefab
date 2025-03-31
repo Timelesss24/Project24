@@ -129,7 +129,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uACE8\uB818 LV 5"
+  m_text: "\uACE8\uB818"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f6f2d29035929f848a09474246513e05, type: 2}
   m_sharedMaterial: {fileID: -662305714528853504, guid: f6f2d29035929f848a09474246513e05,

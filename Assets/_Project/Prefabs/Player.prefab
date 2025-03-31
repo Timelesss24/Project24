@@ -4860,6 +4860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533023387873641881}
   - component: {fileID: 6135767655457839935}
+  - component: {fileID: 7126254073961061941}
   - component: {fileID: 1362591078315495764}
   - component: {fileID: 9007843920410416306}
   - component: {fileID: 3268328116355523884}
@@ -4887,7 +4888,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5871572611767916138}
   - {fileID: 4874162032050735626}
@@ -4919,6 +4920,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.04, z: 0}
+--- !u!114 &7126254073961061941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783237538929662039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7d76a01e58d4b48b7c40456be1c61d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpChangedEvent: {fileID: 11400000, guid: 4adb4291f26f5a2478ad2e9c521afe46, type: 2}
+  staminaChangedEvent: {fileID: 11400000, guid: 807abd78625d55143bbbe8bd83fa8373,
+    type: 2}
 --- !u!114 &1362591078315495764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4936,9 +4952,11 @@ MonoBehaviour:
   cameraLook: {fileID: 4874162032050735626}
   animator: {fileID: 6187148080591312827}
   combatController: {fileID: 9007843920410416306}
+  playerInfo: {fileID: 7126254073961061941}
   animationSystem: {fileID: 5234501713427197604}
   freeLookVCam: {fileID: 0}
   input: {fileID: 11400000, guid: 82e985447364b4adfa7668c2e6b94ac9, type: 2}
+  playerInteractor: {fileID: 5659593342756495435}
   moveSpeed: 6
   rotationSpeed: 15
   RotationSmoothTime: 0.12
@@ -4948,8 +4966,13 @@ MonoBehaviour:
   gravityMultiplier: 3
   fallTimeout: 0.15
   dashForce: 2
+  dashStaminaCost: 10
   rollCooldown: 0
+  rollStaminaCost: 20
+  exhaustedDuration: 2
   RollClip: {fileID: 7400000, guid: 8462698d0470942979477d6cef6918e7, type: 2}
+  HitClip: {fileID: 7400000, guid: efa6aa97b788e476c84cbda1fe1b1bc6, type: 2}
+  ExhaustedClip: {fileID: 0}
 --- !u!114 &9007843920410416306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4965,7 +4988,11 @@ MonoBehaviour:
   playerController: {fileID: 1362591078315495764}
   animationSystem: {fileID: 5234501713427197604}
   animator: {fileID: 6187148080591312827}
+  playerInfo: {fileID: 7126254073961061941}
   defaultWeaponData: {fileID: 11400000, guid: a04b7f6aa8158f94c8e23a69eaa2fb08, type: 2}
+  hitboxLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3268328116355523884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5016,7 +5043,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de071d5854689f140ba8d7605a6e3438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputReader: {fileID: 11400000, guid: 82e985447364b4adfa7668c2e6b94ac9, type: 2}
 --- !u!114 &8440744671260616448
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,11 +5,13 @@ using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.AI;
 using Utilities;
+using UnityEditor;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Timelesss
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDamageable
     {
         //[SerializeField] public EnemyOS Date;
         // NavMeshAgent 객체: 적의 경로 탐색 및 이동 처리를 담당
@@ -35,13 +37,13 @@ namespace Timelesss
 
         /// Unity의 OnValidate 메서드:
         /// 에디터에서 컴포넌트가 설정되었는지 유효성 검사 및 자동 설정.
-        /// </summary>
+
+        private float enemyHp;
+
         void OnValidate() => this.ValidateRefs();
 
         /// Unity의 Start 메서드:
         /// 적 클래스의 초기화를 수행하며, 상태 기계와 공격 타이머 설정을 처리합니다.
-         
-        
         void Start()
         {
             // 공격 타이머 초기화
@@ -61,6 +63,7 @@ namespace Timelesss
             At(chaseState, attackState, new FuncPredicate(() => playerDetector.CanAttackPlayer())); // 공격 가능 시 공격 상태 진입
             At(attackState, chaseState, new FuncPredicate(() => !playerDetector.CanAttackPlayer())); // 공격 불가 시 추적
 
+            enemyHp = playerDetector.Date.maxHp;
             // 초기 상태 설정 (방황 상태로 시작)
             stateMachine.SetState(wanderState);
         }
@@ -112,16 +115,49 @@ namespace Timelesss
 
             // 공격 실행
             attackTimer.Start();
-            //playerDetector.TargetHealth.TakeDamage(10); // 플레이어에게 피해 (임시로 10 피해)
+            playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해 (임시로 10 피해)
         }
         void OnHit()
         {
             animator.SetTrigger("Hit");
-            OnDie();
+
+            if (enemyHp <= 0)
+            {
+                OnDie();
+            }
         }
         void OnDie()
         {
             animator.SetTrigger("Die");
+
+            playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
+        }
+
+        public void TakeDamage(int value)
+        {
+            int min = (int)(value * 0.8);
+            int max = (int)(value * 1.2);
+            int damage = Random.Range(min, max + 1);
+
+            enemyHp -= damage;
+
+            OnHit();
+        }
+    }
+    [CustomEditor(typeof(Enemy))]
+    public class EnemyDie : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (EditorApplication.isPlaying)
+            {
+                if (GUILayout.Button("1000 데미지"))
+                {
+                    ((Enemy)target).TakeDamage(1000);
+                }
+            }
         }
     }
 }

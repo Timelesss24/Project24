@@ -13,9 +13,9 @@ namespace Timelesss
         {
             base.Interact();
             // 입장 확인 팝업 띄워주기
-
-            GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);
             Debug.Log($"{targetSceneName} 던전 입장");
+            
+            GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);
             InteractionManager.Instance.EndInteraction();
         }
     }
