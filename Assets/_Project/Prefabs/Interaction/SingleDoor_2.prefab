@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9693109e522521c43a7640999506f0e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 7400000, guid: 3f98c400b2d3254468e4f4db2fda0679, type: 2}
+  clip: {fileID: 7400000, guid: 6caaf3813c1cd7041aab7928b5d68925, type: 2}
   interactionText: {fileID: 4729003450200545428}
   doorState: 0
   doorTransforms: []

@@ -72,7 +72,7 @@ namespace Timelesss
             isOpen = true;
             interactionText.text = string.Empty;
 
-            float rotationTime = 0.5f; 
+            float rotationTime = Clip.averageDuration; 
             float time = 0f;
 
             List<Quaternion> initialRotations = new List<Quaternion>();
