@@ -24,33 +24,52 @@ namespace Timelesss
                 .OrderBy(slot => Vector2.Distance(slot.RectTransform.position, Input.mousePosition))
                 .FirstOrDefault();
 
+            var originSlot = DragState.OriginSlot;
+            var originContainer = DragState.OriginContainer;
+            var item = DragState.DraggingItem;
+
             if (closestSlot)
             {
-                bool droppedToSameSlot = closestSlot == DragState.OriginSlot;
+                bool droppedToSameSlot = closestSlot == originSlot;
 
-                // 드롭 대상 슬롯이 속한 View로부터 드롭 처리
                 var targetContainer = closestSlot.GetComponentInParent<IItemContainer>();
 
-                if (targetContainer?.HandleDrop(DragState.OriginSlot, closestSlot, DragState.DraggingItem) ?? true)
+                if (targetContainer?.HandleDrop(originSlot, closestSlot, item) ?? false)
                 {
-                    DragState.OriginSlot?.Remove();
+                    // 다른 컨테이너로 옮겨졌다면 원래 모델에서 제거
+                    if (targetContainer != originContainer)
+                    {
+                        switch (originContainer)
+                        {
+                            case InventoryView inventoryView:
+                                inventoryView.Controller?.Model?.Remove(item);
+                                break;
+
+                            case EquipmentView equipmentView:
+                                equipmentView.Controller?.Model?.Remove(item);
+                                equipmentView.Controller?.VisualHandler?.Unequip(((EquipmentItem)item).EquipmentType);
+                                break;
+                            case ConsumableStorage:
+                                break;
+                        }
+                    }
                 }
                 else
                 {
-                    DragState.OriginSlot?.RestoreVisual();
+                    originSlot?.RestoreVisual();
                 }
 
                 if (droppedToSameSlot)
                 {
-                    DragState.OriginSlot?.RestoreVisual();
+                    originSlot?.RestoreVisual();
                 }
             }
             else
             {
-                DragState.OriginSlot?.RestoreVisual();
+                originSlot?.RestoreVisual();
             }
 
-            var view = DragState.OriginSlot?.GetComponentInParent<StorageView>();
+            var view = originSlot?.GetComponentInParent<StorageView>();
             view?.HideGhostIcon();
 
             DragState.Clear();

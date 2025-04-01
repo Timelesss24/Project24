@@ -4860,20 +4860,18 @@ GameObject:
   m_Component:
   - component: {fileID: 6533023387873641881}
   - component: {fileID: 6135767655457839935}
+  - component: {fileID: 3731722413143349293}
   - component: {fileID: 7126254073961061941}
   - component: {fileID: 1362591078315495764}
   - component: {fileID: 9007843920410416306}
   - component: {fileID: 3268328116355523884}
   - component: {fileID: 6187148080591312827}
   - component: {fileID: 5659593342756495435}
-  - component: {fileID: 8440744671260616448}
   - component: {fileID: 7479521191868915765}
   - component: {fileID: 5234501713427197604}
   - component: {fileID: 6127079088358157217}
-  - component: {fileID: 4102480345581492913}
   - component: {fileID: 6330232439459381160}
   - component: {fileID: 2299740829881540455}
-  - component: {fileID: 3731722413143349293}
   - component: {fileID: 3382824367833768008}
   m_Layer: 0
   m_Name: Player
@@ -4925,6 +4923,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.04, z: 0}
+--- !u!114 &3731722413143349293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3783237538929662039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4c33d599531ef448e2b41a94c91e4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7126254073961061941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4996,7 +5006,6 @@ MonoBehaviour:
   animationSystem: {fileID: 5234501713427197604}
   animator: {fileID: 6187148080591312827}
   playerInfo: {fileID: 7126254073961061941}
-  defaultWeaponData: {fileID: 0}
   hitboxLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -5050,18 +5059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de071d5854689f140ba8d7605a6e3438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8440744671260616448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3783237538929662039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9dc54fca41a75439f41b8574aef4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7479521191868915765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5078,7 +5075,7 @@ MonoBehaviour:
   unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8440744671260616448}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Timelesss.PlayerInventory, Assembly-CSharp
         m_MethodName: DropItemAddToInventory
         m_Mode: 0
@@ -5115,20 +5112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatController: {fileID: 9007843920410416306}
---- !u!114 &4102480345581492913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3783237538929662039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c8b524a46ec4154c8d3e0642636c6a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 6187148080591312827}
-  helmet: {fileID: 6815976800896096675}
 --- !u!114 &6330232439459381160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5170,18 +5153,6 @@ MonoBehaviour:
     Part2: 1291227998
     Part3: 438918075
     Part4: 2240810988
---- !u!114 &3731722413143349293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3783237538929662039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e4c33d599531ef448e2b41a94c91e4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3382824367833768008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5195,6 +5166,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6187148080591312827}
+  combatController: {fileID: 9007843920410416306}
+  targets: []
 --- !u!1 &3849191001419436325
 GameObject:
   m_ObjectHideFlags: 0

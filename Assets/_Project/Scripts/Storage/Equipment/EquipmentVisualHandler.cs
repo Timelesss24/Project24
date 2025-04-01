@@ -41,11 +41,7 @@ namespace Timelesss
             var type = item.EquipmentType;
 
             // 기존 장비 제거
-            if (instances.TryGetValue(type, out var old))
-            {
-                Destroy(old);
-            }
-
+            Unequip(type);
 
             if (type == EquipmentType.Weapon)
             {
@@ -53,26 +49,22 @@ namespace Timelesss
                 var weapon = Instantiate(item.EquipmentPrefab, holder, true);
                 combatController.SetWeaponObject(weapon, (WeaponDetails)item.Details);
                 instances[type] = weapon;
-
                 return;
             }
 
-            // 프리팹에서 SkinnedMeshRenderer 가져오기
             var prefabSMR = item.EquipmentPrefab.GetComponentInChildren<SkinnedMeshRenderer>();
             if (prefabSMR == null)
                 return;
 
             var characterRenderer = GetRenderer(type);
-
             if (characterRenderer == null)
             {
                 Debug.LogWarning($"No renderer for type {type}");
                 return;
             }
-            // 본 이름 기준으로 캐릭터의 본과 매핑
+
             Transform[] mappedBones = MapBonesByName(prefabSMR.bones, characterRenderer.bones);
 
-            // 인스턴스 생성
             var instance = Instantiate(item.EquipmentPrefab, transform);
             var instanceSMR = instance.GetComponentInChildren<SkinnedMeshRenderer>();
             if (instanceSMR == null)
@@ -81,23 +73,33 @@ namespace Timelesss
                 return;
             }
 
-            // 본, 루트본 연결
             instanceSMR.bones = mappedBones;
             instanceSMR.rootBone = characterRenderer.rootBone;
 
             instances[type] = instance;
         }
 
-        /// <summary>
-        /// SkinnedMeshRenderer 본 배열 기준으로, 이름이 같은 본을 타겟에서 찾아 매핑함
-        /// </summary>
+        public void Unequip(EquipmentType type)
+        {
+            if (instances.TryGetValue(type, out var instance))
+            {
+                Destroy(instance);
+                instances.Remove(type);
+            }
+
+            if (type == EquipmentType.Weapon)
+            {
+                combatController.UnEquipWeapon();
+            }
+        }
+
         Transform[] MapBonesByName(Transform[] sourceBones, Transform[] targetBones)
         {
             return sourceBones
                 .Select(source => targetBones.FirstOrDefault(target => target.name == source.name))
                 .ToArray();
         }
-        
+
         SkinnedMeshRenderer GetRenderer(EquipmentType type)
         {
             return targetDic.GetValueOrDefault(type);

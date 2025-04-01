@@ -5,7 +5,7 @@ namespace Timelesss
 {
     public enum ItemType
     {
-        Usable,
+        Consumable,
         Equipment,
         Quest,
     }
@@ -20,7 +20,6 @@ namespace Timelesss
 
         public ItemType ItemType;
         public GameObject DropPrefab;
-        
         public EquipmentType EquipmentType;
         
         void AssignNewGuid()
@@ -38,6 +37,5 @@ namespace Timelesss
             return new Item(this, quantity);
         }
     }
-
 
 }

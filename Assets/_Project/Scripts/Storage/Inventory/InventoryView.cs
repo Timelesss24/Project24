@@ -13,7 +13,7 @@ namespace Timelesss
         [SerializeField] Button closeButton; // 닫기 버튼
         [SerializeField] TextMeshProUGUI inventoryHeader; // 제목 텍스트
         
-        InventoryController controller; //todo
+        public InventoryController Controller { get; private set; } 
         public override void InitializeView(int capacity = 0)
         {
             // 슬롯 배열 초기화
@@ -41,26 +41,40 @@ namespace Timelesss
         
         protected override Item GetItemFromSlot(Slot slot)
         {
-            return controller?.Model?.Get(slot.Index); // 인벤토리 기준
+            return Controller?.Model?.Get(slot.Index); // 인벤토리 기준
         }
         
         
         public void Bind(InventoryController controller)
         {
-            this.controller = controller;
+            this.Controller = controller;
         }
         
    
         public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
         {
-            if (item == null || controller?.Model == null) return true;
+            if (item == null || Controller?.Model == null) return true;
 
+            var model = Controller.Model;
+
+            // ✔ 장비창에서 인벤토리로 드래그
+            if (fromSlot is EquipmentSlot)
+            {
+                if (model.Add(item))
+                {
+                    RefreshSlot(toSlot.Index); // UI 갱신
+                    return true;
+                }
+
+                return false;
+            }
+
+            // ✔ 인벤토리 내부 이동
             int fromIndex = fromSlot.Index;
             int toIndex = toSlot.Index;
 
             if (fromIndex == toIndex) return false;
 
-            var model = controller.Model;
             var targetItem = model.Get(toIndex);
 
             if (targetItem != null &&
@@ -73,8 +87,23 @@ namespace Timelesss
             {
                 model.Swap(fromIndex, toIndex);
             }
-            
+
+            RefreshSlot(fromIndex);
+            RefreshSlot(toIndex);
             return true;
+        }
+        
+        void RefreshSlot(int index)
+        {
+            var item = Controller.Model.Get(index);
+            if (item == null || item.Id.Equals(SerializableGuid.Empty))
+            {
+                Slots[index].Set(SerializableGuid.Empty, null);
+            }
+            else
+            {
+                Slots[index].Set(item.Id, item.Details.Icon, item.Quantity);
+            }
         }
     }
 }
