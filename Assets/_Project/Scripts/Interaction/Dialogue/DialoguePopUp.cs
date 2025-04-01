@@ -1,77 +1,74 @@
 ﻿using Managers;
 using Scripts.UI;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
-
 
 namespace Timelesss
 {
     public class DialoguePopUp : UIPopup
     {
-        [SerializeField] private Button nextButton;
-        [SerializeField] private Button closeButton;
+        [SerializeField] private Button nextButton; // 다음 버튼
+        [SerializeField] private Button closeButton; // 닫기 버튼
 
-        [SerializeField] private TextMeshProUGUI dialogueText;
-        [SerializeField] private TextMeshProUGUI npcNameText;
+        [SerializeField] private TextMeshProUGUI dialogueText; // 대화 텍스트
+        [SerializeField] private TextMeshProUGUI npcNameText; // NPC 이름 텍스트
 
-        private Coroutine typewriterCoroutine;
-        private const float TypeWriterSpeed = 0.05f;
+        private Coroutine typewriterCoroutine; // 타자 효과 코루틴
+        private const float TypeWriterSpeed = 0.05f; // 타자 효과 속도
 
         private PlayerInfo playerInfo;
 
-        private int npcID;
+        private int npcID; // NPC ID
 
         private void Awake()
         {
-            playerInfo = FindObjectOfType<PlayerInfo>();
+            playerInfo = FindObjectOfType<PlayerInfo>(); 
 
             if (playerInfo == null)
             {
                 Debug.Log("playerInfo를 찾을 수 없습니다.");
             }
 
-            nextButton.onClick.AddListener(OnClickNextButton);
+            nextButton.onClick.AddListener(OnClickNextButton); 
             closeButton.onClick.AddListener(OnClickCloseButton);
         }
 
-        public void SetNpcID(int id) => npcID = id;
+        public void SetNpcID(int id) => npcID = id; // NPC ID 설정
 
         public void ShowDialogue(string text, bool hasNextDialogue, bool hasQuest, bool isComplete = false)
         {
-            nextButton.gameObject.SetActive(false);
-            closeButton.gameObject.SetActive(false);
+            nextButton.gameObject.SetActive(false); // 다음 버튼 비활성화
+            closeButton.gameObject.SetActive(false); // 닫기 버튼 비활성화
 
             if (typewriterCoroutine != null)
-                StopCoroutine(typewriterCoroutine);
+                StopCoroutine(typewriterCoroutine); // 기존 코루틴 중지
 
             typewriterCoroutine =
-                StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete));
+                StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete)); // 새로운 코루틴 시작
         }
 
         private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest,
             bool isComplete = false)
         {
-            dialogueText.text = "";
+            dialogueText.text = ""; // 대화 텍스트 초기화
 
-            text = text.Replace("모험가", $"{playerInfo.GetName()}");
+            text = text.Replace("모험가", $"{playerInfo.GetName()}"); // "모험가"를 플레이어 이름으로 대체
 
             foreach (char letter in text)
             {
-                dialogueText.text += letter;
+                dialogueText.text += letter; // 한 글자씩 추가
                 yield return new WaitForSeconds(TypeWriterSpeed);
             }
 
-            if (hasNextDialogue)
+            if (hasNextDialogue) // 다음 대화가 있다면
             {
-                nextButton.gameObject.SetActive(true);
+                nextButton.gameObject.SetActive(true); // 다음 버튼 활성화
             }
             else
             {
-                HandleEndOfDialogue(hasQuest, isComplete);
+                HandleEndOfDialogue(hasQuest, isComplete); // 대화 종료 처리
             }
         }
 
@@ -79,44 +76,44 @@ namespace Timelesss
         {
             if (isComplete)
             {
-                ShowQuestPopup(isComplete: true);
+                ShowQuestPopup(isComplete: true); // 완료된 퀘스트 팝업 표시
             }
             else if (hasQuest)
             {
-                ShowQuestPopup(isComplete: false);
+                ShowQuestPopup(isComplete: false); // 퀘스트 팝업 표시
             }
             else
             {
-                closeButton.gameObject.SetActive(true);
+                closeButton.gameObject.SetActive(true); // 닫기 버튼 활성화
             }
         }
 
         private void ShowQuestPopup(bool isComplete)
         {
             int questID = isComplete
-                ? QuestManager.Instance.FindCompletedQuestID(npcID)
-                : QuestManager.Instance.GetQuestID(npcID);
+                ? QuestManager.Instance.FindCompletedQuestID(npcID) // 완료된 퀘스트 ID 찾기
+                : QuestManager.Instance.GetQuestID(npcID); // 퀘스트 ID 찾기
 
             if (questID == 0) return;
 
-            QuestData questData = QuestManager.Instance.GetQuestData(questID);
+            QuestData questData = QuestManager.Instance.GetQuestData(questID); // 퀘스트 데이터 가져오기
 
             if (questData == null) return;
 
-            AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
-            popUp.SetQuestInfo(questData, isComplete);
+            AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>(); // 퀘스트 팝업 표시
+            popUp.SetQuestInfo(questData, isComplete); // 퀘스트 정보 설정
         }
 
         private void OnClickNextButton()
         {
-            DialogueManager.Instance.ShowCurrentDialogue();
+            DialogueManager.Instance.ShowCurrentDialogue(); // 현재 대화 표시
         }
 
         private void OnClickCloseButton()
         {
-            ClosePopup();
+            ClosePopup(); // 팝업 닫기
         }
 
-        public void SetNpcNameText(string name) => npcNameText.text = name;
+        public void SetNpcNameText(string name) => npcNameText.text = name; // NPC 이름 텍스트 설정
     }
 }
