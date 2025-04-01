@@ -147,7 +147,7 @@ namespace Managers
         }
         public void ClosePopup(UIPopup ui)
         {
-            if (CurrentPopupCount == 0)
+            if (CurrentPopupCount == 0 && GameStateManager.Instance.CurrentState != GameStateManager.GameState.TitleScene)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
