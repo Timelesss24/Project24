@@ -48,7 +48,7 @@ namespace Timelesss
             if (typewriterCoroutine != null)
                 StopCoroutine(typewriterCoroutine);
 
-            typewriterCoroutine = StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest));
+            typewriterCoroutine = StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete));
         }
 
         private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest, bool isComplete = false)

@@ -79,8 +79,9 @@ namespace Timelesss
             }
 
             bool hasNextDialogue = dialogue.nextDialogueID != 0;
+            bool isComplete = QuestManager.Instance.GetIsCompleteToNpc(npcID);
 
-            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
+            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest, isComplete);
 
             if (hasNextDialogue)
                 currentDialogueID = dialogue.nextDialogueID;

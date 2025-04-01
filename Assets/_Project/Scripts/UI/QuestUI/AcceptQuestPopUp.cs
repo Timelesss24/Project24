@@ -72,8 +72,9 @@ namespace Timelesss
 
         private void OnClickRewardButton()
         {
-            Debug.Log("보상 지급");
+            QuestManager.Instance.CompleteQuest(questData.key);
             DialogueManager.Instance.ShowQuestDialogue(true);
+            ClosePopup();
         }
     }
 }
