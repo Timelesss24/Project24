@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityUtils;
+using Random = UnityEngine.Random;
 
 namespace Timelesss
 {
@@ -19,6 +21,7 @@ namespace Timelesss
         private GameObject bossObect;
 
         [SerializeField] private GameObject potal;
+        public Action bossHpUIAction;
 
         private NavMeshSurface navMeshSurface;
 
@@ -103,6 +106,7 @@ namespace Timelesss
             if (enemies.Count == 1)
             {
                 bossObect.SetActive(true);
+                bossHpUIAction?.Invoke();
             }
             else if(enemies.Count == 0)
             {

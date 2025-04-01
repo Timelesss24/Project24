@@ -488,7 +488,7 @@ MonoBehaviour:
   - {fileID: 6536882554421665507, guid: c47657c0c8374a7449d894cec0aa7294, type: 3}
   - {fileID: 1761535780415142199, guid: 6450e736f016e334aab0d9641f19308a, type: 3}
   - {fileID: 6530091672749328409, guid: 8866b87bb5bb77442af9032565490785, type: 3}
-  bossPrefabs: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
+  bossPrefabs: {fileID: 1522695186968703268, guid: 188174a480189614ca8f2788907b4e5d,
     type: 3}
   bossSpawner: {fileID: 983035222}
   potal: {fileID: 6480536614048859313, guid: 5274cf59732a8d84e970000c2cc2605d, type: 3}
@@ -718,10 +718,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3783237538929662039, guid: 927eb925089e24dec90b3c9f28cdd3e9,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1079561589}
-    - targetCorrespondingSourceObject: {fileID: 3783237538929662039, guid: 927eb925089e24dec90b3c9f28cdd3e9,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1079561598}
   m_SourcePrefab: {fileID: 100100000, guid: 927eb925089e24dec90b3c9f28cdd3e9, type: 3}
 --- !u!1 &1079561573 stripped
@@ -730,24 +726,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1079561572}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1079561589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1079561573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf7d76a01e58d4b48b7c40456be1c61d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 1079561608}
-  hpChangedEvent: {fileID: 11400000, guid: 4adb4291f26f5a2478ad2e9c521afe46, type: 2}
-  staminaChangedEvent: {fileID: 11400000, guid: 807abd78625d55143bbbe8bd83fa8373,
-    type: 2}
-  expChangedEvent: {fileID: 11400000, guid: e002bc16c420b9146ad16c30ec37c53a, type: 2}
-  levelChangedEvent: {fileID: 11400000, guid: 9e9bbf3155709b84fbb640b9ef33a513, type: 2}
 --- !u!114 &1079561598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -762,18 +740,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1079561619}
   helmet: {fileID: 1981158205}
---- !u!114 &1079561608 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1362591078315495764, guid: 927eb925089e24dec90b3c9f28cdd3e9,
-    type: 3}
-  m_PrefabInstance: {fileID: 1079561572}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1079561573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea2285baa7bf476683f4ade7ac0c2768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1079561619 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6187148080591312827, guid: 927eb925089e24dec90b3c9f28cdd3e9,
