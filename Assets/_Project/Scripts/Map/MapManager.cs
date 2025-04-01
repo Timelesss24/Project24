@@ -31,7 +31,7 @@ namespace Timelesss
 
         private void Start()
         {
-            navMeshSurface.BuildNavMesh();
+            //navMeshSurface.BuildNavMesh();
             SetEnemy();
         }
 
