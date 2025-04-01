@@ -1015,7 +1015,7 @@ GameObject:
   - component: {fileID: 7022860099544658328}
   - component: {fileID: 3770541890150124077}
   - component: {fileID: 7293109943406439061}
-  - component: {fileID: 8455529769958301346}
+  - component: {fileID: 775274056756009198}
   m_Layer: 7
   m_Name: BeholderCustom
   m_TagString: Untagged
@@ -1115,8 +1115,8 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &8455529769958301346
-SphereCollider:
+--- !u!136 &775274056756009198
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1133,9 +1133,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.16292334
-  m_Center: {x: 0.0003092885, y: 1.4234103, z: -0.09662056}
+  serializedVersion: 2
+  m_Radius: 0.25178313
+  m_Height: 1.7541237
+  m_Direction: 1
+  m_Center: {x: -0.022050858, y: 1.2504466, z: -0.08646178}
 --- !u!1 &4942662968516062585
 GameObject:
   m_ObjectHideFlags: 0

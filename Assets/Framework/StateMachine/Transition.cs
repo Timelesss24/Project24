@@ -1,4 +1,4 @@
-namespace Timelesss
+﻿namespace Timelesss
 {
     public class Transition : ITransition
     {
@@ -11,5 +11,19 @@ namespace Timelesss
             To = to;
             Condition = condition;
         }
+
+    }
+    public class TransitionAs : ITransition
+    {
+
+        public IState To { get; }
+        public IPredicate Condition { get; }
+
+        public TransitionAs(IState to)
+        {
+            To = to;
+            //Condition = condition;
+        }
+
     }
 }

@@ -39,8 +39,8 @@ namespace Timelesss
         public override void OnEnter()
         {
             // Walk 애니메이션 실행
-            animator.CrossFade(WalkHash, crossFadeDuration);
-            Debug.Log("방황");
+            animator.CrossFade(IdleHash, crossFadeDuration);
+            Debug.Log("대기");
         }
 
         /// <summary>
@@ -50,23 +50,23 @@ namespace Timelesss
         public override void Update()
         {
             // 적이 이전 목적지에 도달했을 경우
-            if (HasReachedDestination())
-            {
-                // 반경 내에서 무작위 방향 벡터를 생성
-                var randomDirection = Random.insideUnitSphere * wanderRadius;
+            //if (HasReachedDestination())
+            //{
+            //    // 반경 내에서 무작위 방향 벡터를 생성
+            //    var randomDirection = Random.insideUnitSphere * wanderRadius;
 
-                // 시작 지점을 기준으로 배회 영역 벗어나지 않도록 보정
-                randomDirection += startPoint;
+            //    // 시작 지점을 기준으로 배회 영역 벗어나지 않도록 보정
+            //    randomDirection += startPoint;
 
-                // 해당 방향이 NavMesh 상에서 유효한 위치인지 확인 및 보정
-                NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, wanderRadius, 1);
+            //    // 해당 방향이 NavMesh 상에서 유효한 위치인지 확인 및 보정
+            //    NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, wanderRadius, 1);
 
-                // 최종 목적지 설정
-                var finalPosition = hit.position;
+            //    // 최종 목적지 설정
+            //    var finalPosition = hit.position;
 
-                // NavMeshAgent를 이용해 적을 목적지로 이동시킴
-                agent.SetDestination(finalPosition);
-            }
+            //    // NavMeshAgent를 이용해 적을 목적지로 이동시킴
+            //    agent.SetDestination(finalPosition);
+            //}
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace Timelesss
         /// 목적지 도달 여부는 NavMeshAgent의 상태와 남은 거리 등을 기반으로 판단합니다.
         /// </summary>
         /// <returns>적이 목적지에 도달했다면 true, 그렇지 않으면 false.</returns>
-        bool HasReachedDestination()
-        {
-            // NavMeshAgent의 상태를 기반으로 목적지 도달 여부 확인:
-            return !agent.pathPending && // 새로운 경로 계산중이 아니며
-                   agent.remainingDistance <= agent.stoppingDistance && // 남은 거리가 정지 거리보다 작거나 같으며
-                   (!agent.hasPath || agent.velocity.sqrMagnitude == 0f); // 경로가 없거나 속도가 0일 경우
-        }
+        //bool HasReachedDestination()
+        //{
+        //    // NavMeshAgent의 상태를 기반으로 목적지 도달 여부 확인:
+        //    return !agent.pathPending && // 새로운 경로 계산중이 아니며
+        //           agent.remainingDistance <= agent.stoppingDistance && // 남은 거리가 정지 거리보다 작거나 같으며
+        //           (!agent.hasPath || agent.velocity.sqrMagnitude == 0f); // 경로가 없거나 속도가 0일 경우
+        //}
     }
 }
