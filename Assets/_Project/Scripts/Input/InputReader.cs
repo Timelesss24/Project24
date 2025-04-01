@@ -16,6 +16,7 @@ namespace Timelesss
         public event UnityAction<bool> Dash = delegate { };
         public event UnityAction Attack = delegate { };
         public event UnityAction InterAction = delegate { };
+        public event UnityAction Consume = delegate { };
 
         PlayerInputActions inputActions;
 
@@ -92,6 +93,13 @@ namespace Timelesss
             if (context.phase == InputActionPhase.Started)
             {
                 InterAction?.Invoke();
+            }
+        }
+        void IPlayerActions.OnConsume(InputAction.CallbackContext context)
+        {
+            if (context.phase == InputActionPhase.Started)
+            {
+                Consume?.Invoke();
             }
         }
     }

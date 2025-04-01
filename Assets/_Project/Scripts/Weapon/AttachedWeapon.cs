@@ -6,7 +6,7 @@ namespace Timelesss
 {
     public class AttachedWeapon : MonoBehaviour
     {
-        [field: SerializeField] public WeaponData Weapon;
+        [field: SerializeField] public WeaponDetails Weapon;
         [field: SerializeField] public GameObject Trail;
     }
 }

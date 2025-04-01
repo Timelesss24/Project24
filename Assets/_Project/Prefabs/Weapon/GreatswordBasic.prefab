@@ -14771,7 +14771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc824e5f4f7244db817ddbeb33096c7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Weapon: {fileID: 11400000, guid: a04b7f6aa8158f94c8e23a69eaa2fb08, type: 2}
+  Weapon: {fileID: 11400000, guid: 35027283509a54f30b7641ace2bd3dc9, type: 2}
   Trail: {fileID: 2634014434910156134}
 --- !u!4 &1757121737753286356 stripped
 Transform:

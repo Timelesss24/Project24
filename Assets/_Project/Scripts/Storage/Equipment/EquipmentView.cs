@@ -22,7 +22,7 @@ namespace Timelesss
         
         Dictionary<EquipmentType, EquipmentSlot> slotDict;
         
-        EquipmentController controller; //todo
+        public EquipmentController  Controller { get; private set; } 
         
         public override void InitializeView(int capacity = 0)
         {
@@ -48,11 +48,11 @@ namespace Timelesss
         protected override Item GetItemFromSlot(Slot slot)
         {
             if (slot is not EquipmentSlot equipmentSlot) return null;
-            return controller?.Model?.Get(equipmentSlot.EquipmentType);
+            return Controller?.Model?.Get(equipmentSlot.EquipmentType);
         }
         public void Bind(EquipmentController controller)
         {
-            this.controller = controller;
+            this.Controller = controller;
         }
 
         public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
@@ -64,7 +64,7 @@ namespace Timelesss
             if (item is not EquipmentItem equipItem || equipItem.EquipmentType != targetSlot.EquipmentType)
                 return false;
 
-            controller?.Model?.Add(item);
+            Controller?.Model?.Add(item);
             return true;
         }
     }

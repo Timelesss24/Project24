@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using Managers;
 using Scripts.UI;
 using UnityEngine;
@@ -11,16 +11,7 @@ namespace Timelesss
         [SerializeField] Button settingButton;
         [SerializeField] Button inventoryButton;
         [SerializeField] Button questButton;
-
-        [SerializeField] Button skillButton;
-        [SerializeField] Image sbCoolTimeIndicator;
-        [SerializeField] Button ultimateSkillButton;
-        [SerializeField] Image usbCoolTimeIndicator;
-        [SerializeField] Button useItemButton;
-        [SerializeField] Image uibCoolTimeIndicator;
-
-        [SerializeField] GameObject bossUI;
-
+        
         UIManager uIManager;
 
         private void Awake()
@@ -28,10 +19,7 @@ namespace Timelesss
             settingButton.onClick.AddListener(OnClickSettingButton);
             inventoryButton.onClick.AddListener(OnClickInventoryButton);
             questButton.onClick.AddListener(OnClickQuestButton);
-            skillButton.onClick.AddListener(OnClickSkillButton);
-            ultimateSkillButton.onClick.AddListener(OnClickUltimateSkillButton);
-            useItemButton.onClick.AddListener(OnClickUseItemButton);
-            DungeonManager.Instance.bossHpUIAction += SetBossUI;
+           
         }
 
         private void Start()
@@ -59,28 +47,8 @@ namespace Timelesss
         {
             uIManager.ShowPopup<QuestPopUp>();
         }
-        void OnClickSkillButton()
-        {
-            CoolTime(1f, sbCoolTimeIndicator);
-        }
-        void OnClickUltimateSkillButton()
-        {
-            CoolTime(3f, usbCoolTimeIndicator);
-        }
-        void OnClickUseItemButton()
-        {
-            CoolTime(5f, uibCoolTimeIndicator);
-        }
 
-        void CoolTime(float time, Image indicator)
-        {
-            indicator.fillAmount = 1f;
-            indicator.DOFillAmount(0, time);
-        }
 
-        public void SetBossUI()
-        {
-            bossUI.SetActive(true);
-        }
+ 
     }
 }

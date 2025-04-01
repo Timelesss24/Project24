@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/WheelOnlyScrollRect.cs.meta
+guid: 7719cf08203764e28a581fa6aecae6b9
+========
 guid: c7e0b667785009845bc63e4cbf17af62
+>>>>>>>> Dev:Assets/_Project/Scripts/Enemy/BossEnemy/EarthShake.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

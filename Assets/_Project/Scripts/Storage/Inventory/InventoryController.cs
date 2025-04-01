@@ -25,45 +25,29 @@ namespace Timelesss
 
             //view.OnDrop += HandleDrop;
             Model.OnModelChanged += HandleModelChanged;
+            for (int i = 0; i < capacity; i++)
+            {
+                var item = Model.Get(i);
+                SubscribeToItem(item);
+            }
 
             RefreshView();
         }
+        
+        void SubscribeToItem(Item item)
+        {
+            if (item == null) return;
+
+            item.OnChanged += RefreshView;
+        }
 
         public void Bind(InventoryData data) => Model.Bind(data);
-
-        // void HandleDrop(Slot originalSlot, Slot closestSlot)
-        // {
-        //     // Moving to Same Slot or Empty Slot
-        //     if (originalSlot.Index == closestSlot.Index || closestSlot.ItemId.Equals(SerializableGuid.Empty))
-        //     {
-        //         Model.Swap(originalSlot.Index, closestSlot.Index);
-        //         return;
-        //     }
-        //
-        //     // TODO world drops
-        //     // TODO Cross Inventory drops
-        //     // TODO HotBar drops
-        //
-        //     // Moving to Non-Empty Slot
-        //     var sourceItemId = Model.Get(originalSlot.Index).details.Id;
-        //     var targetItemId = Model.Get(closestSlot.Index).details.Id;
-        //
-        //     if (sourceItemId.Equals(targetItemId) 
-        //         && Model.Get(closestSlot.Index).quantity + Model.Get(originalSlot.Index).quantity <= Model.Get(closestSlot.Index).details.MaxStack)
-        //     {
-        //         Model.Combine(originalSlot.Index, closestSlot.Index);
-        //     }
-        //     else
-        //     {
-        //         Model.Swap(originalSlot.Index, closestSlot.Index);
-        //     }
-        // }
+        
 
         void HandleModelChanged(IList<Item> items) => RefreshView();
 
         void RefreshView()
         {
-            
             
             for (int i = 0; i < capacity; i++)
             {
