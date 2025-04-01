@@ -9990,7 +9990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4602173910609317484}
   - component: {fileID: 8273274213430788087}
-  - component: {fileID: 4294464221760883980}
+  - component: {fileID: -7667591354076323332}
   m_Layer: 0
   m_Name: Portal_ToVillage
   m_TagString: Untagged
@@ -10040,7 +10040,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 2, z: 3}
   m_Center: {x: 0, y: 2.07, z: 0.85}
---- !u!114 &4294464221760883980
+--- !u!114 &-7667591354076323332
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
