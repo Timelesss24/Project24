@@ -48,10 +48,12 @@ namespace Timelesss
             if (typewriterCoroutine != null)
                 StopCoroutine(typewriterCoroutine);
 
-            typewriterCoroutine = StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete));
+            typewriterCoroutine =
+                StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete));
         }
 
-        private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest, bool isComplete = false)
+        private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest,
+            bool isComplete = false)
         {
             dialogueText.text = "";
 
@@ -67,30 +69,42 @@ namespace Timelesss
             {
                 nextButton.gameObject.SetActive(true);
             }
-            else if (!hasNextDialogue && isComplete)
+            else
             {
-                int completedQuestID = QuestManager.Instance.FindCompletedQuestID(npcID);
-
-                if (completedQuestID == 0) yield break;
-
-                QuestData completedQuest = QuestManager.Instance.GetQuestData(completedQuestID);
-                AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
-                popUp.SetQuestInfo(completedQuest, true);
+                HandleEndOfDialogue(hasQuest, isComplete);
             }
-            else if (!hasNextDialogue && hasQuest)
+        }
+
+        private void HandleEndOfDialogue(bool hasQuest, bool isComplete)
+        {
+            if (isComplete)
             {
-                int questID = QuestManager.Instance.GetQuestID(npcID);
-
-                if (questID == 0) yield break;
-
-                QuestData questData = QuestManager.Instance.GetQuestData(questID);
-                AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
-                popUp.SetQuestInfo(questData, false);
+                ShowQuestPopup(isComplete: true);
             }
-            else if (!hasNextDialogue && !hasQuest)
+            else if (hasQuest)
+            {
+                ShowQuestPopup(isComplete: false);
+            }
+            else
             {
                 closeButton.gameObject.SetActive(true);
             }
+        }
+
+        private void ShowQuestPopup(bool isComplete)
+        {
+            int questID = isComplete
+                ? QuestManager.Instance.FindCompletedQuestID(npcID)
+                : QuestManager.Instance.GetQuestID(npcID);
+
+            if (questID == 0) return;
+
+            QuestData questData = QuestManager.Instance.GetQuestData(questID);
+
+            if (questData == null) return;
+
+            AcceptQuestPopUp popUp = UIManager.Instance.ShowPopup<AcceptQuestPopUp>();
+            popUp.SetQuestInfo(questData, isComplete);
         }
 
         private void OnClickNextButton()

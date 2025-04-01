@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityUtils;
 
@@ -20,6 +22,8 @@ namespace Timelesss
         public List<int> CompleteQuestList => completeQuestList;
 
         private QuestType questType;
+        
+        private const int InvalidQuestID = 0;
 
         private void Start()
         {
@@ -34,13 +38,13 @@ namespace Timelesss
                 if (quest.npcID == npcID &&
                     !activeQuestList.Exists(x => x.questID == quest.key) &&
                     !completeQuestList.Contains(quest.key) &&
-                    (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
+                    (quest.enabledQuestID == InvalidQuestID || completeQuestList.Contains(quest.enabledQuestID)))
                 {
                     return quest.key;
                 }
             }
 
-            return 0;
+            return InvalidQuestID;
         }
 
         public QuestData GetQuestData(int questID)
@@ -121,12 +125,12 @@ namespace Timelesss
                        x.IsComplete();           
             });
 
-            return completedQuest == null ? 0 : completedQuest.questID;
+            return completedQuest == null ? InvalidQuestID : completedQuest.questID;
         }
-
+        
         public void UpdateProgress(object type)
         {
-            int id = 0;
+            int id = InvalidQuestID;
 
             if (type is EnemyOS enemy)
             {

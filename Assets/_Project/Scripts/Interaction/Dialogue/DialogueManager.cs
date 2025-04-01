@@ -17,6 +17,9 @@ namespace Timelesss
 
         private Camera npcCamera;
 
+        private const int EndOfDialogueID = 0;
+        private const int NoDataID = -1;
+        
         private void Start()
         {
             dataLoader = new DialogueDataLoader();
@@ -35,7 +38,7 @@ namespace Timelesss
             currentDialogueID = hasCompleted ? 
                 FindCompletedDialogueID(npcInfo.ID) : FindFirstDialogueID(npcInfo.ID, questID != 0);
 
-            if (currentDialogueID == -1)
+            if (currentDialogueID == NoDataID)
             {
                 onComplete?.Invoke();
                 Debug.LogWarning($"NPC {npcInfo.ID}의 대화 데이터를 찾을 수 없습니다.");
@@ -97,7 +100,7 @@ namespace Timelesss
                 }
             }
 
-            return -1;
+            return NoDataID;
         }
 
         private int FindCompletedDialogueID(int npcID)
@@ -110,7 +113,7 @@ namespace Timelesss
                 }
             }
 
-            return -1;
+            return NoDataID;
         }
         
         public void ShowQuestDialogue(bool isAccept)
@@ -126,11 +129,11 @@ namespace Timelesss
                 (isAccept ? currentDialogue.acceptDialogueID : currentDialogue.declineDialogueID,
                 out var dialogue) ? dialogue : null;
 
-            bool hasNextDialogue = dialogue.nextDialogueID != 0;
+            bool hasNextDialogue = dialogue.nextDialogueID != EndOfDialogueID;
 
             dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
 
-            currentDialogueID = hasNextDialogue ? currentDialogue.nextDialogueID : 0;
+            currentDialogueID = hasNextDialogue ? currentDialogue.nextDialogueID : EndOfDialogueID;
         }
     }
 }
