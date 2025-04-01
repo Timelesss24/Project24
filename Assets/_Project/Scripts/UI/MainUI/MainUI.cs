@@ -1,9 +1,6 @@
 using DG.Tweening;
-using KBCore.Refs;
 using Managers;
 using Scripts.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,8 +43,13 @@ namespace Timelesss
 
         void OnClickInventoryButton()
         {
-            uIManager.ShowPopup<InventoryPopUp>();
-            //eventChannel.Invoke(10);
+            var view = uIManager.ShowPopup<InventoryView>();
+            view.Bind(PlayerManager.Instance.Inventory.Controller);
+            PlayerManager.Instance.Inventory.Controller.InitializeView(view);
+            
+            var eqView = uIManager.ShowPopup<EquipmentView>();
+            eqView.Bind(PlayerManager.Instance.Equipment.Controller);
+            PlayerManager.Instance.Equipment.Controller.InitializeView(eqView);
         }
 
         void OnClickQuestButton()

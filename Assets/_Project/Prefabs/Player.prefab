@@ -5123,7 +5123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8b524a46ec4154c8d3e0642636c6a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 6187148080591312827}
   helmet: {fileID: 6815976800896096675}
 --- !u!1 &3849191001419436325
 GameObject:

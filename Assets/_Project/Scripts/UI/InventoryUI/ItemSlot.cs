@@ -32,7 +32,7 @@ namespace Timelesss
             {
                 useItemButton.onClick.AddListener(OnClickUseItemButton);
             }
-            UseItemAction += itemData.OnUseItem;
+            //UseItemAction += itemData.OnUseItem;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
