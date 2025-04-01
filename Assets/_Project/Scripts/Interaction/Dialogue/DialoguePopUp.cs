@@ -56,7 +56,6 @@ namespace Timelesss
             dialogueText.text = "";
 
             text = text.Replace("모험가", $"{playerInfo.GetName()}");
-            Debug.Log(text);
 
             foreach (char letter in text)
             {
@@ -96,7 +95,6 @@ namespace Timelesss
 
         private void OnClickNextButton()
         {
-            Debug.Log("Next Button");
             DialogueManager.Instance.ShowCurrentDialogue();
         }
 

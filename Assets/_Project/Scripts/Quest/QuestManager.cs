@@ -61,7 +61,7 @@ namespace Timelesss
                 if (questData != null)
                 {
                     activeQuestList.Add(new ActiveQuestInfo(questID, questData.targetNum));
-                    Debug.Log($"퀘스트 시작: {questDict[questID].questDescription}");
+                    Debug.Log($"퀘스트 시작: {questDict[questID].questName}");
                 }
             }
             else
@@ -81,7 +81,7 @@ namespace Timelesss
 
                 if (questDict.TryGetValue(questID, out var completedQuest))
                 {
-                    Debug.Log($"퀘스트 완료: {completedQuest.questDescription}");
+                    Debug.Log($"퀘스트 완료: {completedQuest.questName}");
                     RewardPlayer(completedQuest.rewardExp, completedQuest.rewardItemID, completedQuest.rewardItemNum);
                 }
                 else
@@ -127,8 +127,6 @@ namespace Timelesss
         public void UpdateProgress(object type)
         {
             int id = 0;
-
-            Debug.Log("진행도 업데이트 호출");
 
             if (type is EnemyOS enemy)
             {
