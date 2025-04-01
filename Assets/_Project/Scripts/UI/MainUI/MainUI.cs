@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Managers;
 using Scripts.UI;
 using UnityEngine;
@@ -19,6 +19,8 @@ namespace Timelesss
         [SerializeField] Button useItemButton;
         [SerializeField] Image uibCoolTimeIndicator;
 
+        [SerializeField] GameObject bossUI;
+
         UIManager uIManager;
 
         private void Awake()
@@ -29,6 +31,7 @@ namespace Timelesss
             skillButton.onClick.AddListener(OnClickSkillButton);
             ultimateSkillButton.onClick.AddListener(OnClickUltimateSkillButton);
             useItemButton.onClick.AddListener(OnClickUseItemButton);
+            DungeonManager.Instance.bossHpUIAction += SetBossUI;
         }
 
         private void Start()
@@ -73,6 +76,11 @@ namespace Timelesss
         {
             indicator.fillAmount = 1f;
             indicator.DOFillAmount(0, time);
+        }
+
+        public void SetBossUI()
+        {
+            bossUI.SetActive(true);
         }
     }
 }

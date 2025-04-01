@@ -33,7 +33,7 @@ namespace Timelesss
         private bool isSmokeAttack = false;
         private bool isShakeAttack = false;
 
-        public Image hpBar;
+        //public Image hpBar;
         public bool isDie = false;
         public IState idleState;
         public IState walkState; // 플레이어 추적 상태
@@ -44,6 +44,8 @@ namespace Timelesss
         public GameObject LavaStone;
 
         public event System.Action OnDamageTaken;
+
+        [SerializeField] private EventChannel<float> bossHpChannel;
 
         private void Awake()
         {
@@ -72,7 +74,7 @@ namespace Timelesss
 
             //skinRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
             enemyTransform = GetComponent<Transform>();
-            hpBar = GetComponentInChildren<Image>();
+            //hpBar = GetComponentInChildren<Image>();
             enemyHp = playerDetector.Date.maxHp;
             // 초기 상태 설정 (방황 상태로 시작)
             stateMachine.SetState(idleState);
@@ -103,7 +105,7 @@ namespace Timelesss
             attackTimer.Start();
             playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해
 
-            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y+6, this.transform.position.z);
+            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y + 6, this.transform.position.z);
         }
         void OnHit()
         {
@@ -138,8 +140,8 @@ namespace Timelesss
         }
         void UpdateUI()
         {
-            if (hpBar != null)
-                hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
+            //if (hpBar != null)
+            bossHpChannel?.Invoke(enemyHp);
         }
         void FadeOutDestroy()
         {

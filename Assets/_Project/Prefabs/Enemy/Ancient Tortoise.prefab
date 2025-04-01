@@ -124,10 +124,15 @@ MonoBehaviour:
   agent: {fileID: 0}
   playerDetector: {fileID: 0}
   animator: {fileID: 0}
+  generateArea:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
   hpBar: {fileID: 0}
   isDie: 0
   EarthShake: {fileID: 1302072210878452296}
   Smoke: {fileID: 5761021046377642337}
+  LavaStone: {fileID: 0}
+  bossHpChannel: {fileID: 11400000, guid: b82abb1d53773214ea57234496d6359f, type: 2}
 --- !u!114 &2458014740496945720
 MonoBehaviour:
   m_ObjectHideFlags: 0

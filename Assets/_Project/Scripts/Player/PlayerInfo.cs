@@ -28,7 +28,7 @@ namespace Timelesss
         private int equipmentDeffecne = 0;
 
         public int totalAttack { get => baseAttack + equipmentAttack; }
-        private int baseAttack = 1000000;
+        private int baseAttack = 100;
         private int equipmentAttack = 0;
 
         private int currentExp = 0;
