@@ -11,7 +11,8 @@ namespace Timelesss
         [field: SerializeField] public Image Icon { get; private set; } // 슬롯에 표시될 아이템 이미지
         [field: SerializeField] public TextMeshProUGUI StackLabel { get; private set; } // 슬롯에 표시될 아이템 개수
         [field: SerializeField] public Image SlotFrame { get; private set; } // 슬롯의 프레임 이미지
-
+        [field: SerializeField] public  Image DefaultIcon { get; private set; }
+        
         public int Index { get; private set; } // 슬롯의 인덱스
         public SerializableGuid ItemId { get; private set; } = SerializableGuid.Empty;
         public Sprite BaseSprite { get; private set; } // 슬롯 기본 아이템 스프라이트

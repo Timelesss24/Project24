@@ -61,7 +61,7 @@ namespace Timelesss
             if (toSlot is not EquipmentSlot targetSlot)
                 return false;
 
-            if (item == null || item.EquipmentType != targetSlot.EquipmentType)
+            if (item is not EquipmentItem equipItem || equipItem.EquipmentType != targetSlot.EquipmentType)
                 return false;
 
             controller?.Model?.Add(item);

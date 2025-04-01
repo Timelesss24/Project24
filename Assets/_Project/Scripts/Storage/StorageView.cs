@@ -37,7 +37,6 @@ namespace Timelesss
     {
         public Slot[] Slots;
         [SerializeField] protected GameObject ghostIconObject;
-       // [SerializeField] GameObject ghostIconObject;
         RectTransform ghostIcon;
         // public event Action<Slot, Slot> OnDrop;
         

@@ -8,11 +8,14 @@ namespace Timelesss
     {
         EquipmentView view;
         public EquipmentModel Model { get; private set; }
+        public EquipmentVisualHandler VisualHandler { get; private set; }
 
-        EquipmentController(EquipmentModel model)
+        EquipmentController(EquipmentModel model, EquipmentVisualHandler visualHandler)
         {
             Debug.Assert(model != null, "Model is null");
-            this.Model = model;
+            Debug.Assert(visualHandler != null, "visualHandler is null");
+            Model = model;
+            VisualHandler = visualHandler;
         }
 
         public void InitializeView(EquipmentView view)
@@ -20,7 +23,7 @@ namespace Timelesss
             this.view = view;
             view.InitializeView();
 
-           // view.OnDrop += HandleDrop;
+            // view.OnDrop += HandleDrop;
             Model.OnModelChanged += HandleModelChanged;
 
             RefreshView();
@@ -44,6 +47,12 @@ namespace Timelesss
         void HandleModelChanged(Dictionary<EquipmentType, Item> items)
         {
             RefreshView();
+
+            foreach (var item in items.Values)
+            {
+                if (item == null) continue;
+                VisualHandler?.Equip((EquipmentItem)item); // 3D 모델 장착
+            }
         }
 
         void RefreshView()
@@ -53,14 +62,14 @@ namespace Timelesss
                 var type = (EquipmentType)i;
                 var item = Model.Get(type);
 
-                
+
                 if (item == null || item.Id.Equals(SerializableGuid.Empty))
                 {
-                    view.Slots[i].Set(SerializableGuid.Empty, ((EquipmentSlot)view.Slots[i]).Icon.sprite);
+                    view.Slots[i].Set(SerializableGuid.Empty, null);
                 }
                 else
                 {
-                    view.Slots[i].Set(item.Id, item.details.Icon);
+                    view.Slots[i].Set(item.Id, item.Details.Icon);
                 }
             }
         }
@@ -69,11 +78,17 @@ namespace Timelesss
 
         public class Builder
         {
-            IEnumerable<ItemDetails> itemDetails;
-
-            public Builder WithStartingItems(IEnumerable<ItemDetails> itemDetails)
+            IEnumerable<EquipmentDetails> itemDetails;
+            EquipmentVisualHandler visualHandler;
+            public Builder WithStartingItems(IEnumerable<EquipmentDetails> itemDetails)
             {
                 this.itemDetails = itemDetails;
+                return this;
+            }
+
+            public Builder WithVisualHandler(EquipmentVisualHandler handler)
+            {
+                this.visualHandler = handler;
                 return this;
             }
 
@@ -81,9 +96,14 @@ namespace Timelesss
             {
                 var model = itemDetails != null
                     ? new EquipmentModel(itemDetails)
-                    : new EquipmentModel(Array.Empty<ItemDetails>());
+                    : new EquipmentModel(Array.Empty<EquipmentDetails>());
 
-                return new EquipmentController(model);
+
+                foreach (var item in model.Items)
+                    visualHandler.Equip((EquipmentItem)item.Value);
+
+
+                return new EquipmentController(model, visualHandler);
             }
         }
 

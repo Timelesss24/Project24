@@ -75,7 +75,7 @@ namespace Timelesss
                 for (var i = 0; i < capacity; i++)
                 {
                     if (Items[i] == null) continue;
-                    inventoryData.Items[i].details = ItemDatabase.GetDetailsById(Items[i].detailsId);
+                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
                 }
             }
 
@@ -140,8 +140,8 @@ namespace Timelesss
         /// <returns>병합 후 대상 아이템의 총 수량.</returns>
         public int Combine(int source, int target)
         {
-            var total = Items[source].quantity + Items[target].quantity;
-            Items[target].quantity = total;
+            var total = Items[source].Quantity + Items[target].Quantity;
+            Items[target].Quantity = total;
             Remove(Items[source]);
             return total;
         }

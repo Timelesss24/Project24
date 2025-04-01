@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Serialization;
 
 public interface IObservableArray<T>
 {
@@ -22,7 +21,6 @@ public interface IObservableArray<T>
 public class ObservableArray<T> : IObservableArray<T>
 {
 
-    [FormerlySerializedAs("items")]
     public T[] Items;
 
     public event Action<T[]> AnyValueChanged = delegate { };

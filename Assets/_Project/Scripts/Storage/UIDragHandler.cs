@@ -24,21 +24,21 @@ namespace Timelesss
                 .OrderBy(slot => Vector2.Distance(slot.RectTransform.position, Input.mousePosition))
                 .FirstOrDefault();
 
-            if (closestSlot != null)
+            if (closestSlot)
             {
                 bool droppedToSameSlot = closestSlot == DragState.OriginSlot;
 
                 // 드롭 대상 슬롯이 속한 View로부터 드롭 처리
                 var targetContainer = closestSlot.GetComponentInParent<IItemContainer>();
 
-                targetContainer?.HandleDrop(DragState.OriginSlot, closestSlot, DragState.DraggingItem);
-                return;
-                
-                // if (!targetContainer?.HandleDrop(DragState.OriginSlot, closestSlot, DragState.DraggingItem) ?? true)
-                // {
-                //     DragState.OriginSlot?.RestoreVisual();
-                // }
-
+                if (targetContainer?.HandleDrop(DragState.OriginSlot, closestSlot, DragState.DraggingItem) ?? true)
+                {
+                    DragState.OriginSlot?.Remove();
+                }
+                else
+                {
+                    DragState.OriginSlot?.RestoreVisual();
+                }
 
                 if (droppedToSameSlot)
                 {

@@ -18,8 +18,7 @@ namespace Timelesss
         [Tooltip("무기에 특화된 움직임 애니메이션을 관리하기 위한 애니메이터 오버라이드 컨트롤러입니다.")]
         [field: SerializeField]
         public AnimatorOverrideController OverrideController { get; private set; } // 애니메이터 오버라이드 컨트롤러
-
-
+        
         public override EquipType EquipType => EquipType.Sword;
         // 초기화 메서드
         public void InIt()

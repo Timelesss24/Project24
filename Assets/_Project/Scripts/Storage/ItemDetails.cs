@@ -1,9 +1,15 @@
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Timelesss
 {
+    public enum ItemType
+    {
+        Usable,
+        Equipment,
+        Quest,
+    }
+    
     [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
     [Serializable]
     public class ItemDetails : ScriptableObject
@@ -11,10 +17,12 @@ namespace Timelesss
         public string Name;
         public int MaxStack = 1;
         public SerializableGuid Id = SerializableGuid.NewGuid();
-        
-        public ItemType ItemType;
-        public EquipmentType EquipmentType;
 
+        public ItemType ItemType;
+        public GameObject DropPrefab;
+        
+        public EquipmentType EquipmentType;
+        
         void AssignNewGuid()
         {
             Id = SerializableGuid.NewGuid();
@@ -25,9 +33,11 @@ namespace Timelesss
         [TextArea]
         public string Description;
 
-        public Item Create(int quantity)
+        public virtual Item Create(int quantity)
         {
             return new Item(this, quantity);
         }
     }
+
+
 }

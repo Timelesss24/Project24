@@ -74,7 +74,7 @@ namespace Timelesss
                 }
                 else
                 {
-                    view.Slots[i].Set(item.Id, item.details.Icon, item.quantity);
+                    view.Slots[i].Set(item.Id, item.Details.Icon, item.Quantity);
                 }
             }
         }

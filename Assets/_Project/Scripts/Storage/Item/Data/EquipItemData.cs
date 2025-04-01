@@ -17,7 +17,7 @@ namespace Timelesss
         [field: SerializeField] public GameObject EquipPrefab { get; protected set; }
         
 
-        public override ItemType ItemType => ItemType.EquipableItem;
+        public override ItemType Type => ItemType.Equipment;
         public override bool CanStack => false;
         public override IItemStrategy CreateStrategy()
         {

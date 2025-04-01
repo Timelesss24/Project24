@@ -25,7 +25,7 @@ namespace Timelesss
         [FormerlySerializedAs("defaultData")]
         [FormerlySerializedAs("weaponData")]
         [FormerlySerializedAs("weapon")]
-        [SerializeField, Anywhere] WeaponData defaultWeaponData;
+        [SerializeField] WeaponData defaultWeaponData;
 
         [SerializeField] LayerMask hitboxLayer;
 
@@ -257,6 +257,7 @@ namespace Timelesss
 
         public void EquipWeapon(WeaponData data)
         {
+            if(!data) return;
             UnEquipWeapon();
 
             data.InIt();

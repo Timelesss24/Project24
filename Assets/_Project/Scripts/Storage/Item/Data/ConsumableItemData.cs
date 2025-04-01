@@ -15,7 +15,7 @@ namespace Timelesss
         public float duration;      // 지속 시간 (0이면 즉시 효과)
         public PotionType type;
 
-        public override ItemType ItemType => ItemType.UseableItem;
+        public override ItemType Type => ItemType.Usable;
         public override bool CanStack => true;
         public override IItemStrategy CreateStrategy()
         {

@@ -23,7 +23,7 @@ namespace Timelesss
             itemDescriptionObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = itemData.ItemDescription;
             playerInfo = FindObjectOfType<PlayerInfo>();
             equipinventoryPopUp = FindObjectOfType<EquipinventoryPopUp>();
-            if (itemData.ItemType == ItemType.EquipableItem)
+            if (itemData.Type == ItemType.Equipment)
             {
                 useItemButton.GetComponentInChildren<TextMeshProUGUI>().text = "장착";
                 useItemButton.onClick.AddListener(OnClickEquipItemButton);

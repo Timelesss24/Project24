@@ -32,14 +32,7 @@ namespace Timelesss
                 Slots[i] = slotComponent;
                 slotComponent.Initialize(i); // 초기화 (예: 인덱스 설정)
             }
-
-            // // 고스트 아이콘 생성
-            // if (ghostIconPrefab != null)
-            // {
-            //     var ghostIconObject = Instantiate(ghostIconPrefab, transform);
-            //     ghostIcon = ghostIconObject.GetComponent<RectTransform>();
-            //     ghostIcon.gameObject.SetActive(false); // 기본적으로 비활성화
-            // }
+            
 
             // 닫기 버튼 이벤트 연결
             closeButton.onClick.AddListener(ClosePopup);
@@ -71,8 +64,8 @@ namespace Timelesss
             var targetItem = model.Get(toIndex);
 
             if (targetItem != null &&
-                targetItem.details.Id == item.details.Id &&
-                targetItem.quantity + item.quantity <= item.details.MaxStack)
+                targetItem.Details.Id == item.Details.Id &&
+                targetItem.Quantity + item.Quantity <= item.Details.MaxStack)
             {
                 model.Combine(fromIndex, toIndex);
             }

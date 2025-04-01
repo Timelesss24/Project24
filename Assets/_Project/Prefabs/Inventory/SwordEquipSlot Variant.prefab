@@ -13,6 +13,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordEquipSlot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2077480237002003722, guid: 91abcec953d3a442eb837f0e33f34eca,
+        type: 3}
+      propertyPath: <DefaultIcon>k__BackingField
+      value: 
+      objectReference: {fileID: 6496129684256750168}
     - target: {fileID: 4544109207672649323, guid: 91abcec953d3a442eb837f0e33f34eca,
         type: 3}
       propertyPath: m_Pivot.x
@@ -118,3 +123,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91abcec953d3a442eb837f0e33f34eca, type: 3}
+--- !u!114 &6496129684256750168 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7542388233012756876, guid: 91abcec953d3a442eb837f0e33f34eca,
+    type: 3}
+  m_PrefabInstance: {fileID: 3642587075560192980}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
