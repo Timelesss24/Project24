@@ -1,9 +1,10 @@
-using System;
 using Managers;
 using Scripts.UI;
 using Timelesss;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
 
 namespace _01_Scripts.UI.Scene
 {
@@ -13,19 +14,30 @@ namespace _01_Scripts.UI.Scene
         [SerializeField] private Button settingBtn;
         [SerializeField] private Button exitBtn;
 
+        [SerializeField] private TextMeshProUGUI titleText;
+
+        [SerializeField] private float wobbleAmount = 10f;
+        [SerializeField] private float wobbleSpeed = 0.6f;
+
         private void Awake()
         {
-            if(startBtn)
+            if (startBtn)
                 startBtn.onClick.AddListener(OnClickedStartBtn);
-            if(settingBtn)
+            if (settingBtn)
                 settingBtn.onClick.AddListener(OnClickedSettingBtn);
-            if(exitBtn)
+            if (exitBtn)
                 exitBtn.onClick.AddListener(OnClickedExitBtn);
+            
+            RectTransform rectTransform = titleText.GetComponent<RectTransform>();
+
+            rectTransform.DOAnchorPosY(rectTransform.anchoredPosition.y + wobbleAmount, wobbleSpeed)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo);
         }
 
         private void OnClickedSettingBtn()
         {
-            throw new NotImplementedException();
+            UIManager.Instance.ShowPopup<SettingPopUp>();
         }
 
         private void OnClickedStartBtn()
