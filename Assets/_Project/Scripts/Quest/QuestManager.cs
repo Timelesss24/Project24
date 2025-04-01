@@ -10,8 +10,16 @@ namespace Timelesss
         private QuestDataLoader questDataLoader;
 
         private Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
-        private List<int> activeQuests = new List<int>();
-        private List<int> completeQuests = new List<int>();
+
+        private List<ActiveQuestInfo> activeQuestList = new List<ActiveQuestInfo>();
+
+        public List<ActiveQuestInfo> ActiveQuestList => activeQuestList;
+
+        private List<int> completeQuestList = new List<int>();
+
+        public List<int> CompleteQuestList => completeQuestList;
+
+        private QuestType questType;
 
         private void Start()
         {
@@ -19,16 +27,15 @@ namespace Timelesss
             questDict = questDataLoader.ItemsDict;
         }
 
-        public int GetQuest(int npcID)
+        public int GetQuestID(int npcID)
         {
             foreach (var quest in questDict.Values)
             {
                 if (quest.npcID == npcID &&
-                    !activeQuests.Contains(quest.key) &&
-                    !completeQuests.Contains(quest.key) &&
-                    (quest.enabledQuestID == 0 || completeQuests.Contains(quest.enabledQuestID)))
+                    !activeQuestList.Exists(x => x.questID == quest.key) &&
+                    !completeQuestList.Contains(quest.key) &&
+                    (quest.enabledQuestID == 0 || completeQuestList.Contains(quest.enabledQuestID)))
                 {
-                    StartQuest(quest.key);
                     return quest.key;
                 }
             }
@@ -36,12 +43,26 @@ namespace Timelesss
             return 0;
         }
 
+        public QuestData GetQuestData(int questID)
+        {
+            if (questDict.TryGetValue(questID, out var questData))
+            {
+                return questData;
+            }
+
+            return null;
+        }
+
         public void StartQuest(int questID)
         {
-            if (!activeQuests.Contains(questID) && questDict.ContainsKey(questID))
+            if (!activeQuestList.Exists(x => x.questID == questID) && questDict.ContainsKey(questID))
             {
-                activeQuests.Add(questID);
-                Debug.Log($"퀘스트 시작: {questDict[questID].questDescription}");
+                QuestData questData = GetQuestData(questID);
+                if (questData != null)
+                {
+                    activeQuestList.Add(new ActiveQuestInfo(questID, questData.targetNum));
+                    Debug.Log($"퀘스트 시작: {questDict[questID].questDescription}");
+                }
             }
             else
             {
@@ -51,21 +72,17 @@ namespace Timelesss
 
         public void CompleteQuest(int questID)
         {
-            if (activeQuests.Contains(questID))
+            ActiveQuestInfo activeQuest = activeQuestList.Find(x => x.questID == questID);
+
+            if (activeQuest != null)
             {
-                activeQuests.Remove(questID);
-                completeQuests.Add(questID);
+                activeQuestList.Remove(activeQuest);
+                completeQuestList.Add(questID);
 
                 if (questDict.TryGetValue(questID, out var completedQuest))
                 {
                     Debug.Log($"퀘스트 완료: {completedQuest.questDescription}");
                     RewardPlayer(completedQuest.rewardExp, completedQuest.rewardItemID, completedQuest.rewardItemNum);
-
-                    if (completedQuest.enabledQuestID != 0)
-                    {
-                        Debug.Log($"후속 퀘스트 활성화: {completedQuest.enabledQuestID}");
-                        StartQuest(completedQuest.enabledQuestID);
-                    }
                 }
                 else
                 {
@@ -80,7 +97,68 @@ namespace Timelesss
 
         private void RewardPlayer(int exp, int itemId, int itemNum)
         {
-            Debug.Log($"플레이어에게 보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+            Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
+        }
+
+        public bool GetIsComplete(int questId) =>
+            activeQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
+
+        public bool GetIsCompleteToNpc(int npcId) => activeQuestList.Exists(x =>
+        {
+            QuestData questData = GetQuestData(x.questID);
+            return questData != null &&
+                   questData.npcID == npcId &&
+                   x.progress >= x.goal;
+        });
+
+        public int FindCompletedQuestID(int npcID)
+        {
+            ActiveQuestInfo completedQuest = activeQuestList.Find(x =>
+            {
+                QuestData questData = GetQuestData(x.questID);
+                return questData != null &&
+                       questData.npcID == npcID && 
+                       x.IsComplete();           
+            });
+
+            return completedQuest == null ? 0 : completedQuest.questID;
+        }
+
+        public void UpdateProgress(object type)
+        {
+            int id = 0;
+
+            Debug.Log("진행도 업데이트 호출");
+
+            if (type is EnemyOS enemy)
+            {
+                questType = QuestType.MonsterKill;
+                id = enemy.enemyCode;
+            }
+
+            else if (type is ItemData item)
+            {
+                questType = QuestType.MaterialGather;
+                // 아이템 아이디 가져오기
+            }
+            else
+                questType = QuestType.DungeonClear;
+
+            ActiveQuestInfo activeQuest = activeQuestList.Find(x =>
+            {
+                QuestData questData = GetQuestData(x.questID);
+                return questData != null &&
+                       questData.questType == questType &&
+                       questData.targetID == id;
+            });
+
+            if (activeQuest != null)
+            {
+                if (activeQuest.progress < activeQuest.goal)
+                    activeQuest.progress++;
+
+                Debug.Log($"퀘스트 진행 업데이트: {activeQuest.progress}/{activeQuest.goal}");
+            }
         }
     }
 }

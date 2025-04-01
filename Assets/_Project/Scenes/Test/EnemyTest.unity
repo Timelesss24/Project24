@@ -426,6 +426,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueBoarCustom
       objectReference: {fileID: 0}
+    - target: {fileID: 6536882554421665507, guid: c47657c0c8374a7449d894cec0aa7294,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7174637172123202149, guid: c47657c0c8374a7449d894cec0aa7294,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -549,6 +554,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: FootmanCustom
       objectReference: {fileID: 0}
+    - target: {fileID: 1761535780415142199, guid: 6450e736f016e334aab0d9641f19308a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4986024435059286594, guid: 6450e736f016e334aab0d9641f19308a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -566,6 +581,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GolemCustom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530091672749328409, guid: 8866b87bb5bb77442af9032565490785,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8453937913422188302, guid: 8866b87bb5bb77442af9032565490785,
         type: 3}
@@ -994,6 +1014,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MimicCustom
       objectReference: {fileID: 0}
+    - target: {fileID: 7743039942230440850, guid: d0ae57917f131a842a0ce2b219f77955,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8125654673358408417, guid: d0ae57917f131a842a0ce2b219f77955,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1146,6 +1171,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BeholderCustom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4786562564244088828, guid: 507a1a3f9ca57474abe85e16e86da748,
         type: 3}

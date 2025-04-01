@@ -13,9 +13,9 @@ namespace Timelesss
         [SerializeField] Image armorEquipIcon;
         [SerializeField] Image bootsEquipIcon;
 
-        public void OnEquipItem(ItemData itemData)
+        public void OnEquipItem(EquipItemData itemData)
         {
-            switch (itemData.equipType)
+            switch (itemData.EquipType)
             {
                 case EquipType.Null:
                     break;

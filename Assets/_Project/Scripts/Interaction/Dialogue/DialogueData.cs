@@ -31,6 +31,21 @@ public class DialogueData
     /// </summary>
     public bool hasQuest;
 
+    /// <summary>
+    /// HasCompleteQuest
+    /// </summary>
+    public bool hasCompleteQuest;
+
+    /// <summary>
+    /// AcceptDialogueID
+    /// </summary>
+    public int acceptDialogueID;
+
+    /// <summary>
+    /// DeclineDialogueID
+    /// </summary>
+    public int declineDialogueID;
+
 }
 public class DialogueDataLoader
 {
