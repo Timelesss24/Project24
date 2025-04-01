@@ -182,7 +182,7 @@ namespace Timelesss
 
             if (enemyTransform != null)
             {
-                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f),2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f),2f).SetEase(Ease.InOutSine).OnComplete(() => DungeonManager.Instance.RemoveEnemy(gameObject));
             }
         }
         private IEnumerator DelayDie(float count)
