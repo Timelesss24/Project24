@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityUtils;
@@ -12,8 +13,8 @@ namespace Framework.Audio
     /// </summary>
     public class SoundManager : PersistentSingleton<SoundManager>
     {
-        [Header("BGM Settings")] [SerializeField]
-        private AudioSource bgmSource; // 배경 음악용 오디오 소스
+               [Header("BGM Settings")]
+        [SerializeField] private AudioSource bgmSource; // 배경 음악용 오디오 소스
 
         [FormerlySerializedAs("bgmVolume")]
         [Range(0f, 1f)] public float BGMVolume = 1f; // 배경음악(BGM)의 볼륨
@@ -32,13 +33,22 @@ namespace Framework.Audio
 
         private Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
         
+        
+        // 추가
+        private Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
+        [SerializeField] private AudioClip clickSound;
+        public AudioClip ClickSound => clickSound;
+
         protected void Start()
         {
             bgmSource = gameObject.GetOrAdd<AudioSource>();
             
             ApplyVolumeSettings(); // 초기 볼륨 설정
+            
+            PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")); 
         }
 
+        
         /// <summary>
         /// 볼륨 설정 적용
         /// </summary>
@@ -49,7 +59,6 @@ namespace Framework.Audio
             //isMuted | isSfxMuted? 0f : sfxVolume;
         }
 
-
         /// <summary>
         /// BGM 재생
         /// </summary>
@@ -59,7 +68,7 @@ namespace Framework.Audio
             if (isMuted) return;
 
             // 이름으로 BGM 찾기
-            AudioClip clip = bgmClips.Find(c => c.name == clipName);
+            AudioClip clip = bgmClips.Find(c => c.name.Contains(clipName));
 
             if (clip != null && bgmSource.clip != clip)
             {
@@ -78,16 +87,41 @@ namespace Framework.Audio
         }
 
         /// <summary>
-        /// SFX 재생
+        /// SFX 재생 
         /// </summary>
         /// <param name="clip">재생할 효과음 클립</param>
         public static void PlaySfx(AudioClip clip)
         {
             if (Instance.isMuted || !clip) return;
 
-            SoundSource obj = Instantiate(Instance.SoundSourcePrefab); // 새로운 사운드 소스 오브젝트 생성
-            SoundSource soundSource = obj.GetComponent<SoundSource>(); // 사운드 소스 가져오기
+            SoundSource soundSource = Instance.GetSoundSourceFromPool(); // 풀에서 SoundSource 가져오기
             soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
+        }
+
+        /// <summary>
+        /// 풀에서 SoundSource 가져오기. 없으면 새로 생성.
+        /// </summary>
+        private SoundSource GetSoundSourceFromPool()
+        {
+            if (soundSourcePool.Count > 0)
+            {
+                SoundSource source = soundSourcePool.Dequeue();
+                source.gameObject.SetActive(true);
+                return source;
+            }
+            else
+            {
+                return Instantiate(SoundSourcePrefab, transform);
+            }
+        }
+
+        /// <summary>
+        /// 사용 완료한 SoundSource를 풀에 반환.
+        /// </summary>
+        public void ReturnSoundSource(SoundSource source)
+        {
+            source.gameObject.SetActive(false);
+            soundSourcePool.Enqueue(source);
         }
 
         /// <summary>
@@ -100,7 +134,6 @@ namespace Framework.Audio
             ApplyVolumeSettings();
         }
 
-
         /// <summary>
         /// 배경음악 볼륨 설정
         /// </summary>
@@ -111,7 +144,6 @@ namespace Framework.Audio
             ApplyVolumeSettings();
         }
 
-
         /// <summary>
         /// 효과음 볼륨 설정
         /// </summary>
@@ -121,7 +153,6 @@ namespace Framework.Audio
             sfxVolume = Mathf.Clamp(volume, 0f, 1f);
             ApplyVolumeSettings();
         }
-
 
         /// <summary>
         /// 배경음악 페이드아웃
@@ -134,14 +165,13 @@ namespace Framework.Audio
                 StopCoroutine(_fadeCoroutine);
 
             float startVolume = bgmSource.volume;
-
+            
             while (bgmSource.volume > 0)
             {
                 bgmSource.volume =
                     Mathf.MoveTowards(bgmSource.volume, 0f, (startVolume / fadeDuration) * Time.deltaTime);
                 yield return null;
             }
-
             bgmSource.Stop();
             bgmSource.volume = 0; // 완전히 0으로 설정
         }
@@ -169,14 +199,13 @@ namespace Framework.Audio
                 bgmSource.Play();
             }
 
-
             while (bgmSource.volume < BGMVolume)
             {
                 bgmSource.volume = Mathf.MoveTowards(bgmSource.volume, BGMVolume,
                     (BGMVolume / fadeDuration) * Time.deltaTime);
                 yield return null;
             }
-
+            
             bgmSource.volume = BGMVolume; // 최종 볼륨 고정
         }
 
@@ -190,7 +219,6 @@ namespace Framework.Audio
             // 기존 코루틴 중단 후 새로운 코루틴 시작
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
-
             _fadeCoroutine = StartCoroutine(ChangeBGMCoroutine(clipName, fadeDuration));
         }
 
@@ -202,7 +230,6 @@ namespace Framework.Audio
         private IEnumerator ChangeBGMCoroutine(string clipName, float fadeDuration)
         {
             float initialVolume = bgmSource.volume;
-
             // 클립이 같고 이미 재생 중이라면 페이드아웃 생략
             if (bgmSource.isPlaying && bgmSource.clip && (bgmSource.clip.name == clipName))
             {
@@ -212,7 +239,6 @@ namespace Framework.Audio
             {
                 yield return FadeOutBGM(fadeDuration); // 현재 재생 중인 음악 페이드아웃
             }
-
             yield return FadeInBGM(clipName, fadeDuration); // 새로운 음악 페이드인
         }
 
@@ -224,7 +250,6 @@ namespace Framework.Audio
         {
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
-
             _fadeCoroutine = StartCoroutine(FadeOutBGM(fadeDuration));
         }
 
@@ -237,7 +262,6 @@ namespace Framework.Audio
         {
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
-
             _fadeCoroutine = StartCoroutine(FadeInBGM(clipName, fadeDuration));
         }
     }

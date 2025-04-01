@@ -1,3 +1,4 @@
+using Framework.Audio;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -18,13 +19,14 @@ public class SoundSource : MonoBehaviour
         // 피치(음 높낮이) 설정 (랜덤 변동 적용)
         _audioSource.pitch = 1f + Random.Range(-soundEffectPitchVariance, soundEffectPitchVariance);
 
-        // 오디오 클립 길이 + 2초 후 자동 비활성화
-        Invoke(nameof(Disable), clip.length + 2);
+        // 클립 재생 길이 + 0.5초 후 Disable 호출 (풀에 반환)
+        Invoke(nameof(Disable), clip.length + 0.5f);
     }
 
     public void Disable()
     {
-        _audioSource.Stop(); // 오디오 정지
-        Destroy(this.gameObject); // 오브젝트 삭제
+        _audioSource.Stop();
+        // Destroy 대신 풀로 반환
+        SoundManager.Instance.ReturnSoundSource(this);
     }
 }

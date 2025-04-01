@@ -27,7 +27,7 @@ namespace Managers
         // 상수 선언
         private const float SceneActivationThreshold = 0.9f; // 씬 활성화 기준값
         public event Action OnSceneLoadedCallback;
-        
+
         /// <summary>
         /// 씬을 이름을 기준으로 비동기로 로드합니다.
         /// </summary>
@@ -97,11 +97,11 @@ namespace Managers
             // 페이드 인
             if (fadeCanvasGroup != null)
             {
+                OnSceneLoadedCallback?.Invoke();
                 yield return StartCoroutine(Fade(0f));
             }
 
             loadingScreen?.SetActive(false);
-            OnSceneLoadedCallback?.Invoke();
         }
 
         /// <summary>
@@ -142,7 +142,5 @@ namespace Managers
 
             fadeCanvasGroup.alpha = targetAlpha;
         }
-
-
     }
 }
