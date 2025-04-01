@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,11 @@ namespace Timelesss
         [SerializeField] Slider staminaBar;
         [SerializeField] Slider ExpBar;
         [SerializeField] TextMeshProUGUI levelText;
+
+        private void Start()
+        {
+            PlayerManager.Instance.PlayerIfo.InitalizedValueChanged();
+        }
 
         public void SetHPBar(float amount)
         {

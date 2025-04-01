@@ -42,6 +42,8 @@ namespace Timelesss
         public GameObject EarthShake;
         public GameObject Smoke;
         public GameObject LavaStone;
+        
+        public FloatEventChannel FloatEventChannel;
 
         public event System.Action OnDamageTaken;
 
@@ -139,8 +141,7 @@ namespace Timelesss
         }
         void UpdateUI()
         {
-            if (hpBar != null)
-                hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
+            FloatEventChannel?.Invoke(enemyHp);
         }
         void FadeOutDestroy()
         {

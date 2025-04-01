@@ -13,12 +13,13 @@ namespace Framework
             Debug.Log("Gameplay Initialized");
 
             // 적 생성
-           // EnemyManager.Instance.SpawnEnemies();
+            // EnemyManager.Instance.SpawnEnemies();
 
             // 게임플레이 UI 표시
-             UIManager.Instance.ShowUI<MainUI>();
-             
-             PlayerManager.Instance.PlayerIfo.InitalizedValueChanged();
+            UIManager.Instance.ShowUI<MainUI>();
+
+            if (PlayerManager.Instance.PlayerIfo != null)
+                PlayerManager.Instance.PlayerIfo.InitalizedValueChanged();
 
             // 게임 로직 실행
             Debug.Log("Gameplay is now running.");

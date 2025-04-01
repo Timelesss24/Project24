@@ -11,6 +11,8 @@ namespace Timelesss
         [SerializeField] Button settingButton;
         [SerializeField] Button inventoryButton;
         [SerializeField] Button questButton;
+
+        [SerializeField] private GameObject bossUI;
         
         UIManager uIManager;
 
@@ -25,6 +27,7 @@ namespace Timelesss
         private void Start()
         {
             uIManager = UIManager.Instance;
+            DungeonManager.Instance.bossHpUIAction += OnBossUI;
         }
 
         void OnClickSettingButton()
@@ -48,7 +51,10 @@ namespace Timelesss
             uIManager.ShowPopup<QuestPopUp>();
         }
 
-
+        void OnBossUI()
+        {
+            bossUI.SetActive(true);
+        }
  
     }
 }
