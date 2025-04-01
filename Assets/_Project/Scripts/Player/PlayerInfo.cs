@@ -28,7 +28,7 @@ namespace Timelesss
         private int equipmentDeffecne = 0;
 
         public int totalAttack { get => baseAttack + equipmentAttack; }
-        private int baseAttack = 1000000;
+        private int baseAttack = 100;
         private int equipmentAttack = 0;
 
         private int currentExp = 0;
@@ -36,6 +36,8 @@ namespace Timelesss
 
         [SerializeField] private EventChannel<float> hpChangedEvent;
         [SerializeField] private EventChannel<float> staminaChangedEvent;
+        [SerializeField] private EventChannel<float> expChangedEvent;
+        [SerializeField] private EventChannel<int> levelChangedEvent;
 
         public event Action ExhanstedAction;
         public event Action DeathAction;
@@ -47,6 +49,14 @@ namespace Timelesss
             GetName();
         }
 
+        public void InitalizedValueChanged()
+        {
+            hpChangedEvent?.Invoke(currentHealth);
+            staminaChangedEvent?.Invoke(currentStamina);
+            expChangedEvent?.Invoke(currentExp);
+            levelChangedEvent?.Invoke(playerLevel);
+        }
+        
         public string GetName()
         {
             if (PlayerName != null) return PlayerName;
@@ -166,8 +176,7 @@ namespace Timelesss
 
         public void IncreasedExp(int value)
         {
-            currentExp += value;
-
+            currentExp += value;            
             Debug.Log($"{value} 경험치를 획득하였습니다. 현재 경험치: {currentExp}/{requiredExp}");
 
             while (currentExp >= requiredExp)
@@ -175,6 +184,7 @@ namespace Timelesss
                 currentExp -= requiredExp;
                 LevelUp();
             }
+            expChangedEvent?.Invoke(currentExp);
         }
 
         private void LevelUp()
@@ -187,6 +197,8 @@ namespace Timelesss
 
             playerLevel++;
             requiredExp = (int)((float)requiredExp * 1.25f);
+
+            levelChangedEvent?.Invoke(playerLevel);
 
             Debug.Log($"레벨업. 현재 레벨: {playerLevel} / 현재 경험치: {currentExp}/{requiredExp}");
         }

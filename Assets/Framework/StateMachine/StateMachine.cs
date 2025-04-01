@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -66,6 +66,10 @@ namespace Timelesss
         {
             anyTransitions.Add(new Transition(GetOrAddNode(to).State, condition));
         }
+        public void TransitionState(IState from, IState to)
+        {
+            GetOrAddNode(from).TransitionState(GetOrAddNode(to).State);
+        }
 
         StateNode GetOrAddNode(IState state)
         {
@@ -93,6 +97,10 @@ namespace Timelesss
             public void AddTransition(IState to, IPredicate condition)
             {
                 Transitions.Add(new Transition(to, condition));
+            }
+            public void TransitionState(IState to)
+            {
+                Transitions.Add(new TransitionAs(to));
             }
         }
     }
