@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24eb60a2b379f94c809c85fb240de3c, type: 3}
   m_Name: PinkSword
   m_EditorClassIdentifier: 
-  ItemName: "\uBD84\uD64D\uC0C9 \uAC80"
-  ItemDescription: "\uBD84\uD64D\uC0C9 \uAC80\uC774\uB2E4"
-  ItemIcon: {fileID: 21300000, guid: 4ec20c1a96ac7ab438e0763cad6c5e2f, type: 3}
-  itemType: 1
-  equipType: 1
-  equipValue: 15
-  Stack: 0
+  <ItemName>k__BackingField: 
+  <ItemDescription>k__BackingField: 
+  <ItemIcon>k__BackingField: {fileID: 21300000, guid: 4ec20c1a96ac7ab438e0763cad6c5e2f,
+    type: 3}
+  <EquipType>k__BackingField: 0
+  <EquipValue>k__BackingField: 0
+  <EquipPrefab>k__BackingField: {fileID: 0}
   <WeaponModel>k__BackingField: {fileID: 1380736215264169070, guid: 57c1532ccb55e0a47ac46823c720e289,
     type: 3}
   <LocalPosition>k__BackingField: {x: -0.007, y: 0.007, z: -0.094}

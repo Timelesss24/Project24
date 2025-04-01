@@ -433,7 +433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4c33d599531ef448e2b41a94c91e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1079561573}
 --- !u!4 &664380567
 Transform:
   m_ObjectHideFlags: 0
@@ -672,11 +671,35 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6857164526514445087, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5962685339742925464, guid: e3a4a110ea89e59478f9dfa28c707d52,
+        type: 3}
+    - target: {fileID: 7126254073961061941, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: expChangedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: e002bc16c420b9146ad16c30ec37c53a,
+        type: 2}
+    - target: {fileID: 7126254073961061941, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: levelChangedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e9bbf3155709b84fbb640b9ef33a513,
+        type: 2}
     - target: {fileID: 7718754293255713509, guid: 927eb925089e24dec90b3c9f28cdd3e9,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9007843920410416306, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: defaultWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 270dce8342051dc43b587584022a45e7,
+        type: 2}
     - target: {fileID: 9139830033660984174, guid: 927eb925089e24dec90b3c9f28cdd3e9,
         type: 3}
       propertyPath: m_Mesh
@@ -723,6 +746,8 @@ MonoBehaviour:
   hpChangedEvent: {fileID: 11400000, guid: 4adb4291f26f5a2478ad2e9c521afe46, type: 2}
   staminaChangedEvent: {fileID: 11400000, guid: 807abd78625d55143bbbe8bd83fa8373,
     type: 2}
+  expChangedEvent: {fileID: 11400000, guid: e002bc16c420b9146ad16c30ec37c53a, type: 2}
+  levelChangedEvent: {fileID: 11400000, guid: 9e9bbf3155709b84fbb640b9ef33a513, type: 2}
 --- !u!114 &1079561598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -735,7 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c8b524a46ec4154c8d3e0642636c6a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 1079561619}
   helmet: {fileID: 1981158205}
 --- !u!114 &1079561608 stripped
 MonoBehaviour:
@@ -749,6 +774,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2285baa7bf476683f4ade7ac0c2768, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1079561619 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6187148080591312827, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1079561572}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1146724138
 PrefabInstance:
   m_ObjectHideFlags: 0
