@@ -25,6 +25,7 @@ namespace Timelesss
         void SkillDamage()
         {
             if (engage == false) return;
+            if (enemy == null) return;
 
             enemy.Attack();
         }

@@ -15,10 +15,12 @@ namespace Timelesss
         [SerializeField] NavMeshAgent agent;
 
         // PlayerDetector 객체: 플레이어 탐지와 공격 범위를 관리
-        [SerializeField] PlayerDetector playerDetector;
+        [SerializeField] public PlayerDetector playerDetector;
 
         // Animator 객체: 적의 애니메이션 상태를 관리
         [SerializeField] Animator animator;
+
+        [SerializeField] private Bounds generateArea;
 
         // 상태 기계(State Machine) 객체: 적의 상태 전환 및 동작 관리
         public StateMachine stateMachine;
@@ -28,7 +30,8 @@ namespace Timelesss
 
         private float enemyHp;
         private Transform enemyTransform;
-        private bool isAttack = false;
+        private bool isSmokeAttack = false;
+        private bool isShakeAttack = false;
 
         public Image hpBar;
         public bool isDie = false;
@@ -38,6 +41,7 @@ namespace Timelesss
 
         public GameObject EarthShake;
         public GameObject Smoke;
+        public GameObject LavaStone;
 
         public event System.Action OnDamageTaken;
 
@@ -98,6 +102,8 @@ namespace Timelesss
             // 공격 실행
             attackTimer.Start();
             playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해
+
+            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y+6, this.transform.position.z);
         }
         void OnHit()
         {
@@ -156,29 +162,44 @@ namespace Timelesss
         }
         public void SmokeAttack()
         {
-            if (isAttack == false)
-            { 
+            if (isSmokeAttack == false)
+            {
                 Smoke.SetActive(true);
-                isAttack = true;
+                isSmokeAttack = true;
             }
             else
             {
                 Smoke.SetActive(false);
-                isAttack = false;
+                isSmokeAttack = false;
             }
-        } 
+        }
         public void EarthShakeAttack()
         {
-            if (isAttack == false)
+            if (isShakeAttack == false)
             {
                 EarthShake.SetActive(true);
-                isAttack = true;
+                isShakeAttack = true;
             }
             else
             {
                 EarthShake.SetActive(false);
-                isAttack = false;
+                isShakeAttack = false;
             }
+        }
+        public void LavaStoneAttack()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                Vector3 randomPosition = new Vector3(Random.Range(generateArea.min.x, generateArea.max.x), Random.Range(generateArea.min.y, generateArea.max.y), Random.Range(generateArea.min.z, generateArea.max.z));//구역에서 랜덤 좌표 선택
+                GameObject LavaAttack = Instantiate(LavaStone, randomPosition, Quaternion.identity);
+
+                LavaAttack.transform.parent = this.transform;
+            }
+        }
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(generateArea.center, generateArea.size);
         }
     }
 }
