@@ -30,8 +30,10 @@ namespace Timelesss
 
             int questID = QuestManager.Instance.GetQuestID(npcInfo.ID);
 
-            currentDialogueID = FindFirstDialogueID(npcInfo.ID, questID != 0);
-
+            bool hasCompleted = QuestManager.Instance.GetIsCompleteToNpc(npcInfo.ID);
+            
+            currentDialogueID = hasCompleted ? 
+                FindCompletedDialogueID(npcInfo.ID) : FindFirstDialogueID(npcInfo.ID, questID != 0);
 
             if (currentDialogueID == -1)
             {
@@ -47,7 +49,6 @@ namespace Timelesss
                 npcCamera.transform.localRotation = Quaternion.Euler(0, 180f, 0);
             }
 
-
             if (dialoguePopUp == null)
             {
                 dialoguePopUp = UIManager.Instance.ShowPopup<DialoguePopUp>();
@@ -55,14 +56,14 @@ namespace Timelesss
             }
 
             dialoguePopUp.Show();
-            dialoguePopUp.SetNPCNameText(npcInfo.Name);
+            dialoguePopUp.SetNpcNameText(npcInfo.Name);
 
             ShowCurrentDialogue();
 
             StartCoroutine(TrackingDialogue(onComplete));
         }
 
-        IEnumerator TrackingDialogue(Action onComplete = null)
+        private IEnumerator TrackingDialogue(Action onComplete = null)
         {
             yield return new WaitWhile(() => dialoguePopUp != null);
 
@@ -98,6 +99,19 @@ namespace Timelesss
             return -1;
         }
 
+        private int FindCompletedDialogueID(int npcID)
+        {
+            foreach (var data in dataLoader.ItemsDict.Values)
+            {
+                if (data.npcID == npcID && data.hasCompleteQuest)
+                {
+                    return data.key;
+                }
+            }
+
+            return -1;
+        }
+        
         public void ShowQuestDialogue(bool isAccept)
         {
             if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out DialogueData currentDialogue))

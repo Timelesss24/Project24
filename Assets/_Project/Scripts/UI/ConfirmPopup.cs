@@ -27,7 +27,7 @@ namespace Timelesss
 
             cancelButton.onClick.AddListener(() => {
                 onCancel?.Invoke();
-                if(onCancel == null) ClosePopup();
+                ClosePopup();
             });
         }
     }

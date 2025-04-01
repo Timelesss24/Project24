@@ -19,9 +19,16 @@ MonoBehaviour:
   <EquipType>k__BackingField: 0
   <EquipValue>k__BackingField: 0
   <EquipPrefab>k__BackingField: {fileID: 0}
-  <WeaponModel>k__BackingField: {fileID: 0}
+  <WeaponModel>k__BackingField: {fileID: 1380736215264169070, guid: 4bdcefeecacf84fc3a5366408a0b2634,
+    type: 3}
   <LocalPosition>k__BackingField: {x: 0, y: 0, z: 0}
-  <LocalRotation>k__BackingField: {x: 0, y: 0, z: 0}
+  <LocalRotation>k__BackingField: {x: 0, y: 270, z: 0}
   <AttacksContainer>k__BackingField:
-    <Attacks>k__BackingField: []
+    <Attacks>k__BackingField:
+    - <Attack>k__BackingField: {fileID: 11400000, guid: a6a3cb24433fb40eb88a09c88e8a4f82,
+        type: 2}
+    - <Attack>k__BackingField: {fileID: 11400000, guid: e32cdc3c12bb7485bb8c201963b1027d,
+        type: 2}
+    - <Attack>k__BackingField: {fileID: 11400000, guid: 949922fd4900d411f9eb590b75b952aa,
+        type: 2}
   <OverrideController>k__BackingField: {fileID: 0}
