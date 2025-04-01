@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.909, y: 1.015, z: 0.031}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1305018848175433418}
@@ -124,10 +124,15 @@ MonoBehaviour:
   agent: {fileID: 0}
   playerDetector: {fileID: 0}
   animator: {fileID: 0}
+  generateArea:
+    m_Center: {x: 0, y: 6, z: 0}
+    m_Extent: {x: 2, y: 0.2, z: 2}
   hpBar: {fileID: 0}
   isDie: 0
   EarthShake: {fileID: 1302072210878452296}
   Smoke: {fileID: 5761021046377642337}
+  LavaStone: {fileID: 1521101356974260530, guid: 86d180f2eaf33ca49916a5b81f4bf0ba,
+    type: 3}
 --- !u!114 &2458014740496945720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,8 +165,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.1499386, y: 1.4719002, z: 9.76764}
-  m_Center: {x: 0, y: 2.2905989, z: 0.64879656}
+  m_Size: {x: 2.1499386, y: 1.4719, z: 9.193661}
+  m_Center: {x: 0, y: 2.2905989, z: 0.36180663}
 --- !u!135 &5701680234550541507
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -343,23 +348,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.78863686
+      value: 0.99558765
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.092617266
+      value: 0.064250894
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6076722
+      value: -0.004404405
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.014437259
+      value: 0.06824763
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 7.385
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -367,7 +372,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 7.843
       objectReference: {fileID: 0}
     - target: {fileID: 198000010811326064, guid: 84071889161839d47a06151ac570398d,
         type: 3}
@@ -429,8 +434,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2.7807662
-  m_Center: {x: 0.000000045623047, y: 0.00000014885032, z: 2.3327363}
+  m_Radius: 1.4943712
+  m_Center: {x: 2.3884585, y: -0.11999997, z: 0.0000028003612}
 --- !u!4 &5764319876125025427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000010428153376, guid: 84071889161839d47a06151ac570398d,

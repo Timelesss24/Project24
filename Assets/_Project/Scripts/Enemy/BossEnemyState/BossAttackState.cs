@@ -54,15 +54,15 @@ namespace Timelesss
         }
         void AttackPattern()
         {
-            float targetRange = Vector3.Distance(enemy.transform.position, target.position);
-            if (targetRange <= 7f)
+            int pattern = Random.Range(0, 3);
+            if (pattern == 0)
             {
                 // Attack 애니메이션을 부드럽게 시작 (CrossFade 사용)
                 animator.CrossFade(AttackFirstHash, crossFadeDuration);
                 Debug.Log(" 뿜기 공격");
                 skillcount = 3f;
             }
-            else if (targetRange > 7f && targetRange < 15f)
+            else if (pattern == 1)
             {
                 animator.CrossFade(AttackSecondHash, crossFadeDuration);
                 Debug.Log(" 원거리 공격");
@@ -75,7 +75,7 @@ namespace Timelesss
                 skillcount = 4.5f;
             }
         }
-        private IEnumerator AttackDelay(float count)
+        private IEnumerator AttackDelay(float count)//작동을 안해...
         {
             yield return new WaitForSeconds(count);
             enemy.stateMachine.TransitionState(enemy.attackState, enemy.walkState);

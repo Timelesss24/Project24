@@ -74,6 +74,7 @@ namespace Timelesss
             enemyTransform = GetComponent<Transform>();
             hpBar = GetComponentInChildren<Image>();
             enemyHp = playerDetector.Date.maxHp;
+            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y + 6, this.transform.position.z);
             // 초기 상태 설정 (방황 상태로 시작)
             stateMachine.SetState(idleState);
         }
@@ -103,7 +104,7 @@ namespace Timelesss
             attackTimer.Start();
             playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해
 
-            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y+6, this.transform.position.z);
+            
         }
         void OnHit()
         {
@@ -195,6 +196,13 @@ namespace Timelesss
 
                 LavaAttack.transform.parent = this.transform;
             }
+        }
+        public void AttackReaet()
+        {
+            Smoke.SetActive(false);
+            isSmokeAttack = false;
+            EarthShake.SetActive(false);
+            isShakeAttack = false;
         }
         private void OnDrawGizmosSelected()
         {
