@@ -33,7 +33,7 @@ public abstract class UIBase : MonoBehaviour
     /// </summary>
     protected virtual void OnShow()
     {
-        Debug.Log($"{gameObject.name} Shown");
+        Debug.Log($"{gameObject} Shown");
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ namespace Managers
         //게임이 커지면 씬별로 나눠도 됌
     }
 
-    public class UIManager : PersistentSingleton<UIManager>
+    public class UIManager : RegulatorSingleton<UIManager>
     {
         private readonly Dictionary<UICategory, string> _uiPrefixes = new()
         {

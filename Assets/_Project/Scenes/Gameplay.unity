@@ -354,6 +354,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9007843920410416306, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: defaultWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: d2cd7d06cc7e1954897513e6a7e6bcb5,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -365,6 +371,37 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 511498181}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &695960782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695960783}
+  m_Layer: 0
+  m_Name: BossSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &695960783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695960782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.93, y: 1.35, z: -0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 357594585998061442}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &755977647
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -678,6 +715,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 882039128707012300, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.093
+      objectReference: {fileID: 0}
     - target: {fileID: 1165010869362486997, guid: 0eb830350c995fc4bb636495f78b6269,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -728,14 +770,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1238924386995020618, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: potal
+      value: 
+      objectReference: {fileID: 6480536614048859313, guid: 5274cf59732a8d84e970000c2cc2605d,
+        type: 3}
+    - target: {fileID: 1238924386995020618, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: bossPrefabs
+      value: 
+      objectReference: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
+        type: 3}
+    - target: {fileID: 1238924386995020618, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: bossSpawner
+      value: 
+      objectReference: {fileID: 695960783}
+    - target: {fileID: 6194484827851375338, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.093
+      objectReference: {fileID: 0}
     - target: {fileID: 8560944390189090002, guid: 0eb830350c995fc4bb636495f78b6269,
         type: 3}
       propertyPath: m_Name
-      value: MapManager
+      value: DungeonManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1165010869362486997, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 695960783}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5176537665596940123, guid: 0eb830350c995fc4bb636495f78b6269,
         type: 3}
@@ -746,6 +814,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 0eb830350c995fc4bb636495f78b6269, type: 3}
+--- !u!4 &357594585998061442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1165010869362486997, guid: 0eb830350c995fc4bb636495f78b6269,
+    type: 3}
+  m_PrefabInstance: {fileID: 357594585998061441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

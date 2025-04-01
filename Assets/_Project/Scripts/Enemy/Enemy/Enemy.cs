@@ -47,6 +47,8 @@ namespace Timelesss
 
         public event System.Action OnDamageTaken;
 
+        public EnemyOSEventChannel enemyEventChannel;
+
         void OnValidate() => this.ValidateRefs();
 
         /// Unity의 Start 메서드:
@@ -144,6 +146,7 @@ namespace Timelesss
             isDie = true;
             animator.SetTrigger("Die");
 
+            enemyEventChannel?.Invoke(playerDetector.Date);
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
             StartCoroutine(DelayDie(1.34f));
         }
@@ -162,7 +165,8 @@ namespace Timelesss
         }
         void UpdateUI()
         {
-            hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
+            if (hpBar != null)
+                hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
         }
         void FadeOutDestroy()
         {
@@ -179,7 +183,7 @@ namespace Timelesss
 
             if (enemyTransform != null)
             {
-                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f),2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => DungeonManager.Instance.RemoveEnemy(gameObject));
             }
         }
         private IEnumerator DelayDie(float count)

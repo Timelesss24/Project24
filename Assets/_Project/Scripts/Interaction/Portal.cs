@@ -7,13 +7,10 @@ namespace Timelesss
     {
         public override string InteractionName { get; } = "입장하기";
 
-        [SerializeField] private string targetSceneName;
-
         public override void Interact()
         {
             base.Interact();
             // 입장 확인 팝업 띄워주기
-            Debug.Log($"{targetSceneName} 던전 입장");
             
 
             var popup = UIManager.Instance.ShowPopup<ConfirmPopup>();

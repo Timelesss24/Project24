@@ -1,6 +1,4 @@
 ﻿using Scripts.UI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +9,7 @@ namespace Timelesss
     {
         [SerializeField] private Button acceptButton;
         [SerializeField] private Button declineButton;
+        [SerializeField] private Button rewardButton;
 
         [SerializeField] private TextMeshProUGUI questNameText;
         [SerializeField] private TextMeshProUGUI questDescriptionText;
@@ -23,9 +22,10 @@ namespace Timelesss
         {
             acceptButton.onClick.AddListener(OnClickAcceptButton);
             declineButton.onClick.AddListener(OnClickDeclineButton);
+            rewardButton.onClick.AddListener(OnClickRewardButton);
         }
 
-        public void SetQuestInfo(QuestData questData)
+        public void SetQuestInfo(QuestData questData, bool isComplete)
         {
             this.questData = questData;
 
@@ -35,16 +35,20 @@ namespace Timelesss
             switch (questData.questType)
             {
                 case QuestType.DungeonClear:
-                    questTargetText.text = $"{questData.targetName} 클리어하기 0/{questData.targetNum}";
+                    questTargetText.text = $"{questData.targetName} 클리어하기" + (isComplete ? "(완료)" : $"0/{questData.targetNum}");
                     break;
                 case QuestType.MonsterKill:
-                    questTargetText.text = $"{questData.targetName} 처치하기 0/{questData.targetNum}";
+                    questTargetText.text = $"{questData.targetName} 처치하기" + (isComplete ? "(완료)" : $"0/{questData.targetNum}");
                     break;
                 case QuestType.MaterialGather:
-                    questTargetText.text = $"{questData.targetName} 수집하기 0/{questData.targetNum}";
+                    questTargetText.text = $"{questData.targetName} 수집하기" + (isComplete ? "(완료)" : $"0/{questData.targetNum}");
                     break;
             }
-
+            
+            acceptButton.gameObject.SetActive(!isComplete);
+            declineButton.gameObject.SetActive(!isComplete);
+            rewardButton.gameObject.SetActive(isComplete);
+            
             questRewardText.text = $"{questData.rewardExp} 경험치";
         }
 
@@ -53,7 +57,7 @@ namespace Timelesss
             DialogueManager.Instance.ShowQuestDialogue(true);
 
             if (questData != null)
-                QuestManager.Instance.AddActiveQuest(questData);
+                QuestManager.Instance.StartQuest(questData.key);
 
             ClosePopup();
         }
@@ -61,6 +65,13 @@ namespace Timelesss
         private void OnClickDeclineButton()
         {
             DialogueManager.Instance.ShowQuestDialogue(false);
+            ClosePopup();
+        }
+
+        private void OnClickRewardButton()
+        {
+            QuestManager.Instance.CompleteQuest(questData.key);
+            DialogueManager.Instance.ShowQuestDialogue(true);
             ClosePopup();
         }
     }
