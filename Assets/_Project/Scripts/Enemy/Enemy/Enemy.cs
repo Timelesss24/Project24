@@ -47,6 +47,8 @@ namespace Timelesss
 
         public event System.Action OnDamageTaken;
 
+        public EnemyOSEventChannel enemyEventChannel;
+
         void OnValidate() => this.ValidateRefs();
 
         /// Unity의 Start 메서드:
@@ -144,6 +146,7 @@ namespace Timelesss
             isDie = true;
             animator.SetTrigger("Die");
 
+            enemyEventChannel?.Invoke(playerDetector.Date);
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
             StartCoroutine(DelayDie(1.34f));
         }

@@ -6,6 +6,7 @@
       "dialogueText": "안녕하세요, 모험가님.",
       "nextDialogueID": 2,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -15,6 +16,7 @@
       "dialogueText": "지금은 부탁드릴 일이 없는 것 같군요.",
       "nextDialogueID": 3,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -24,6 +26,7 @@
       "dialogueText": "나중에 다시 한 번 찾아와 주세요.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -33,6 +36,7 @@
       "dialogueText": "안녕하세요, 모험가님.",
       "nextDialogueID": 5,
       "hasQuest": true,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -42,6 +46,7 @@
       "dialogueText": "괜찮으시다면 저를 도와주실 수 있으신가요?",
       "nextDialogueID": 0,
       "hasQuest": true,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 6,
       "declineDialogueID": 7
     },
@@ -51,6 +56,7 @@
       "dialogueText": "정말 감사합니다! 당신 덕분에 희망이 생겼습니다.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -60,6 +66,7 @@
       "dialogueText": "아쉽지만 어쩔 수 없겠죠. 다음에 꼭 부탁드릴게요.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -69,6 +76,7 @@
       "dialogueText": "마을에 있는 포탈과 상호작용하면 던전에 입장할 수 있습니다.",
       "nextDialogueID": 9,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -78,6 +86,7 @@
       "dialogueText": "던전에는 강력한 몬스터들이 있으니 조심하세요.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -87,6 +96,7 @@
       "dialogueText": "모험가님, 제 부탁을 들어주실 수 있으실까요?",
       "nextDialogueID": 11,
       "hasQuest": true,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -96,6 +106,7 @@
       "dialogueText": "모험가님의 힘을 빌리고 싶습니다.",
       "nextDialogueID": 0,
       "hasQuest": true,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 12,
       "declineDialogueID": 13
     },
@@ -105,6 +116,7 @@
       "dialogueText": "정말 감사합니다! 당신의 도움이 큰 힘이 될 거예요.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     },
@@ -114,6 +126,57 @@
       "dialogueText": "아쉽지만 이해합니다. 그래도 언젠가는 도와주시길 바랍니다.",
       "nextDialogueID": 0,
       "hasQuest": false,
+      "hasCompleteQuest": false,
+      "acceptDialogueID": 0,
+      "declineDialogueID": 0
+    },
+    {
+      "key": 14,
+      "npcID": 1,
+      "dialogueText": "제가 부탁드린 일을 완료해주셨군요! 감사합니다.",
+      "nextDialogueID": 15,
+      "hasQuest": false,
+      "hasCompleteQuest": true,
+      "acceptDialogueID": 0,
+      "declineDialogueID": 0
+    },
+    {
+      "key": 15,
+      "npcID": 1,
+      "dialogueText": "하기 힘들다 그죠?",
+      "nextDialogueID": 0,
+      "hasQuest": false,
+      "hasCompleteQuest": true,
+      "acceptDialogueID": 16,
+      "declineDialogueID": 0
+    },
+    {
+      "key": 16,
+      "npcID": 1,
+      "dialogueText": "보상을 지급해드렸습니다.",
+      "nextDialogueID": 0,
+      "hasQuest": false,
+      "hasCompleteQuest": false,
+      "acceptDialogueID": 0,
+      "declineDialogueID": 0
+    },
+    {
+      "key": 17,
+      "npcID": 2,
+      "dialogueText": "모험가님 드디어 오셨군요!",
+      "nextDialogueID": 17,
+      "hasQuest": false,
+      "hasCompleteQuest": true,
+      "acceptDialogueID": 0,
+      "declineDialogueID": 0
+    },
+    {
+      "key": 18,
+      "npcID": 2,
+      "dialogueText": "감사합니다. 모험가님 덕분에 한 숨 놓았습니다.",
+      "nextDialogueID": 0,
+      "hasQuest": false,
+      "hasCompleteQuest": true,
       "acceptDialogueID": 0,
       "declineDialogueID": 0
     }

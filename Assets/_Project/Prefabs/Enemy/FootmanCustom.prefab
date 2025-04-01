@@ -400,7 +400,9 @@ MonoBehaviour:
   agent: {fileID: 7270821628330363597}
   playerDetector: {fileID: 214845919439462675}
   animator: {fileID: 8509212108200777184}
+  hpBar: {fileID: 0}
   isDie: 0
+  enemyEventChannel: {fileID: 11400000, guid: 8a220449c9af2d249be31fcffd850784, type: 2}
 --- !u!114 &214845919439462675
 MonoBehaviour:
   m_ObjectHideFlags: 0

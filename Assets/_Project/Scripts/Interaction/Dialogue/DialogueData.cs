@@ -32,6 +32,11 @@ public class DialogueData
     public bool hasQuest;
 
     /// <summary>
+    /// HasCompleteQuest
+    /// </summary>
+    public bool hasCompleteQuest;
+
+    /// <summary>
     /// AcceptDialogueID
     /// </summary>
     public int acceptDialogueID;
