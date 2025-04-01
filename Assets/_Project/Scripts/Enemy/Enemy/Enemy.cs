@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using KBCore.Refs;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.AI;
 using Utilities;
 using UnityEditor;
+using DG.Tweening;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace Timelesss
@@ -37,11 +39,15 @@ namespace Timelesss
 
         /// Unity의 OnValidate 메서드:
         /// 에디터에서 컴포넌트가 설정되었는지 유효성 검사 및 자동 설정.
-
+        //[SerializeField] SkinnedMeshRenderer skinRenderer;
+        public Image hpBar;
         private float enemyHp;
+        private Transform enemyTransform;
         public bool isDie = false;
 
         public event System.Action OnDamageTaken;
+
+        public EnemyOSEventChannel enemyEventChannel;
 
         void OnValidate() => this.ValidateRefs();
 
@@ -66,6 +72,9 @@ namespace Timelesss
             At(chaseState, attackState, new FuncPredicate(() => playerDetector.CanAttackPlayer())); // 공격 가능 시 공격 상태 진입
             At(attackState, chaseState, new FuncPredicate(() => !playerDetector.CanAttackPlayer())); // 공격 불가 시 추적
 
+            //skinRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            enemyTransform = GetComponent<Transform>();
+            hpBar = GetComponentInChildren<Image>();
             enemyHp = playerDetector.Date.maxHp;
             // 초기 상태 설정 (방황 상태로 시작)
             stateMachine.SetState(wanderState);
@@ -120,10 +129,11 @@ namespace Timelesss
 
             // 공격 실행
             attackTimer.Start();
-            playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해 (임시로 10 피해)
+            playerDetector.TargetInfo.TakeDamage(playerDetector.Date.attackDamage); // 플레이어에게 피해
         }
         void OnHit()
         {
+            if (isDie == true) return;
             animator.SetTrigger("Hit");
 
             if (enemyHp <= 0)
@@ -136,8 +146,9 @@ namespace Timelesss
             isDie = true;
             animator.SetTrigger("Die");
 
+            enemyEventChannel?.Invoke(playerDetector.Date);
             playerDetector.TargetInfo.IncreasedExp(playerDetector.Date.exp);
-            //StartCoroutine(DelayDie(2));
+            StartCoroutine(DelayDie(1.34f));
         }
 
         public void TakeDamage(int value)
@@ -147,14 +158,38 @@ namespace Timelesss
             int damage = Random.Range(min, max + 1);
 
             enemyHp -= damage;
-            Debug.Log($"{damage}피해를 받았다!");
+            UpdateUI();
+            Debug.Log($"적이 {damage}의 피해를 받았다!");
 
             OnHit();
         }
-        private IEnumerator DelayDie(int count)
+        void UpdateUI()
+        {
+            if (hpBar != null)
+                hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
+        }
+        void FadeOutDestroy()
+        {
+
+            //if (skinRenderer != null)//투명화. skinnd mesh randerer에서 안 먹힘
+            //{
+            //    foreach (Material mat in skinRenderer.materials)
+            //    {
+            //        Debug.Log("죽음");
+
+            //        mat.DOFade(0f, 3.8f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+            //    }
+            //}
+
+            if (enemyTransform != null)
+            {
+                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+            }
+        }
+        private IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
-            Destroy(this.gameObject);
+            FadeOutDestroy();
         }
     }
 

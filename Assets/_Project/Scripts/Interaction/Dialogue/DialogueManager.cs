@@ -10,7 +10,7 @@ namespace Timelesss
     public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
         private DialogueDataLoader dataLoader;
-        private int currentDialogueID;
+        public int currentDialogueID;
         private int npcID;
 
         private DialoguePopUp dialoguePopUp;
@@ -28,11 +28,12 @@ namespace Timelesss
         {
             this.npcID = npcInfo.ID;
 
-            QuestManager questManager = FindObjectOfType<QuestManager>();
-            int questID = questManager.GetQuest(npcInfo.ID);
+            int questID = QuestManager.Instance.GetQuestID(npcInfo.ID);
 
-            currentDialogueID = FindFirstDialogueID(npcInfo.ID, questID != 0);
-
+            bool hasCompleted = QuestManager.Instance.GetIsCompleteToNpc(npcInfo.ID);
+            
+            currentDialogueID = hasCompleted ? 
+                FindCompletedDialogueID(npcInfo.ID) : FindFirstDialogueID(npcInfo.ID, questID != 0);
 
             if (currentDialogueID == -1)
             {
@@ -48,19 +49,21 @@ namespace Timelesss
                 npcCamera.transform.localRotation = Quaternion.Euler(0, 180f, 0);
             }
 
-
             if (dialoguePopUp == null)
+            {
                 dialoguePopUp = UIManager.Instance.ShowPopup<DialoguePopUp>();
+                dialoguePopUp.SetNpcID(npcInfo.ID);
+            }
 
             dialoguePopUp.Show();
-            dialoguePopUp.SetNPCNameText(npcInfo.Name);
+            dialoguePopUp.SetNpcNameText(npcInfo.Name);
 
             ShowCurrentDialogue();
 
             StartCoroutine(TrackingDialogue(onComplete));
         }
 
-        IEnumerator TrackingDialogue(Action onComplete = null)
+        private IEnumerator TrackingDialogue(Action onComplete = null)
         {
             yield return new WaitWhile(() => dialoguePopUp != null);
 
@@ -77,16 +80,10 @@ namespace Timelesss
 
             bool hasNextDialogue = dialogue.nextDialogueID != 0;
 
-            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue);
+            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
 
             if (hasNextDialogue)
-            {
                 currentDialogueID = dialogue.nextDialogueID;
-            }
-            else
-            {
-                ResetToFirstDialogue();
-            }
         }
 
         private int FindFirstDialogueID(int npcID, bool hasQuest)
@@ -102,9 +99,37 @@ namespace Timelesss
             return -1;
         }
 
-        private void ResetToFirstDialogue()
+        private int FindCompletedDialogueID(int npcID)
         {
-            currentDialogueID = 0;
+            foreach (var data in dataLoader.ItemsDict.Values)
+            {
+                if (data.npcID == npcID && data.hasCompleteQuest)
+                {
+                    return data.key;
+                }
+            }
+
+            return -1;
+        }
+        
+        public void ShowQuestDialogue(bool isAccept)
+        {
+            if (!dataLoader.ItemsDict.TryGetValue(currentDialogueID, out DialogueData currentDialogue))
+            {
+                Debug.LogWarning($"현재 대화 ID {currentDialogueID}에 해당하는 데이터를 찾을 수 없습니다.");
+                return;
+            }
+
+            DialogueData questDialogue = 
+                dataLoader.ItemsDict.TryGetValue
+                (isAccept ? currentDialogue.acceptDialogueID : currentDialogue.declineDialogueID,
+                out var dialogue) ? dialogue : null;
+
+            bool hasNextDialogue = dialogue.nextDialogueID != 0;
+
+            dialoguePopUp.ShowDialogue(dialogue.dialogueText, hasNextDialogue, dialogue.hasQuest);
+
+            currentDialogueID = hasNextDialogue ? currentDialogue.nextDialogueID : 0;
         }
     }
 }

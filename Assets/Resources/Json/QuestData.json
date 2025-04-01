@@ -7,7 +7,7 @@
       "questDescription": "테스트 퀘스트1",
       "questType": 1,
       "enabledQuestID": 0,
-      "targetID": 0,
+      "targetID": 1003,
       "targetName": "난쟁이 병사",
       "targetNum": 5,
       "rewardExp": 100,

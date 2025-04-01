@@ -8,6 +8,11 @@ namespace Timelesss
     {
         public Camera playerCamera;
 
+        private void Awake()
+        {
+            playerCamera = Camera.main;
+        }
+
         // Update is called once per frame
         void Update()
         {

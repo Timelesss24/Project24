@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f88ffd27bd4ec4c9007b4930e0d9a1, type: 3}
   m_Name: BoarDragonOS
   m_EditorClassIdentifier: 
+  enemyCode: 1001
   maxHp: 100
-  attackDamage: 10
-  exp: 30
+  attackDamage: 12
+  exp: 45
   wanderRadius: 10
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 1.2
   detectionAngle: 360
   detectionRadius: 10
   innerDetectionRadius: 5

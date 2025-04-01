@@ -11,7 +11,6 @@ namespace Timelesss
     public class NameSettingPopUp : UIPopup
     {
         [SerializeField] private Button startButton;
-        [SerializeField] private Button closeButton;
 
         [SerializeField] private TMP_InputField nameInput;
 
@@ -20,7 +19,6 @@ namespace Timelesss
         private void Start()
         {
             startButton.onClick.AddListener(OnClickStartButton);
-            closeButton.onClick.AddListener(OnClickCloseButton);
 
             PlayerPrefs.DeleteKey(PlayerNameKey);
 
@@ -45,11 +43,6 @@ namespace Timelesss
             SavePlayerName(playerName);
             ClosePopup();
             GameStateManager.Instance.SetGameState(GameStateManager.GameState.Village);
-        }
-
-        private void OnClickCloseButton()
-        {
-            ClosePopup();
         }
 
         private void SavePlayerName(string playerName)
