@@ -23,8 +23,11 @@ namespace Timelesss
 
             confirmButton.onClick.AddListener(() => {
                 onConfirm?.Invoke();
+                ClosePopup();
             });
 
+            
+            
             cancelButton.onClick.AddListener(() => {
                 onCancel?.Invoke();
                 ClosePopup();

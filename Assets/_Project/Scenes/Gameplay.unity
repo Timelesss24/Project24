@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -354,6 +354,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9007843920410416306, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: defaultWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: d2cd7d06cc7e1954897513e6a7e6bcb5,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -776,6 +782,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
         type: 3}
+    - target: {fileID: 1238924386995020618, guid: 0eb830350c995fc4bb636495f78b6269,
+        type: 3}
+      propertyPath: bossSpawner
+      value: 
+      objectReference: {fileID: 695960783}
     - target: {fileID: 6194484827851375338, guid: 0eb830350c995fc4bb636495f78b6269,
         type: 3}
       propertyPath: m_LocalPosition.y
