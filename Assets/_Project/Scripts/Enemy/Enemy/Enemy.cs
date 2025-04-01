@@ -165,7 +165,8 @@ namespace Timelesss
         }
         void UpdateUI()
         {
-            hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
+            if (hpBar != null)
+                hpBar.fillAmount = enemyHp / playerDetector.Date.maxHp;
         }
         void FadeOutDestroy()
         {
@@ -182,7 +183,7 @@ namespace Timelesss
 
             if (enemyTransform != null)
             {
-                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f),2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
             }
         }
         private IEnumerator DelayDie(float count)
