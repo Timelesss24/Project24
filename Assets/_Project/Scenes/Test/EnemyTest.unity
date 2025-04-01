@@ -677,8 +677,11 @@ MonoBehaviour:
   rightroomPrefabs:
   - {fileID: 6971758438424921021, guid: 0b974a90ec038104da04a4180c11af49, type: 3}
   - {fileID: 894823524309872588, guid: ff60899ac33b2814f859ffc5b7cafd36, type: 3}
-  rooms: []
   enemyPrefabs: []
+  bossPrefabs: {fileID: 1522695186968703268, guid: 188174a480189614ca8f2788907b4e5d,
+    type: 3}
+  bossSpawner: {fileID: 0}
+  potal: {fileID: 0}
 --- !u!4 &835481653
 Transform:
   m_ObjectHideFlags: 0
@@ -865,6 +868,8 @@ MonoBehaviour:
   hpChangedEvent: {fileID: 11400000, guid: 4adb4291f26f5a2478ad2e9c521afe46, type: 2}
   staminaChangedEvent: {fileID: 11400000, guid: 807abd78625d55143bbbe8bd83fa8373,
     type: 2}
+  expChangedEvent: {fileID: 0}
+  levelChangedEvent: {fileID: 0}
 --- !u!114 &1079561596 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7126254073961061941, guid: 927eb925089e24dec90b3c9f28cdd3e9,
@@ -1175,21 +1180,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 70590365192129773, guid: 188174a480189614ca8f2788907b4e5d,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 70590365192129773, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 70590365192129773, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 70590365192129773, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.71
       objectReference: {fileID: 0}
@@ -1242,102 +1232,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ancient Tortoise
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610051864806482312, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.4719
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610051864806482312, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Size.z
-      value: 9.193661
-      objectReference: {fileID: 0}
-    - target: {fileID: 1610051864806482312, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0.36180663
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: LavaStone
-      value: 
-      objectReference: {fileID: 1521101356974260530, guid: 86d180f2eaf33ca49916a5b81f4bf0ba,
-        type: 3}
-    - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: generateArea.m_Center.y
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: generateArea.m_Extent.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: generateArea.m_Extent.y
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: generateArea.m_Extent.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761021046377642337, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.99558765
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.064250894
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.004404405
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.06824763
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 7.385
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764319876125025427, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 7.843
-      objectReference: {fileID: 0}
-    - target: {fileID: 7892461053159129840, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Radius
-      value: 1.4943712
-      objectReference: {fileID: 0}
-    - target: {fileID: 7892461053159129840, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Center.x
-      value: 2.3884585
-      objectReference: {fileID: 0}
-    - target: {fileID: 7892461053159129840, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Center.y
-      value: -0.11999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 7892461053159129840, guid: 188174a480189614ca8f2788907b4e5d,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0.0000028003612
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
