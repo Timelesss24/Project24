@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityUtils;
 
 namespace Timelesss
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : Singleton<PlayerManager>
     {
-        public static PlayerManager Instance;
+        public PlayerInfo PlayerIfo { get; private set; }
+        public Inventory Inventory { get; private set; }
+        public Equipment Equipment { get; private set; }
 
-        private void Awake()
+        protected override void Awake()
         {
-            Instance = this;
+            base.Awake();
+            Inventory = GetComponent<Inventory>();
+            Equipment = GetComponent<Equipment>();
+            PlayerIfo = GetComponent<PlayerInfo>();
         }
-
-        public GameObject Player;
     }
 }

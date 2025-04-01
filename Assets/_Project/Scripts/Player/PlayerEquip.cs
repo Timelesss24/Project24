@@ -11,14 +11,17 @@ namespace Timelesss
         public WeaponData Weapon { get; private set; }
         public EquipItemData Helmet { get; private set; }
         
-        public Dictionary<EquipItemData, GameObject>  EquipItems { get; private set; }
+        public List<ItemInstance>  EquipItems { get; private set; }
 
 
         [SerializeField, Self] Animator animator;
         public GameObject helmet;
 
+        void OnValidate() => this.ValidateRefs();
+
         public void ChangeMaterial(EquipItemData equipItemData)
         {
+            
             switch (equipItemData.EquipType)
             {
                 case EquipType.Helmet:
@@ -32,29 +35,29 @@ namespace Timelesss
             }
         }
         
-        void EquipWeaponObject(EquipItemData data)
-        {
-            var holder = animator.GetBoneTransform(data.GetHolder());
-            GameObject obj = null;
-            if (data.EquipType == EquipType.Sword)
-                GetComponent<CombatController>().EquipWeapon((WeaponData)data);
-            else
-                obj = Instantiate(data.EquipPrefab, holder, true);   
-            
-            EquipItems[data] = obj;
-        }
-        
-        void UnEquipWeaponObject(EquipItemData data)
-        {
-          
-           if (!EquipItems.TryGetValue(data, out var obj)) return;
-
-            if (data.EquipType == EquipType.Sword)
-                GetComponent<CombatController>().UnEquipWeapon();
-            
-            Destroy(obj);
-            EquipItems.Remove(data);
-        }
+        // public void EquipWeaponObject(ItemInstance item)
+        // {
+        //     var holder = animator.GetBoneTransform(item.Data.GetHolder());
+        //     GameObject obj = null;
+        //     if (data.EquipType == EquipType.Sword)
+        //         GetComponent<CombatController>().EquipWeapon((WeaponData)data);
+        //     else
+        //         obj = Instantiate(data.EquipPrefab, holder, true);   
+        //     
+        //     EquipItems[data] = obj;
+        // }
+        //
+        // public void UnEquipWeaponObject(ItemInstance item)
+        // {
+        //   
+        //    if (!EquipItems.TryGetValue(data, out var obj)) return;
+        //
+        //     if (data.EquipType == EquipType.Sword)
+        //         GetComponent<CombatController>().UnEquipWeapon();
+        //     
+        //     Destroy(obj);
+        //     EquipItems.Remove(data);
+        // }
         
     }
 }
