@@ -47,12 +47,16 @@ namespace Timelesss
         private void Start()
         {
             GetName();
+        }
+
+        public void InitalizedValueChanged()
+        {
             hpChangedEvent?.Invoke(currentHealth);
             staminaChangedEvent?.Invoke(currentStamina);
             expChangedEvent?.Invoke(currentExp);
             levelChangedEvent?.Invoke(playerLevel);
         }
-
+        
         public string GetName()
         {
             if (PlayerName != null) return PlayerName;
