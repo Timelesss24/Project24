@@ -3,7 +3,6 @@ using System.Collections;
 using Core;
 using KBCore.Refs;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Utilities;
 
 namespace Timelesss
@@ -22,16 +21,12 @@ namespace Timelesss
         [SerializeField, Self] AnimationSystem animationSystem;
         [SerializeField, Self] Animator animator;
         [SerializeField, Self] PlayerInfo playerInfo;
-        [FormerlySerializedAs("defaultData")]
-        [FormerlySerializedAs("weaponData")]
-        [FormerlySerializedAs("weapon")]
-        [SerializeField] WeaponData defaultWeaponData;
 
         [SerializeField] LayerMask hitboxLayer;
 
 
         AttachedWeapon currentWeaponHandler;
-        WeaponData currentWeaponData;
+        WeaponDetails currentWeaponDetails;
         GameObject currentWeaponObject;
         GameObject prevGameObj; // Collider sweep 공격 히트 체크용 
         BoxCollider weaponCollider;
@@ -62,26 +57,13 @@ namespace Timelesss
 
             OnStartAttack += attackTimer.Start;
             OnEndAttack += attackTimer.Stop;
-
-            EquipWeapon(defaultWeaponData); // 기본 무기 장착
         }
 
-        void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                if (currentWeaponObject)
-                    UnEquipWeapon();
-                else
-                    EquipWeapon(defaultWeaponData);
+        void Update() => attackTimer.Tick(Time.deltaTime);
 
-            }
-
-            attackTimer.Tick(Time.deltaTime);
-        }
         public void TryAttack()
         {
-            if (!currentWeaponData) return;
+            if (!currentWeaponDetails) return;
             HandleAttack();
         }
 
@@ -106,7 +88,7 @@ namespace Timelesss
 
             AttackState = AttackStates.Windup;
 
-            var attackList = currentWeaponData.AttacksContainer.Attacks;
+            var attackList = currentWeaponDetails.AttacksContainer.Attacks;
             var attackSlot = attackList[comboCount];
             var attack = attackSlot.Attack;
             CurrentAttack = attack;
@@ -255,42 +237,27 @@ namespace Timelesss
             activeCollider = null;
         }
 
-        public void EquipWeapon(WeaponData data)
+        public void SetWeaponObject(GameObject obj, WeaponDetails details)
         {
-            if(!data) return;
-            UnEquipWeapon();
-
-            data.InIt();
-            SetWeaponObject(data);
+            if(!details) return;
+             UnEquipWeapon();
+             details.InIt();
+            
+             currentWeaponObject = obj;
+             currentWeaponObject.transform.localPosition = details.LocalPosition;
+             currentWeaponObject.transform.localRotation = Quaternion.Euler(details.LocalRotation);
+             currentWeaponObject.tag = "Hitbox";
+             currentWeaponHandler = currentWeaponObject.GetComponent<AttachedWeapon>();
+             currentWeaponDetails = details;
 
             if (currentWeaponObject == null) return;
-            weaponCollider = currentWeaponObject.GetComponentInChildren<BoxCollider>();
-            EnableAndDisableWeapon(true);
+                weaponCollider = currentWeaponObject.GetComponentInChildren<BoxCollider>();
         }
         public void UnEquipWeapon()
         {
-            EnableAndDisableWeapon(false);
             currentWeaponObject = null;
-            currentWeaponData = null;
+            currentWeaponDetails = null;
         }
-        void SetWeaponObject(WeaponData data)
-        {
-            var holder = animator.GetBoneTransform(HumanBodyBones.RightHand);
-            currentWeaponObject = Instantiate(data.WeaponModel, holder, true);
-            currentWeaponObject.transform.localPosition = data.LocalPosition;
-            currentWeaponObject.transform.localRotation = Quaternion.Euler(data.LocalRotation);
-            currentWeaponObject.tag = "Hitbox";
-            currentWeaponHandler = currentWeaponObject.GetComponent<AttachedWeapon>();
-            currentWeaponData = data;
-            // Todo 무기 스왑 시스템 추가 할시 => 리스트 관리
-
-        }
-
-        void EnableAndDisableWeapon(bool enableWeapon)
-        {
-            currentWeaponObject?.SetActive(enableWeapon);
-        }
-
         void OnGUI()
         {
             // 공격 상태를 디버깅하기 위한 간단한 UI 작성

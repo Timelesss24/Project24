@@ -4871,10 +4871,10 @@ GameObject:
   - component: {fileID: 5234501713427197604}
   - component: {fileID: 6127079088358157217}
   - component: {fileID: 4102480345581492913}
-  - component: {fileID: 1582992466687491861}
-  - component: {fileID: 8048480534534630146}
-  - component: {fileID: 6958752919335256505}
-  - component: {fileID: 6697466734952895269}
+  - component: {fileID: 6330232439459381160}
+  - component: {fileID: 2299740829881540455}
+  - component: {fileID: 3731722413143349293}
+  - component: {fileID: 3382824367833768008}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5129,7 +5129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6187148080591312827}
   helmet: {fileID: 6815976800896096675}
---- !u!114 &1582992466687491861
+--- !u!114 &6330232439459381160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5151,7 +5151,7 @@ MonoBehaviour:
     Part3: 3488873864
     Part4: 2373077261
   coinChannel: {fileID: 0}
---- !u!114 &8048480534534630146
+--- !u!114 &2299740829881540455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5163,13 +5163,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e0a729df004eb8ae0e0fe711a2e4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems: []
+  startingItems:
+  - {fileID: 0}
   <Id>k__BackingField:
     Part1: 3907552367
     Part2: 1291227998
     Part3: 438918075
     Part4: 2240810988
---- !u!114 &6958752919335256505
+--- !u!114 &3731722413143349293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5181,7 +5182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4c33d599531ef448e2b41a94c91e4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6697466734952895269
+--- !u!114 &3382824367833768008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6366,7 +6367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7128059267668773649
 Transform:
   m_ObjectHideFlags: 0
