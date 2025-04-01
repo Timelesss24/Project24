@@ -14385,6 +14385,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7126254073961061941, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: expChangedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: e002bc16c420b9146ad16c30ec37c53a,
+        type: 2}
+    - target: {fileID: 7126254073961061941, guid: 927eb925089e24dec90b3c9f28cdd3e9,
+        type: 3}
+      propertyPath: levelChangedEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e9bbf3155709b84fbb640b9ef33a513,
+        type: 2}
     - target: {fileID: 9007843920410416306, guid: 927eb925089e24dec90b3c9f28cdd3e9,
         type: 3}
       propertyPath: defaultWeaponData
