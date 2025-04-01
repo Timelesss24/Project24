@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f88ffd27bd4ec4c9007b4930e0d9a1, type: 3}
   m_Name: BossOS
   m_EditorClassIdentifier: 
-  enemyCode: 0
-  maxHp: 100
+  enemyCode: 1006
+  maxHp: 1000
   attackDamage: 10
   exp: 30
-  wanderRadius: 10
+  wanderRadius: 20
   timeBetweenAttacks: 1
-  detectionAngle: 60
-  detectionRadius: 10
-  innerDetectionRadius: 5
+  detectionAngle: 360
+  detectionRadius: 20
+  innerDetectionRadius: 1
   detectionCooldown: 1
-  attackRange: 2
+  attackRange: 6

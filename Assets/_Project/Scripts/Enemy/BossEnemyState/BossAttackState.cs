@@ -13,10 +13,11 @@ namespace Timelesss
         // 공격 대상인 플레이어의 Transform
         readonly Transform target;
 
+        float skillcount;
+
         /// EnemyAttackState 생성자:
         /// 적 개체, 애니메이터, NavMeshAgent, 공격 타겟을 초기화합니다.
-        /// </summary>
-        /// <param name="enemy">현재 적 객체</param>
+
         /// <param name="animator">적의 애니메이션을 제어하는 Animator</param>
         /// <param name="agent">적의 이동과 경로 탐색을 담당하는 NavMeshAgent</param>
         /// <param name="target">적이 공격할 대상 (플레이어의 Transform)</param>
@@ -31,9 +32,8 @@ namespace Timelesss
         /// 공격 상태 진입 시, 공격 애니메이션을 실행합니다.
         public override void OnEnter()
         {
-            // Attack 애니메이션을 부드럽게 시작 (CrossFade 사용)
-            animator.CrossFade(AttackFirstHash, crossFadeDuration);
-            Debug.Log("공격");
+            AttackPattern();
+            //enemy.StopCoroutine(AttackDelay(skillcount));
         }
 
         /// <summary>
@@ -47,9 +47,40 @@ namespace Timelesss
 
             // 적(NavMeshAgent)이 타겟을 바라보도록 설정
             agent.transform.LookAt(targetPosition);
+            StateMachine stateMachine =new StateMachine();
 
             // 적의 공격 동작 수행
             //enemy.Attack();
+        }
+        void AttackPattern()
+        {
+            float targetRange = Vector3.Distance(enemy.transform.position, target.position);
+            if (targetRange <= 7f)
+            {
+                // Attack 애니메이션을 부드럽게 시작 (CrossFade 사용)
+                animator.CrossFade(AttackFirstHash, crossFadeDuration);
+                Debug.Log(" 뿜기 공격");
+                skillcount = 3f;
+            }
+            else if (targetRange > 7f && targetRange < 15f)
+            {
+                animator.CrossFade(AttackSecondHash, crossFadeDuration);
+                Debug.Log(" 원거리 공격");
+                skillcount = 4f;
+            }
+            else
+            {
+                animator.CrossFade(AttackThidHash, crossFadeDuration);
+                Debug.Log(" 억까 공격");
+                skillcount = 4.5f;
+            }
+        }
+        private IEnumerator AttackDelay(float count)
+        {
+            yield return new WaitForSeconds(count);
+            enemy.stateMachine.TransitionState(enemy.attackState, enemy.walkState);
+            yield return new WaitForSeconds(1);
+            enemy.stateMachine.TransitionState(enemy.walkState,enemy.attackState);
         }
     }
 }
