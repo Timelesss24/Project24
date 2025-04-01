@@ -45,7 +45,7 @@ namespace Framework.Audio
             
             ApplyVolumeSettings(); // 초기 볼륨 설정
             
-            PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")); 
+            //PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")); 
         }
 
         
