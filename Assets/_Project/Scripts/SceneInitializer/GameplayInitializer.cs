@@ -17,6 +17,8 @@ namespace Framework
 
             // 게임플레이 UI 표시
              UIManager.Instance.ShowUI<MainUI>();
+             
+             PlayerManager.Instance.PlayerIfo.InitalizedValueChanged();
 
             // 게임 로직 실행
             Debug.Log("Gameplay is now running.");
