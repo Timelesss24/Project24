@@ -94,8 +94,8 @@ namespace Framework.Audio
         {
             if (Instance.isMuted || !clip) return;
 
-            SoundSource soundSource = Instance.GetSoundSourceFromPool();
-            soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance);
+            SoundSource soundSource = Instance.GetSoundSourceFromPool(); // 풀에서 SoundSource 가져오기
+            soundSource.Play(clip, Instance.sfxVolume, Instance.sfxPitchVariance); // 효과음 재생
         }
 
         /// <summary>
