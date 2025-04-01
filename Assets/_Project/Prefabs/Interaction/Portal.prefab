@@ -266,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clip: {fileID: 7400000, guid: 19d70cddc853d934d8ebfc7cac722062, type: 2}
   interactionText: {fileID: 5611970956637889152}
-  targetSceneName: GamePlay
+  targetGameState: 2
 --- !u!1001 &5639041102423370190
 PrefabInstance:
   m_ObjectHideFlags: 0
