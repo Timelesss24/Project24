@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028301, g: 0.22571309, b: 0.30692127, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -422,72 +422,6 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!1 &2123159033
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2123159035}
-  - component: {fileID: 2123159034}
-  m_Layer: 0
-  m_Name: Data
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2123159034
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2123159033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b25005605c1d4122be127c6c648c9781, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AutoUnparentOnAwake: 1
-  GameData:
-    Name: Game
-    PlayerData:
-      <Id>k__BackingField:
-        Part1: 0
-        Part2: 0
-        Part3: 0
-        Part4: 0
-      PlayerLevel: 0
-      MaxHealth: 0
-      CurrentHealth: 0
-      CurrentExp: 0
-      RequiredExp: 0
-    QuestData:
-      <Id>k__BackingField:
-        Part1: 0
-        Part2: 0
-        Part3: 0
-        Part4: 0
-      ActiveQuestList: []
-      CompleteQuestList: 
---- !u!4 &2123159035
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2123159033}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.048632443, y: 1.2957, z: 0.34437743}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2680777847753545560
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -551,16 +485,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
-        type: 3}
-      propertyPath: bgmClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}
-    - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
-        type: 3}
-      propertyPath: bgmClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -574,4 +498,3 @@ SceneRoots:
   - {fileID: 820381298}
   - {fileID: 1457574295}
   - {fileID: 2680777847753545560}
-  - {fileID: 2123159035}

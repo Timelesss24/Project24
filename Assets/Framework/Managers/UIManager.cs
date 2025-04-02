@@ -168,7 +168,6 @@ namespace Managers
                     ClosePopup(popup);
                 }
             }
-
         }
     }
 }

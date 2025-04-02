@@ -50,17 +50,6 @@ namespace Timelesss
                 Items.TryAdd(itemDetail.Create(1));
             }
         }
-
-        public InventoryModel(Item[] items, int capacity)
-        {
-            this.capacity = capacity;
-            Items = new ObservableArray<Item>(capacity);
-            foreach (var item in items)
-            {
-                if (item.Details == null) continue;
-                Items.TryAdd(item.Details.Create(item.Quantity));
-            }
-        }
         
         // 메서드
         /// <summary>

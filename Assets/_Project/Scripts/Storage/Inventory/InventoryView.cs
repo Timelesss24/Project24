@@ -6,7 +6,7 @@ using Button = UnityEngine.UI.Button;
 
 namespace Timelesss
 {
-    public class InventoryView : StorageView, IItemContainer, IBind<InventoryData>
+    public class InventoryView : StorageView, IItemContainer
     {
         [SerializeField] string panelName = "인벤토리";
         [SerializeField] GameObject slotPrefab; // 슬롯 프리팹
@@ -93,13 +93,10 @@ namespace Timelesss
             {
                 model.Swap(fromIndex, toIndex);
             }
-
-   
-
+            
             RefreshSlot(fromIndex);
             RefreshSlot(toIndex);
-
-
+            
             return true;
         }
 
@@ -113,27 +110,6 @@ namespace Timelesss
             else
             {
                 Slots[index].Set(item.Id, item.Details.Icon, item.Quantity);
-            }
-        }
-
-        public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
-
-        public void Bind(InventoryData data)
-        {
-            inventoryData = data;
-            Id = data.Id;
-
-            for (int i = 0; i < Slots.Length; i++)
-            {
-                Item item = inventoryData.Items[i];
-                if (item != null)
-                {
-                    Slots[i].Set(item.Id, item.Details.Icon, item.Quantity);
-                }
-                else
-                {
-                    Slots[i].Set(SerializableGuid.Empty, null);
-                }
             }
         }
     }

@@ -13,7 +13,7 @@ namespace Systems.Persistence {
         public string Name = "Game";
         public PlayerData PlayerData;
         public SaveableQuestData QuestData;
-        //public InventoryData InventoryData;
+        public InventoryData InventoryData;
     }
         
     public interface ISaveable  
@@ -47,18 +47,16 @@ namespace Systems.Persistence {
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
         {
-            if (scene.name == "Title") return;
-            
-            Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
-            //bind
-            //AllBind();
+            SaveGame();
+            LoadGame(GameData.Name);
+            AllBind();
         }
 
         public void AllBind()
         {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
-            //Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
+            Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -105,14 +103,8 @@ namespace Systems.Persistence {
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
-                // InventoryData = new InventoryData 
-                // {
-                //     Id = SerializableGuid.NewGuid(),
-                //     Capacity = 20,
-                //     Coins = 0,
-                //     Items = new Item[20],
-                //     ItemQuantities = new int[20],
-                // }
+                InventoryData = new InventoryData(),
+     
             };
         }
 
@@ -133,5 +125,10 @@ namespace Systems.Persistence {
         public void ReloadGame() => LoadGame(GameData.Name);
 
         public void DeleteGame(string gameName) => dataService.Delete(gameName);
+
+        void OnApplicationQuit()
+        {
+            SaveGame();
+        }
     }
 }
