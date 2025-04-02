@@ -16,9 +16,9 @@ namespace Timelesss
         [field: SerializeField] public SerializableGuid Id { get; private set; }
         [field: SerializeField] public ItemDetails Details { get; private set; }
         public event Action OnChanged = delegate { };
-        int quantity;
+        [SerializeField] public int quantity;
 
-        public int Quantity
+         public int Quantity
         {
             get => quantity;
             set

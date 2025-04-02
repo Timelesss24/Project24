@@ -220,12 +220,7 @@ namespace Timelesss
         }
         
         [field: SerializeField] public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
-
-        void OnGUI()
-        {
-            GUI.Label(new Rect(100, 100, 300, 300), $"Player ID: {Id.ToGuid()}");
-            GUI.Label(new Rect(100, 400, 300, 300), $"Game ID: {SaveLoadSystem.Instance.GameData.PlayerData.Id.ToGuid()}");
-        }
+        
         public void Bind(PlayerData data)
         {
             playerData = data;

@@ -78,9 +78,10 @@ namespace Timelesss
             int toIndex = toSlot.Index;
 
             if (fromIndex == toIndex) return false;
-
+            
             var targetItem = model.Get(toIndex);
-
+            
+            
             if (targetItem != null &&
                 targetItem.Details.Id == item.Details.Id &&
                 targetItem.Quantity + item.Quantity <= item.Details.MaxStack)
