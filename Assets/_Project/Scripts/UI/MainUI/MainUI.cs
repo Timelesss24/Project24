@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Managers;
 using Scripts.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,7 +21,7 @@ namespace Timelesss
         {
             settingButton.onClick.AddListener(OnClickSettingButton);
             inventoryButton.onClick.AddListener(OnClickInventoryButton);
-            questButton.onClick.AddListener(OnClickQuestButton);           
+            questButton.onClick.AddListener(OnClickQuestButton);
         }
 
         private void Start()
