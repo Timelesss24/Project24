@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 8120617534917948204}
   m_Layer: 7
   m_Name: Ancient Tortoise
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,6 @@ MonoBehaviour:
     m_Center: {x: 0, y: 6, z: 0}
     m_Extent: {x: 2, y: 0.2, z: 2}
   enemyDrop: {fileID: 0}
-  itemSpawner: {fileID: 0}
   hpBar: {fileID: 0}
   isDie: 0
   EarthShake: {fileID: 1302072210878452296}
