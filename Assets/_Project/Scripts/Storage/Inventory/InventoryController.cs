@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Timelesss
@@ -69,6 +70,7 @@ namespace Timelesss
         {
             // readonly InventoryView view;
             IEnumerable<ItemDetails> itemDetails;
+            Item[] items;
             int capacity = 20;
             
             public Builder WithStartingItems(IEnumerable<ItemDetails> itemDetails)
@@ -77,6 +79,14 @@ namespace Timelesss
                 return this;
             }
 
+            public Builder WithLoadItems(Item[] items)
+            {
+                Debug.Log("WithLoadItems 호출");
+                
+                this.items = items;
+                return this;
+            }
+            
             public Builder WithCapacity(int capacity)
             {
                 this.capacity = capacity;
@@ -85,9 +95,14 @@ namespace Timelesss
 
             public InventoryController Build()
             {
-                var model = itemDetails != null
-                    ? new InventoryModel(itemDetails, capacity)
-                    : new InventoryModel(Array.Empty<ItemDetails>(), capacity);
+                InventoryModel model;
+
+                if (items != null)
+                    model = new InventoryModel(items, capacity);
+                else if (itemDetails != null)
+                    model = new InventoryModel(itemDetails, capacity);
+                else
+                    model = new InventoryModel(Array.Empty<ItemDetails>(), capacity);
 
                 return new InventoryController(model, capacity);
             }

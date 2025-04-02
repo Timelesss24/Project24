@@ -23,7 +23,7 @@ namespace Timelesss
         {
             startButton.onClick.AddListener(OnClickStartButton);
 
-            PlayerPrefs.DeleteKey(PlayerNameKey); // 테스트 용
+            //PlayerPrefs.DeleteKey(PlayerNameKey); // 테스트 용
 
             if (PlayerPrefs.HasKey(PlayerNameKey))
             {
