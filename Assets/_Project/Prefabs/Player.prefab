@@ -4953,6 +4953,22 @@ MonoBehaviour:
     type: 2}
   expChangedEvent: {fileID: 11400000, guid: e002bc16c420b9146ad16c30ec37c53a, type: 2}
   levelChangedEvent: {fileID: 11400000, guid: 9e9bbf3155709b84fbb640b9ef33a513, type: 2}
+  playerData:
+    <Id>k__BackingField:
+      Part1: 0
+      Part2: 0
+      Part3: 0
+      Part4: 0
+    PlayerLevel: 0
+    MaxHealth: 0
+    CurrentHealth: 0
+    CurrentExp: 0
+    RequiredExp: 0
+  <Id>k__BackingField:
+    Part1: 4034605423
+    Part2: 1117579559
+    Part3: 1270481066
+    Part4: 1824266012
 --- !u!114 &1362591078315495764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5077,9 +5093,9 @@ MonoBehaviour:
   unityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Timelesss.PlayerInventory, Assembly-CSharp
-        m_MethodName: DropItemAddToInventory
+      - m_Target: {fileID: 6330232439459381160}
+        m_TargetAssemblyTypeName: Timelesss.Inventory, Assembly-CSharp
+        m_MethodName: AddItem
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

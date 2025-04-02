@@ -35,7 +35,7 @@ namespace Timelesss
             RefreshView();
         }
         
-        void SubscribeToItem(Item item)
+        public void SubscribeToItem(Item item)
         {
             if (item == null) return;
 

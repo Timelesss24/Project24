@@ -27,7 +27,8 @@ namespace Timelesss
         private void Start()
         {
             uIManager = UIManager.Instance;
-            DungeonManager.Instance.bossHpUIAction += OnBossUI;
+            if( DungeonManager.HasInstance)
+                DungeonManager.Instance.bossHpUIAction += OnBossUI;
         }
 
         void OnClickSettingButton()

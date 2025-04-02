@@ -6,13 +6,13 @@ namespace Timelesss
 {
     public class DropItem : InteractableBase
     {
-        public ItemDetails itemDetails;
+        public Item item;
 
         public override string InteractionName { get; } = "획득하기";
 
         private ItemSpawner spawner;
 
-        [SerializeField] EventChannel<ItemDetails> itemEventChannel;
+        [SerializeField] EventChannel<Item> itemEventChannel;
 
         public override void Interact()
         {
@@ -23,7 +23,7 @@ namespace Timelesss
         {
             if(Clip != null) yield return new WaitForSeconds(Clip.length);
             
-            itemEventChannel.Invoke(itemDetails);
+            itemEventChannel.Invoke(item);
 
             spawner.ReturnItem(this);
             
@@ -32,7 +32,7 @@ namespace Timelesss
 
         public void Initialize(ItemDetails data)
         {
-            itemDetails = data;
+            item = data.Create(1);
 
             if( spawner == null )
             {
