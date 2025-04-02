@@ -35,9 +35,10 @@ namespace Timelesss
 
         public void Equip(Item item)
         {
-            if (item?.Details.EquipmentPrefab == null)
+            if (item?.Details?.EquipmentPrefab == null)
                 return;
-
+            
+            
             var type = item.Details.EquipmentType;
 
             // 기존 장비 제거
@@ -51,6 +52,7 @@ namespace Timelesss
                 instances[type] = weapon;
                 return;
             }
+            
 
             var prefabSMR = item.Details.EquipmentPrefab.GetComponentInChildren<SkinnedMeshRenderer>();
             if (prefabSMR == null)

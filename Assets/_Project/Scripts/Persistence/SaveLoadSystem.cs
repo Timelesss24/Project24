@@ -48,7 +48,7 @@ namespace Systems.Persistence {
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
         {
-            //SaveGame();
+            SaveGame();
             LoadGame(GameData.Name);
             AllBind();
         }
