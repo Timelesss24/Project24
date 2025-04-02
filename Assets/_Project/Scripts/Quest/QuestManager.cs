@@ -15,34 +15,29 @@ namespace Timelesss
         public List<ActiveQuestInfo> ActiveQuestList;
         public List<int> CompleteQuestList;
     }
-    
+
     public class QuestManager : PersistentSingleton<QuestManager>, IBind<SaveableQuestData>
     {
         private QuestDataLoader questDataLoader;
 
         private Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
 
-        private List<ActiveQuestInfo> activeQuestList = new List<ActiveQuestInfo>();
+        public List<ActiveQuestInfo> ActiveQuestList { get; private set; } = new List<ActiveQuestInfo>();
 
-        public List<ActiveQuestInfo> ActiveQuestList => activeQuestList;
 
-        private List<int> completeQuestList = new List<int>();
+        private List<int> CompleteQuestList { get; set; } = new List<int>();
 
-        public List<int> CompleteQuestList => completeQuestList;
 
         private QuestType questType;
-        
+
         private const int InvalidQuestID = 0;
-        
+
         [SerializeField] private SaveableQuestData saveableQuestData;
 
         private void Start()
         {
             questDataLoader = new QuestDataLoader();
             questDict = questDataLoader.ItemsDict;
-            
-            LoadQuestData();
-            InvokeRepeating(nameof(SaveQuestData), 0, 3f);
         }
 
         public int GetQuestID(int npcID)
@@ -50,9 +45,9 @@ namespace Timelesss
             foreach (var quest in questDict.Values)
             {
                 if (quest.npcID == npcID &&
-                    !activeQuestList.Exists(x => x.questID == quest.key) &&
-                    !completeQuestList.Contains(quest.key) &&
-                    (quest.enabledQuestID == InvalidQuestID || completeQuestList.Contains(quest.enabledQuestID)))
+                    !ActiveQuestList.Exists(x => x.questID == quest.key) &&
+                    !CompleteQuestList.Contains(quest.key) &&
+                    (quest.enabledQuestID == InvalidQuestID || CompleteQuestList.Contains(quest.enabledQuestID)))
                 {
                     return quest.key;
                 }
@@ -73,13 +68,12 @@ namespace Timelesss
 
         public void StartQuest(int questID)
         {
-            if (!activeQuestList.Exists(x => x.questID == questID) && questDict.ContainsKey(questID))
+            if (!ActiveQuestList.Exists(x => x.questID == questID) && questDict.ContainsKey(questID))
             {
                 QuestData questData = GetQuestData(questID);
                 if (questData != null)
                 {
-                    activeQuestList.Add(new ActiveQuestInfo(questID, questData.targetNum));
-                    saveableQuestData.ActiveQuestList = activeQuestList;
+                    ActiveQuestList.Add(new ActiveQuestInfo(questID, questData.targetNum));
                 }
             }
             else
@@ -90,15 +84,12 @@ namespace Timelesss
 
         public void CompleteQuest(int questID)
         {
-            ActiveQuestInfo activeQuest = activeQuestList.Find(x => x.questID == questID);
+            ActiveQuestInfo activeQuest = ActiveQuestList.Find(x => x.questID == questID);
 
             if (activeQuest != null)
             {
-                activeQuestList.Remove(activeQuest);
-                completeQuestList.Add(questID);
-                
-                saveableQuestData.ActiveQuestList = activeQuestList;
-                saveableQuestData.CompleteQuestList = completeQuestList;
+                ActiveQuestList.Remove(activeQuest);
+                CompleteQuestList.Add(questID);
 
                 if (questDict.TryGetValue(questID, out var completedQuest))
                 {
@@ -122,9 +113,9 @@ namespace Timelesss
         }
 
         public bool GetIsComplete(int questId) =>
-            activeQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
+            ActiveQuestList.Exists(x => x.questID == questId && x.progress >= x.goal);
 
-        public bool GetIsCompleteToNpc(int npcId) => activeQuestList.Exists(x =>
+        public bool GetIsCompleteToNpc(int npcId) => ActiveQuestList.Exists(x =>
         {
             QuestData questData = GetQuestData(x.questID);
             return questData != null &&
@@ -134,17 +125,17 @@ namespace Timelesss
 
         public int FindCompletedQuestID(int npcID)
         {
-            ActiveQuestInfo completedQuest = activeQuestList.Find(x =>
+            ActiveQuestInfo completedQuest = ActiveQuestList.Find(x =>
             {
                 QuestData questData = GetQuestData(x.questID);
                 return questData != null &&
-                       questData.npcID == npcID && 
-                       x.IsComplete();           
+                       questData.npcID == npcID &&
+                       x.IsComplete();
             });
 
             return completedQuest == null ? InvalidQuestID : completedQuest.questID;
         }
-        
+
         public void UpdateProgress(object type)
         {
             int id = InvalidQuestID;
@@ -163,7 +154,7 @@ namespace Timelesss
             else
                 questType = QuestType.DungeonClear;
 
-            ActiveQuestInfo activeQuest = activeQuestList.Find(x =>
+            ActiveQuestInfo activeQuest = ActiveQuestList.Find(x =>
             {
                 QuestData questData = GetQuestData(x.questID);
                 return questData != null &&
@@ -175,29 +166,19 @@ namespace Timelesss
             {
                 if (activeQuest.progress < activeQuest.goal)
                     activeQuest.progress++;
-                
-                saveableQuestData.ActiveQuestList = activeQuestList;
+
                 Debug.Log($"퀘스트 진행 업데이트: {activeQuest.progress}/{activeQuest.goal}");
             }
         }
 
         [field: SerializeField] public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
+
         public void Bind(SaveableQuestData data)
         {
             saveableQuestData = data;
-            Id = data.Id;
-            activeQuestList = data.ActiveQuestList;
-            completeQuestList = data.CompleteQuestList;
-        }
-        
-        private void SaveQuestData() => SaveLoadSystem.Instance.GameData.QuestData = saveableQuestData;
-        
-        private void LoadQuestData()
-        {
-            saveableQuestData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).QuestData;
-            
-            if (saveableQuestData != null)
-                Bind(saveableQuestData);
+            saveableQuestData.Id = Id;
+            ActiveQuestList = saveableQuestData.ActiveQuestList;
+            CompleteQuestList = saveableQuestData.CompleteQuestList;
         }
     }
 }
