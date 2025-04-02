@@ -39,15 +39,15 @@ namespace Timelesss
                 var targetContainer = closestSlot.GetComponentInParent<IItemContainer>();
 
                 if (targetContainer?.HandleDrop(originSlot, closestSlot, item, item => {
-                        originSlot.Remove();
-                        if (targetContainer is EquipmentView equipmentView)
-                        {
-                            equipmentView.HandleDrop(originSlot, closestSlot, item);
-                        }
-                        else
-                        {
-                            originContainer.HandleDrop(closestSlot, originSlot, item);
-                        }
+                        // originSlot.Remove();
+                        // if (targetContainer is EquipmentView equipmentView)
+                        // {
+                        //     equipmentView.HandleDrop(originSlot, closestSlot, item);
+                        // }
+                        // else
+                        // {
+                        //     originContainer.HandleDrop(closestSlot, originSlot, item);
+                        // }
                     }) ?? false)
                 {
                     // 다른 컨테이너로 옮겨졌다면 원래 모델에서 제거
