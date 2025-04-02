@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
