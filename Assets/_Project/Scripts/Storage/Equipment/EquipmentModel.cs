@@ -15,7 +15,7 @@ namespace Timelesss
             remove => Items.AnyValueChanged -= value;
         }
 
-        public EquipmentModel(IEnumerable<EquipmentDetails> itemDetails)
+        public EquipmentModel(IEnumerable<ItemDetails> itemDetails)
         {
             Items = new ObservableDictionary<EquipmentType, Item>();
             foreach (var detail in itemDetails)
@@ -64,13 +64,13 @@ namespace Timelesss
 
         public bool Add(Item item)
         {
-            var type = ((EquipmentItem)item).EquipmentType;
+            var type = item.Details.EquipmentType;
             return Items.TrySet(type, item);
         }
 
         public bool Remove(Item item)
         {
-            var type = ((EquipmentItem)item).EquipmentType;
+            var type = item.Details.EquipmentType;
             if (Items.ContainsKey(type) && Items[type] == item)
             {
                 return Items.TryRemove(type);

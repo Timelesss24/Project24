@@ -103,7 +103,7 @@ namespace Systems.Persistence {
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
-                InventoryData = new InventoryData(),
+                InventoryData = new InventoryData()
      
             };
         }

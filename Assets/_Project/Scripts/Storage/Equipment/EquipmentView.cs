@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -55,14 +56,30 @@ namespace Timelesss
             this.Controller = controller;
         }
 
-        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
+        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item, Action<Item> onSwap = null)
         {
             // 장비 슬롯에만 처리
             if (toSlot is not EquipmentSlot targetSlot)
+            {
+                Debug.LogWarning("Drop target is not equipment slot");
                 return false;
+            }
+            
+            if (item.Details.ItemType != ItemType.Equipment || item.Details.EquipmentType != targetSlot.EquipmentType)
+            {
+                Debug.LogWarning("Drop item is not equipment" + item.Details.ItemType);
+                return false;
+            }
 
-            if (item is not EquipmentItem equipItem || equipItem.EquipmentType != targetSlot.EquipmentType)
-                return false;
+            if ( Controller.Model.Get(item.Details.EquipmentType) != null)
+            {
+                var temp = GetItemFromSlot(toSlot);
+                Controller?.Model?.Add(item);
+                onSwap?.Invoke(temp);
+                
+                return true;
+            }
+                
 
             Controller?.Model?.Add(item);
             return true;

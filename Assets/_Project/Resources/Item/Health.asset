@@ -10,25 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc98a17767004bc3a47f1190324a3c39, type: 3}
-  m_Name: Top
+  m_Name: Health
   m_EditorClassIdentifier: 
-  Name: sadasd
-  MaxStack: 1
+  Name: dd
+  MaxStack: 15
   Id:
-    Part1: 2335895748
-    Part2: 1260755733
-    Part3: 4060270520
-    Part4: 754830607
+    Part1: 3120986998
+    Part2: 1191235423
+    Part3: 931099823
+    Part4: 1253682955
   ItemType: 0
   DropPrefab: {fileID: 0}
-  EquipmentType: 2
-  EquipmentPrefab: {fileID: 4248426805996765403, guid: c2cdeecc4c26847fd96f916e561e592e,
-    type: 3}
-  RestoreValue: 0
+  EquipmentType: 0
+  EquipmentPrefab: {fileID: 0}
+  RestoreValue: 10
   LocalPosition: {x: 0, y: 0, z: 0}
   LocalRotation: {x: 0, y: 0, z: 0}
   AttacksContainer:
     <Attacks>k__BackingField: []
   OverrideController: {fileID: 0}
-  Icon: {fileID: 21300000, guid: 507869f62ffa6494a942a26b965fe252, type: 3}
+  Icon: {fileID: 21300000, guid: fef1f120b08ee5746859c1ed267d1947, type: 3}
   Description: 

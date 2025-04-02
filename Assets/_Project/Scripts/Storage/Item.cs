@@ -14,9 +14,9 @@ namespace Timelesss
     [Serializable]
     public class Item : IItem
     {
-        [field: SerializeField] public SerializableGuid Id { get; private set; }
-        [field: SerializeField] public SerializableGuid DetailsId { get; private set; }
-        [field: SerializeField] public ItemDetails Details { get; private set; }
+        [field: SerializeField] public SerializableGuid Id { get;  set; }
+        [field: SerializeField] public SerializableGuid DetailsId { get;  set; }
+        [field: SerializeField] public ItemDetails Details { get;  set; }
         public event Action OnChanged = delegate { };
         [SerializeField] public int quantity;
 
@@ -47,9 +47,9 @@ namespace Timelesss
     public class EquipmentItem : Item
     {
         public EquipmentType EquipmentType => Details.EquipmentType;
-        public GameObject EquipmentPrefab => ((EquipmentDetails)Details).EquipmentPrefab;
-        public Vector3 LocalPosition => ((EquipmentDetails)Details).LocalPosition;
-        public Vector3 LocalRotation => ((EquipmentDetails)Details).LocalRotation;
+        public GameObject EquipmentPrefab => Details.EquipmentPrefab;
+        public Vector3 LocalPosition => Details.LocalPosition;
+        public Vector3 LocalRotation => Details.LocalRotation;
 
         public EquipmentItem(ItemDetails details, int quantity = 1) : base(details, quantity)
         {
@@ -59,7 +59,7 @@ namespace Timelesss
     [Serializable]
     public class ConsumableItem : Item
     {
-        public int RestoreAmount => ((ConsumableDetails)Details).RestoreValue;
+        public int RestoreAmount => Details.RestoreValue;
 
         public ConsumableItem(ItemDetails details, int quantity = 1) : base(details, quantity)
         {

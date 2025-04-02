@@ -67,7 +67,7 @@ public class ObservableArray<T> : IObservableArray<T>
         if (index < 0 || index >= Items.Length) return false;
 
         if (Items[index] != null)
-        {Debug.Log(Items.Length);return false;}
+        {Debug.Log(index);return false;}
 
         Items[index] = item;
         Invoke();

@@ -46,18 +46,20 @@ namespace Timelesss
 
         protected override Item GetItemFromSlot(Slot slot) => sharedItem;
 
-        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
+        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item, Action<Item> OnSwap = null)
         {
+            if(item == null) return false;
+            
             Debug.Log($"[ConsumableStorage] HandleDrop called. Item: {item?.Details?.ItemType}");
 
-            if (item is not ConsumableItem consumable)
+            if (item.Details && item.Details.ItemType != ItemType.Consumable)
             {
                 Debug.LogWarning("올바르지 않은 아이템입니다.");
                 return false;
             }
 
             sharedItem = item;
-            if (item.Details != null) Slots[0].Set(item.Id, item.Details.Icon, item.Quantity);
+            if (item.Details) Slots[0].Set(item.Id, item.Details.Icon, item.Quantity);
             return false;
         }
 
@@ -68,7 +70,7 @@ namespace Timelesss
             CoolTime(5f, uibCoolTimeIndicator);
             
             sharedItem.Quantity--;
-            PlayerManager.Instance.PlayerIfo.RestoreHealth(((ConsumableItem)sharedItem).RestoreAmount);
+            PlayerManager.Instance.PlayerIfo.RestoreHealth(sharedItem.Details.RestoreValue);
             
             
             if (sharedItem.Quantity <= 0)
@@ -83,5 +85,6 @@ namespace Timelesss
             }
             
         }
+        
     }
 }

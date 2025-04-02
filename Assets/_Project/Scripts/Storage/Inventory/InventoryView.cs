@@ -55,7 +55,7 @@ namespace Timelesss
         }
 
 
-        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
+        public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item, Action<Item> OnSwap = null)
         {
             if (item == null || Controller?.Model == null) return true;
 

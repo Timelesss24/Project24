@@ -59,46 +59,91 @@ namespace Timelesss
         /// <param name="data">InventoryData 인스턴스.</param>
         public void Bind(InventoryData data)
         {
-            Debug.Log("INVENTORY MODEL BIND");
+            
+            for (var i = 0; i < data.Items.Length; i++)
+            {
+                if (data.Items[i].Id == SerializableGuid.Empty)
+                    data.Items[i] = null;
+            }
+            
             inventoryData = data;
-
             inventoryData.Capacity = capacity;
-
+            
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
 
-            if (isNew)
-            {
-                // 새로운 데이터일 경우 빈 아이템 배열 초기화
+            if (isNew) {
                 inventoryData.Items = new Item[capacity];
             }
-            else
-            {
+            // else {
+            //     for (var i = 0; i < capacity; i++) {
+            //         if (Items[i] == null) continue;
+            //         inventoryData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
+            //     }
+            // }
+     
 
-                // 기존 데이터에서 아이템을 로드
-                for (var i = 0; i < capacity; i++)
-                {
-                    if (Items[i] == null) continue; 
-                    if(data.Items[i].Quantity == 0)
-                    {
-                        inventoryData.Items[i] = null;
-                        continue;
-                    }
-                    inventoryData.Items[i] = ItemDatabase.GetDetailsById(data.Items[i].DetailsId).Create(data.Items[i].Quantity);
-                }
-            }
-
-            if (isNew && Items.Count != 0)
-            {
-                // 아이템 복사
-                for (var i = 0; i < capacity; i++)
-                {
+            if (isNew && Items.Count != 0) {
+                for (var i = 0; i < capacity; i++) {
                     if (Items[i] == null) continue;
                     inventoryData.Items[i] = Items[i];
                 }
             }
+            
+            for (var i = 0; i < capacity; i++) {
+               Debug.Log($"Items {i}" + (Items[i] == null));
+               Debug.Log($"Save Data{i}" + (inventoryData.Items[i] == null));
+            }
+            
+            Items.Items = inventoryData.Items;
+            
+            // Debug.Log("INVENTORY MODEL BIND");
+            // inventoryData = data;
+            //
+            // inventoryData.Capacity = capacity;
+            //
+            // bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
+            //
+            // if (isNew)
+            // {
+            //     // 새로운 데이터일 경우 빈 아이템 배열 초기화
+            //     inventoryData.Items = new Item[capacity];
+            // }
+            // else
+            // {
+            //     // 기존 데이터에서 아이템을 로드
+            //     for (var i = 0; i < capacity; i++)
+            //     {
+            //         if (Items[i] == null) continue; 
+            //         if(Items[i].Quantity == 0)
+            //         {
+            //             inventoryData.Items[i] = null;
+            //             continue;
+            //         }
+            //         //inventoryData.Items[i] = ItemDatabase.GetDetailsById(data.Items[i].DetailsId).Create(data.Items[i].Quantity);
+            //         
+            //     }
+            // }
+            //
+            // if (isNew && Items.Count != 0)
+            // {
+            //     // 아이템 복사
+            //     for (var i = 0; i < capacity; i++)
+            //     {
+            //         if (Items[i] == null) continue;
+            //         inventoryData.Items[i] = Items[i];
+            //     }
+            // }
+            //
+            // for (var i = 0; i < capacity; i++)
+            // {
+            //     if (inventoryData.Items[i] == null) continue;
+            //     if(inventoryData.Items[i].Quantity == 0)
+            //         inventoryData.Items[i] = null;
+            // }
+            
 
             // Items 배열과 inventoryData의 아이템 연결
-            Items.Items = inventoryData.Items;
+            //Items.Items = inventoryData.Items;
         }
 
         /// <summary>

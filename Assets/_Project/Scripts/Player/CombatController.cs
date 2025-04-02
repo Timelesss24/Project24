@@ -26,7 +26,7 @@ namespace Timelesss
 
 
         AttachedWeapon currentWeaponHandler;
-        WeaponDetails currentWeaponDetails;
+        ItemDetails currentWeaponDetails;
         GameObject currentWeaponObject;
         GameObject prevGameObj; // Collider sweep 공격 히트 체크용 
         BoxCollider weaponCollider;
@@ -237,7 +237,7 @@ namespace Timelesss
             activeCollider = null;
         }
 
-        public void SetWeaponObject(GameObject obj, WeaponDetails details)
+        public void SetWeaponObject(GameObject obj, ItemDetails details)
         {
             if(!details) return;
              UnEquipWeapon();

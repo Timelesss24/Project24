@@ -33,12 +33,12 @@ namespace Timelesss
             }
         }
 
-        public void Equip(EquipmentItem item)
+        public void Equip(Item item)
         {
-            if (item?.EquipmentPrefab == null)
+            if (item?.Details.EquipmentPrefab == null)
                 return;
 
-            var type = item.EquipmentType;
+            var type = item.Details.EquipmentType;
 
             // 기존 장비 제거
             Unequip(type);
@@ -46,13 +46,13 @@ namespace Timelesss
             if (type == EquipmentType.Weapon)
             {
                 var holder = animator.GetBoneTransform(HumanBodyBones.RightHand);
-                var weapon = Instantiate(item.EquipmentPrefab, holder, true);
-                combatController.SetWeaponObject(weapon, (WeaponDetails)item.Details);
+                var weapon = Instantiate(item.Details.EquipmentPrefab, holder, true);
+                combatController.SetWeaponObject(weapon, item.Details);
                 instances[type] = weapon;
                 return;
             }
 
-            var prefabSMR = item.EquipmentPrefab.GetComponentInChildren<SkinnedMeshRenderer>();
+            var prefabSMR = item.Details.EquipmentPrefab.GetComponentInChildren<SkinnedMeshRenderer>();
             if (prefabSMR == null)
                 return;
 
@@ -65,7 +65,7 @@ namespace Timelesss
 
             Transform[] mappedBones = MapBonesByName(prefabSMR.bones, characterRenderer.bones);
 
-            var instance = Instantiate(item.EquipmentPrefab, transform);
+            var instance = Instantiate(item.Details.EquipmentPrefab, transform);
             var instanceSMR = instance.GetComponentInChildren<SkinnedMeshRenderer>();
             if (instanceSMR == null)
             {

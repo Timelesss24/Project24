@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Scripts.UI;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Timelesss
 {
     public interface IItemContainer
     {
-        bool HandleDrop(Slot fromSlot, Slot toSlot, Item item);
+        bool HandleDrop(Slot fromSlot, Slot toSlot, Item item, Action<Item> OnSwap = null);
     }
     
     public static class DragState

@@ -9,24 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccae5c2e89444d5aad31deb8ae367fc7, type: 3}
+  m_Script: {fileID: 11500000, guid: fc98a17767004bc3a47f1190324a3c39, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  Name: "\uAC80"
+  Name: asd
   MaxStack: 1
   Id:
-    Part1: 1008202490
-    Part2: 1224500960
-    Part3: 2753827210
-    Part4: 3455986428
-  ItemType: 1
-  DropPrefab: {fileID: 5172930129705760315, guid: 5316bbc50d6be5a488a68763b6532d1b,
-    type: 3}
+    Part1: 2318992877
+    Part2: 1309408808
+    Part3: 2944228506
+    Part4: 2324025850
+  ItemType: 0
+  DropPrefab: {fileID: 0}
   EquipmentType: 0
-  Icon: {fileID: 21300000, guid: 5a70415ab7693f549ae5c8cd464a075a, type: 3}
-  Description: "\uAC80\uC785\uB2C8\uB2E4."
   EquipmentPrefab: {fileID: 1380736215264169070, guid: 4bdcefeecacf84fc3a5366408a0b2634,
     type: 3}
+  RestoreValue: 0
   LocalPosition: {x: 0, y: 0, z: 0}
   LocalRotation: {x: 0, y: 270, z: 0}
   AttacksContainer:
@@ -38,3 +36,5 @@ MonoBehaviour:
     - <Attack>k__BackingField: {fileID: 11400000, guid: 949922fd4900d411f9eb590b75b952aa,
         type: 2}
   OverrideController: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 009d4fc67f3ecc341a5229c548eea9a0, type: 3}
+  Description: 

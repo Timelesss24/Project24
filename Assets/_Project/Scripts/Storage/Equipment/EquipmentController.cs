@@ -51,7 +51,7 @@ namespace Timelesss
             foreach (var item in items.Values)
             {
                 if (item == null) continue;
-                VisualHandler?.Equip((EquipmentItem)item); // 3D 모델 장착
+                VisualHandler?.Equip(item); // 3D 모델 장착
             }
         }
 
@@ -78,9 +78,9 @@ namespace Timelesss
 
         public class Builder
         {
-            IEnumerable<EquipmentDetails> itemDetails;
+            IEnumerable<ItemDetails> itemDetails;
             EquipmentVisualHandler visualHandler;
-            public Builder WithStartingItems(IEnumerable<EquipmentDetails> itemDetails)
+            public Builder WithStartingItems(IEnumerable<ItemDetails> itemDetails)
             {
                 this.itemDetails = itemDetails;
                 return this;
@@ -96,7 +96,7 @@ namespace Timelesss
             {
                 var model = itemDetails != null
                     ? new EquipmentModel(itemDetails)
-                    : new EquipmentModel(Array.Empty<EquipmentDetails>());
+                    : new EquipmentModel(Array.Empty<ItemDetails>());
 
 
                 foreach (var item in model.Items)
