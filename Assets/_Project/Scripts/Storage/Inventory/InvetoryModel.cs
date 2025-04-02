@@ -50,17 +50,6 @@ namespace Timelesss
                 Items.TryAdd(itemDetail.Create(1));
             }
         }
-
-        public InventoryModel(Item[] items, int capacity)
-        {
-            this.capacity = capacity;
-            Items = new ObservableArray<Item>(capacity);
-            foreach (var item in items)
-            {
-                if (item.Details == null) continue;
-                Items.TryAdd(item.Details.Create(item.Quantity));
-            }
-        }
         
         // 메서드
         /// <summary>
@@ -71,6 +60,8 @@ namespace Timelesss
         public void Bind(InventoryData data)
         {
             inventoryData = data;
+            
+            inventoryData.Capacity = capacity;
 
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
 
@@ -81,12 +72,12 @@ namespace Timelesss
             }
             else
             {
-                // // 기존 데이터에서 아이템을 로드
-                // for (var i = 0; i < capacity; i++)
-                // {
-                //     if (Items[i] == null) continue;
-                //     inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
-                // }
+                // 기존 데이터에서 아이템을 로드
+                for (var i = 0; i < capacity; i++)
+                {
+                    if (Items[i] == null) continue;
+                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
+                }
             }
 
             if (isNew && Items.Count != 0)
