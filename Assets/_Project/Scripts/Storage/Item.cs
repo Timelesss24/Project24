@@ -6,6 +6,7 @@ namespace Timelesss
     public interface IItem
     {
         SerializableGuid Id { get; }
+        SerializableGuid DetailsId { get; }
         ItemDetails Details { get; }
         int Quantity { get; }
     }
@@ -14,6 +15,7 @@ namespace Timelesss
     public class Item : IItem
     {
         [field: SerializeField] public SerializableGuid Id { get; private set; }
+        [field: SerializeField] public SerializableGuid DetailsId { get; private set; }
         [field: SerializeField] public ItemDetails Details { get; private set; }
         public event Action OnChanged = delegate { };
         [SerializeField] public int quantity;
@@ -34,6 +36,8 @@ namespace Timelesss
         public Item(ItemDetails details, int quantity = 1)
         {
             Id = SerializableGuid.NewGuid();
+            Debug.Log("new Item "+Id.ToGuid());
+            DetailsId = details.Id;
             Details = details;
             Quantity = quantity;
         }

@@ -76,7 +76,7 @@ namespace Timelesss
                 for (var i = 0; i < capacity; i++)
                 {
                     if (Items[i] == null) continue;
-                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
+                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].DetailsId));
                 }
             }
 
