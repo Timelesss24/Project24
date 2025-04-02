@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Timelesss
 {
     [CreateAssetMenu(menuName = "Event/ItemEventChannel")]
-    public class ItemEventChannel : EventChannel<ItemData>
+    public class ItemEventChannel : EventChannel<ItemDetails>
     {
         
     }

@@ -1,33 +1,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timelesss;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityUtils;
 
 namespace Systems.Persistence {
-    [Serializable] public class GameData { 
-        public string Name;
-        public string CurrentLevelName;
+    [Serializable] public class GameData 
+    { 
+        public string Name = "Game";
+        public PlayerData PlayerData;
+        public SaveableQuestData QuestData;
+        public InventoryData InventoryData;
     }
         
-    public interface ISaveable  {
+    public interface ISaveable  
+    {
         SerializableGuid Id { get; set; }
     }
     
-    public interface IBind<TData> where TData : ISaveable {
+    public interface IBind<TData> where TData : ISaveable 
+    {
         SerializableGuid Id { get; set; }
         void Bind(TData data);
     }
     
-    public class SaveLoadSystem : PersistentSingleton<SaveLoadSystem> {
+    public class SaveLoadSystem : PersistentSingleton<SaveLoadSystem> 
+    {
         [FormerlySerializedAs("gameData")]
         [SerializeField] public GameData GameData;
 
         IDataService dataService;
 
-        protected override void Awake() {
+        protected override void Awake() 
+        {
             base.Awake();
             dataService = new FileDataService(new JsonSerializer());
         }
@@ -37,12 +45,22 @@ namespace Systems.Persistence {
         void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
         void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
         
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+        {
+            if (scene.name == "Title") return;
             
-            //Bind<T,TData>(data)
+            AllBind();
+        }
+
+        public void AllBind()
+        {
+            Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
+            Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
+            Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
         }
         
-        void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() {
+        void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
+        {
             var entity = FindObjectsByType<T>(FindObjectsSortMode.None).FirstOrDefault();
             if (entity != null)
             {
@@ -51,10 +69,12 @@ namespace Systems.Persistence {
             }
         }
 
-        void Bind<T, TData>(List<TData> datas) where T: MonoBehaviour, IBind<TData> where TData : ISaveable, new() {
+        void Bind<T, TData>(List<TData> datas) where T: MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
+        {
             var entities = FindObjectsByType<T>(FindObjectsSortMode.None);
 
-            foreach(var entity in entities) {
+            foreach(var entity in entities) 
+            {
                 var data = datas.FirstOrDefault(d=> d.Id == entity.Id);
                 if (data == null) {
                     data = new TData { Id = entity.Id };
@@ -64,24 +84,46 @@ namespace Systems.Persistence {
             }
         }
 
-        public void NewGame() {
-            GameData = new GameData {
+        public void NewGame() 
+        {
+            GameData = new GameData 
+            {
                 Name = "Game",
-                CurrentLevelName = "Demo"
+                PlayerData = new PlayerData 
+                {
+                    Id = SerializableGuid.NewGuid(),
+                    PlayerLevel = 1,
+                    CurrentHealth = 100,
+                    MaxHealth = 100,
+                    CurrentExp = 0,
+                    RequiredExp = 100
+                },
+                QuestData = new SaveableQuestData 
+                {
+                    Id = SerializableGuid.NewGuid(),
+                    ActiveQuestList = new List<ActiveQuestInfo>(),
+                    CompleteQuestList = new List<int>(),
+                },
+                // InventoryData = new InventoryData 
+                // {
+                //     Id = SerializableGuid.NewGuid(),
+                //     Capacity = 20,
+                //     Coins = 0,
+                //     Items = new Item[20]
+                // }
             };
-            SceneManager.LoadScene(GameData.CurrentLevelName);
         }
-        
-        public void SaveGame() => dataService.Save(GameData);
 
-        public void LoadGame(string gameName) {
+        public void SaveGame()
+        {
+            Debug.Log("세이브세이브세이브");
+            dataService.Save(GameData);   
+        }
+
+        public GameData LoadGame(string gameName)
+        {
             GameData = dataService.Load(gameName);
-
-            if (String.IsNullOrWhiteSpace(GameData.CurrentLevelName)) {
-                GameData.CurrentLevelName = "Demo";
-            }
-
-            SceneManager.LoadScene(GameData.CurrentLevelName);
+            return dataService.Load(gameName);
         }
         
         public void ReloadGame() => LoadGame(GameData.Name);

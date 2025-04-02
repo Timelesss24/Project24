@@ -1,15 +1,15 @@
 using System;
 using UnityEngine;
 
-namespace Timelesss {
-    
+namespace Timelesss
+{
     public interface IItem
     {
         SerializableGuid Id { get; }
         ItemDetails Details { get; }
         int Quantity { get; }
     }
-    
+
     [Serializable]
     public class Item : IItem
     {
@@ -17,6 +17,7 @@ namespace Timelesss {
         [field: SerializeField] public ItemDetails Details { get; private set; }
         public event Action OnChanged = delegate { };
         int quantity;
+
         public int Quantity
         {
             get => quantity;
@@ -29,7 +30,7 @@ namespace Timelesss {
                 }
             }
         }
-        
+
         public Item(ItemDetails details, int quantity = 1)
         {
             Id = SerializableGuid.NewGuid();
@@ -37,7 +38,7 @@ namespace Timelesss {
             Quantity = quantity;
         }
     }
-    
+
     [Serializable]
     public class EquipmentItem : Item
     {
@@ -45,17 +46,22 @@ namespace Timelesss {
         public GameObject EquipmentPrefab => ((EquipmentDetails)Details).EquipmentPrefab;
         public Vector3 LocalPosition => ((EquipmentDetails)Details).LocalPosition;
         public Vector3 LocalRotation => ((EquipmentDetails)Details).LocalRotation;
-        public EquipmentItem(ItemDetails details, int quantity = 1) : base(details, quantity) { }
+
+        public EquipmentItem(ItemDetails details, int quantity = 1) : base(details, quantity)
+        {
+        }
     }
-    
+
     [Serializable]
     public class ConsumableItem : Item
     {
         public int RestoreAmount => ((ConsumableDetails)Details).RestoreValue;
-    
-        public ConsumableItem(ItemDetails details, int quantity = 1) : base(details, quantity) { }
+
+        public ConsumableItem(ItemDetails details, int quantity = 1) : base(details, quantity)
+        {
+        }
     }
-    
+
     // [Serializable]
     // public class Item {
     //     [field: SerializeField] public SerializableGuid Id;

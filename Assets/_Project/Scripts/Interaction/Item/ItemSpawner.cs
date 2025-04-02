@@ -8,7 +8,7 @@ namespace Timelesss
     {
         [SerializeField] private DropItem dropItemPrefab;
         [SerializeField] private int poolSize = 10;
-        [SerializeField] public List<ItemData> itemDataList = new List<ItemData>();
+        [SerializeField] public List<ItemDetails> itemDataList = new List<ItemDetails>();
 
         private Queue<DropItem> itemPool = new Queue<DropItem>();
 
@@ -32,7 +32,7 @@ namespace Timelesss
             itemPool.Enqueue(newItem);
         }
 
-        public void SpawnItem(ItemData itemData, Vector3 spawnPosition)
+        public void SpawnItem(ItemDetails itemData, Vector3 spawnPosition)
         {
             if (itemPool.Count == 0)
             {
