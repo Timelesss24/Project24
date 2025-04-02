@@ -137,8 +137,8 @@ namespace Timelesss
             if(currentHealth <= 0f)
                 DeathAction?.Invoke();
             
-            playerData.CurrentHealth = currentHealth;
-            playerData.MaxHealth = baseMaxHealth;
+            SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
+            SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
         }
 
         public bool UseStamina(float value)
@@ -170,8 +170,8 @@ namespace Timelesss
             if(currentHealth <= 0f)
                 DeathAction?.Invoke();
             
-            playerData.CurrentHealth = currentHealth;
-            playerData.MaxHealth = baseMaxHealth;
+            SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
+            SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
             Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
         }
 
@@ -210,7 +210,7 @@ namespace Timelesss
                 currentExp -= requiredExp;
                 LevelUp();
             }
-            playerData.CurrentExp = currentExp;
+            SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
             expChangedEvent?.Invoke(currentExp);
         }
 
@@ -227,9 +227,9 @@ namespace Timelesss
 
             levelChangedEvent?.Invoke(playerLevel);
 
-            playerData.PlayerLevel = playerLevel;
-            playerData.CurrentExp = currentExp;
-            playerData.RequiredExp = requiredExp;
+            SaveLoadSystem.Instance.GameData.PlayerData.PlayerLevel = playerLevel;
+            SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
+            SaveLoadSystem.Instance.GameData.PlayerData.RequiredExp = requiredExp;
             
             Debug.Log($"레벨업. 현재 레벨: {playerLevel} / 현재 경험치: {currentExp}/{requiredExp}");
         }

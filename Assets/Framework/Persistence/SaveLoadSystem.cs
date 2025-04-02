@@ -49,7 +49,7 @@ namespace Systems.Persistence {
         {
             if (scene.name == "Title") return;
             
-            //AllBind();
+            AllBind();
         }
 
         public void AllBind()
