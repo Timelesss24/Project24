@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Managers;
+using System;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -21,7 +22,6 @@ namespace Timelesss
         private GameObject bossObect;
 
         [SerializeField] private GameObject potal;
-        public Action bossHpUIAction;
 
         private NavMeshSurface navMeshSurface;
 
@@ -39,11 +39,12 @@ namespace Timelesss
             CreateRightRoom();
             navMeshSurface = GetComponent<NavMeshSurface>();
 
-            enemies = new List<Enemy>();
+            enemies = new List<Enemy>();           
         }
 
         private void Start()
         {
+            PlayerManager.Instance.PlayerIfo.DeathAction += OnGameOverUI;
             navMeshSurface.BuildNavMesh();
             SetEnemy();
         }
@@ -106,17 +107,22 @@ namespace Timelesss
             if (enemies.Count == 1)
             {
                 bossObect.SetActive(true);
-                bossHpUIAction?.Invoke();
+                UIManager.Instance.ShowPopup<BossHpPopUp>();
             }
             else if(enemies.Count == 0)
             {
-                GameOver();
+                GameClear();
             }
         }
 
-        void GameOver()
+        void GameClear()
         {
             Instantiate(potal, bossSpawner.position, potal.transform.rotation);
+        }
+
+        void OnGameOverUI()
+        {
+            UIManager.Instance.ShowPopup<GameOverPopUp>();
         }
     }
 }
