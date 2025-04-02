@@ -17,8 +17,6 @@ namespace Timelesss
         [SerializeField] Button closeButton; // 닫기 버튼
         [SerializeField] TextMeshProUGUI inventoryHeader; // 제목 텍스트
 
-        [SerializeField] InventoryData inventoryData = new InventoryData();
-
         public InventoryController Controller { get; private set; }
 
         public override void InitializeView(int capacity = 0)
@@ -93,10 +91,10 @@ namespace Timelesss
             {
                 model.Swap(fromIndex, toIndex);
             }
-            
+
             RefreshSlot(fromIndex);
             RefreshSlot(toIndex);
-            
+
             return true;
         }
 
