@@ -99,7 +99,7 @@ namespace Timelesss
                     : new EquipmentModel(Array.Empty<ItemDetails>());
 
 
-                foreach (var item in model.Items)
+                foreach (var item in model.dicItems)
                     visualHandler.Equip((EquipmentItem)item.Value);
 
 

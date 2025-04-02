@@ -58,6 +58,8 @@ namespace Timelesss
 
         public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item, Action<Item> onSwap = null)
         {
+            Debug.Log(Controller?.Model?.equipmentData.Id.ToGuid());
+            
             // 장비 슬롯에만 처리
             if (toSlot is not EquipmentSlot targetSlot)
             {
@@ -82,6 +84,7 @@ namespace Timelesss
                 
 
             Controller?.Model?.Add(item);
+            
             return true;
         }
     }

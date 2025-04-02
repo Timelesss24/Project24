@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028301, g: 0.22571309, b: 0.30692127, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -530,6 +530,72 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.MaxHealth
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.RequiredExp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.CurrentHealth
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.EquipmentData.Items.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.QuestData.<Id>k__BackingField.Part1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.QuestData.<Id>k__BackingField.Part2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.QuestData.<Id>k__BackingField.Part3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.QuestData.<Id>k__BackingField.Part4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.<Id>k__BackingField.Part1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.<Id>k__BackingField.Part2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.<Id>k__BackingField.Part3
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.PlayerData.<Id>k__BackingField.Part4
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5689041665774701185, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: GameData.EquipmentData.Items.Array.data[0].<Details>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 35027283509a54f30b7641ace2bd3dc9,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

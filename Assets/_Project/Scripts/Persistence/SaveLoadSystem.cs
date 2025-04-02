@@ -53,12 +53,12 @@ namespace Systems.Persistence {
             AllBind();
         }
 
-        public void AllBind()
+         void AllBind()
         {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
             Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
-            Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
+            Bind<Equipment, EquipmentData>(GameData.EquipmentData);
             Debug.Log(GameData.EquipmentData.Id.ToGuid());
         }
         
@@ -105,8 +105,8 @@ namespace Systems.Persistence {
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
-                InventoryData = new InventoryData(),
-                EquipmentData = new EquipmentData()
+                // InventoryData = new InventoryData(),
+                // EquipmentData = new EquipmentData()
             };
         }
 
