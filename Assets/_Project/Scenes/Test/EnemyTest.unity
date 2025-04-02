@@ -671,6 +671,7 @@ MonoBehaviour:
   bossPrefabs: {fileID: 1522695186968703268, guid: 188174a480189614ca8f2788907b4e5d,
     type: 3}
   bossSpawner: {fileID: 0}
+  portalSpawner: {fileID: 0}
   potal: {fileID: 0}
 --- !u!4 &835481653
 Transform:
@@ -1258,7 +1259,7 @@ PrefabInstance:
     - target: {fileID: 1522695186968703268, guid: 188174a480189614ca8f2788907b4e5d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
         type: 3}
@@ -1282,6 +1283,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BeholderCustom
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4786562564244088828, guid: 507a1a3f9ca57474abe85e16e86da748,
         type: 3}

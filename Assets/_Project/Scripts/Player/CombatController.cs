@@ -46,6 +46,9 @@ namespace Timelesss
         public bool IsAttacking => AttackState != AttackStates.Idle;
         public AttackData CurrentAttack { get; private set; }
 
+        public AudioClip audioClips;
+        private AudioSource audioSource;
+
         void OnValidate() => this.ValidateRefs();
 
 
@@ -57,6 +60,8 @@ namespace Timelesss
 
             OnStartAttack += attackTimer.Start;
             OnEndAttack += attackTimer.Stop;
+
+            audioSource = GetComponent<AudioSource>();
         }
 
         void Update() => attackTimer.Tick(Time.deltaTime);
@@ -101,6 +106,8 @@ namespace Timelesss
 
             float attackLength = attack.Clip.length;
             attackTimer.Reset(attackLength);
+
+            audioSource.PlayOneShot(audioClips);
 
             OnStartAttack?.Invoke();
 
