@@ -27,7 +27,7 @@ namespace Timelesss
 
 
         AttachedWeapon currentWeaponHandler;
-        WeaponDetails currentWeaponDetails;
+        ItemDetails currentWeaponDetails;
         GameObject currentWeaponObject;
         GameObject prevGameObj; // Collider sweep 공격 히트 체크용 
         BoxCollider weaponCollider;
@@ -191,7 +191,7 @@ namespace Timelesss
                     // todo 충돌 대상의 부모 오브젝트에서 `IDamageable` 컴포넌트를 찾아 처리
 
                     if (checkCollision[0].TryGetComponent(out IDamageable damageable))
-                        damageable.TakeDamage(playerInfo.totalAttack);
+                        damageable.TakeDamage(playerInfo.TotalAttack);
 
                     // 현재 충돌한 오브젝트를 기록하여 중복 처리 방지
                     prevGameObj = checkCollision[0].gameObject;
@@ -219,7 +219,7 @@ namespace Timelesss
                     {
                         // todo 충돌 대상의 부모 오브젝트에서 `IDamageable` 컴포넌트를 찾아 처리
                         if (hit.transform.gameObject.TryGetComponent(out IDamageable damageable))
-                            damageable.TakeDamage(playerInfo.totalAttack);
+                            damageable.TakeDamage(playerInfo.TotalAttack);
 
                         // 충돌한 게임 오브젝트를 기록하여 중복 처리 방지
                         prevGameObj = hit.transform.gameObject;
@@ -243,7 +243,7 @@ namespace Timelesss
             activeCollider = null;
         }
 
-        public void SetWeaponObject(GameObject obj, WeaponDetails details)
+        public void SetWeaponObject(GameObject obj, ItemDetails details)
         {
             if(!details) return;
              UnEquipWeapon();

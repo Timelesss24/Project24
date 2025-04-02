@@ -7,18 +7,18 @@ namespace Timelesss
 {
     public class DialogueManager : UnityUtils.Singleton<DialogueManager>
     {
-        private DialogueDataLoader dataLoader;
+        DialogueDataLoader dataLoader;
         public int currentDialogueID; // 현재 대화 ID
-        private int npcID; // 현재 대화 중인 NPC의 ID
+        int npcID; // 현재 대화 중인 NPC의 ID
 
-        private DialoguePopUp dialoguePopUp; // 대화 팝업 UI
+        DialoguePopUp dialoguePopUp; // 대화 팝업 UI
 
-        private Camera npcCamera; // NPC 카메라
+        Camera npcCamera; // NPC 카메라
 
-        private const int EndOfDialogueID = 0; // 대화의 끝을 나타내는 ID
-        private const int NoDataID = -1; // 데이터를 찾을 수 없음을 나타내는 ID
+        const int EndOfDialogueID = 0; // 대화의 끝을 나타내는 ID
+        const int NoDataID = -1; // 데이터를 찾을 수 없음을 나타내는 ID
 
-        private void Start()
+        void Start()
         {
             dataLoader = new DialogueDataLoader(); // 대화 데이터 로드
 
@@ -64,7 +64,7 @@ namespace Timelesss
             StartCoroutine(TrackingDialogue(onComplete)); // 대화 추적 코루틴 시작
         }
 
-        private IEnumerator TrackingDialogue(Action onComplete = null)
+        IEnumerator TrackingDialogue(Action onComplete = null)
         {
             yield return new WaitWhile(() => dialoguePopUp != null); // 대화 팝업이 닫힐 때까지 대기
 
@@ -88,7 +88,7 @@ namespace Timelesss
                 currentDialogueID = dialogue.nextDialogueID; // 다음 대화 ID 설정
         }
 
-        private int FindFirstDialogueID(int npcID, bool hasQuest)
+        int FindFirstDialogueID(int npcID, bool hasQuest)
         {
             foreach (var data in dataLoader.ItemsDict.Values)
             {
@@ -101,7 +101,7 @@ namespace Timelesss
             return NoDataID; // 데이터를 찾을 수 없으면 NoDataID 반환
         }
 
-        private int FindCompletedDialogueID(int npcID)
+        int FindCompletedDialogueID(int npcID)
         {
             foreach (var data in dataLoader.ItemsDict.Values)
             {

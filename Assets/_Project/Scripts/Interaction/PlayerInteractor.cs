@@ -7,7 +7,7 @@ namespace Timelesss
 {
     public class PlayerInteractor : MonoBehaviour
     {
-        private List<IInteractable> interactableList = new List<IInteractable>();
+        List<IInteractable> interactableList = new List<IInteractable>();
         public InteractableBase CurrentInteractable { get; private set; }
 
         public void Start()

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public abstract class SceneInitializer : MonoBehaviour
 {
-    private void Start()
+    void Start()
     {
         Debug.Log($"Initializing Scene: {SceneManager.GetActiveScene().name}");
     }

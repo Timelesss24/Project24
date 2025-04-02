@@ -10,16 +10,22 @@ namespace _01_Scripts.UI.Scene
 {
     public class UITitleScene : UIScene
     {
-        [SerializeField] private Button startBtn;
-        [SerializeField] private Button settingBtn;
-        [SerializeField] private Button exitBtn;
+        [SerializeField]
+        Button startBtn;
+        [SerializeField]
+        Button settingBtn;
+        [SerializeField]
+        Button exitBtn;
 
-        [SerializeField] private TextMeshProUGUI titleText;
+        [SerializeField]
+        TextMeshProUGUI titleText;
 
-        [SerializeField] private float wobbleAmount = 10f;
-        [SerializeField] private float wobbleSpeed = 0.6f;
+        [SerializeField]
+        float wobbleAmount = 10f;
+        [SerializeField]
+        float wobbleSpeed = 0.6f;
 
-        private void Awake()
+        void Awake()
         {
             if (startBtn)
                 startBtn.onClick.AddListener(OnClickedStartBtn);
@@ -35,18 +41,18 @@ namespace _01_Scripts.UI.Scene
                 .SetLoops(-1, LoopType.Yoyo);
         }
 
-        private void OnClickedSettingBtn()
+        void OnClickedSettingBtn()
         {
             UIManager.Instance.ShowPopup<SettingPopUp>();
         }
 
-        private void OnClickedStartBtn()
+        void OnClickedStartBtn()
         {
             //GameStateManager.Instance.SetGameState(GameStateManager.GameState.Gameplay);\
             UIManager.Instance.ShowPopup<NameSettingPopUp>();
         }
 
-        private void OnClickedExitBtn()
+        void OnClickedExitBtn()
         {
             Application.Quit();
         }

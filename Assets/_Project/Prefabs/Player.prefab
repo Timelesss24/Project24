@@ -5148,11 +5148,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   capacity: 20
   startingItems:
-  - {fileID: 11400000, guid: ebb1564f6091e4ef0a2ddbd4cd8cc0ef, type: 2}
   - {fileID: 11400000, guid: 35027283509a54f30b7641ace2bd3dc9, type: 2}
-  - {fileID: 11400000, guid: f5d16d3fdf08b49c7aafee7e36bb414c, type: 2}
-  - {fileID: 11400000, guid: f5d16d3fdf08b49c7aafee7e36bb414c, type: 2}
-  - {fileID: 11400000, guid: f5d16d3fdf08b49c7aafee7e36bb414c, type: 2}
+  - {fileID: 11400000, guid: ebb1564f6091e4ef0a2ddbd4cd8cc0ef, type: 2}
+  - {fileID: 11400000, guid: 24b5287cd15eb44f4b5fdd8597ba91dc, type: 2}
   <Id>k__BackingField:
     Part1: 1850159961
     Part2: 1186982854
@@ -5171,8 +5169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e0a729df004eb8ae0e0fe711a2e4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems:
-  - {fileID: 11400000, guid: 35027283509a54f30b7641ace2bd3dc9, type: 2}
+  startingItems: []
   <Id>k__BackingField:
     Part1: 3907552367
     Part2: 1291227998

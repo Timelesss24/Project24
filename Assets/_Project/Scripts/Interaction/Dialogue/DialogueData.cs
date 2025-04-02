@@ -65,7 +65,7 @@ public class DialogueDataLoader
     }
 
     [Serializable]
-    private class Wrapper
+    class Wrapper
     {
         public List<DialogueData> Items;
     }

@@ -7,10 +7,10 @@ namespace Timelesss
     public class InventoryModel
     {
         /// 인벤토리에 저장된 아이템 배열입니다. 
-        private ObservableArray<Item> Items { get; }
+        ObservableArray<Item> Items { get; }
 
         /// 현재 바인딩된 인벤토리 데이터입니다.
-        InventoryData inventoryData = new();
+         InventoryData inventoryData = new();
 
         /// 인벤토리의 최대 용량입니다. 
         readonly int capacity;
@@ -50,7 +50,7 @@ namespace Timelesss
                 Items.TryAdd(itemDetail.Create(1));
             }
         }
-        
+
         // 메서드
         /// <summary>
         /// InventoryData와 모델을 바인딩합니다.
@@ -59,37 +59,91 @@ namespace Timelesss
         /// <param name="data">InventoryData 인스턴스.</param>
         public void Bind(InventoryData data)
         {
+            
+            for (var i = 0; i < data.Items.Length; i++)
+            {
+                if (data.Items[i].Id == SerializableGuid.Empty)
+                    data.Items[i] = null;
+            }
+            
             inventoryData = data;
-
+            inventoryData.Capacity = capacity;
+            
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
 
-            if (isNew)
-            {
-                // 새로운 데이터일 경우 빈 아이템 배열 초기화
+            if (isNew) {
                 inventoryData.Items = new Item[capacity];
             }
-            else
-            {
-                // // 기존 데이터에서 아이템을 로드
-                // for (var i = 0; i < capacity; i++)
-                // {
-                //     if (Items[i] == null) continue;
-                //     inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
-                // }
-            }
+            // else {
+            //     for (var i = 0; i < capacity; i++) {
+            //         if (Items[i] == null) continue;
+            //         inventoryData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
+            //     }
+            // }
+     
 
-            if (isNew && Items.Count != 0)
-            {
-                // 아이템 복사
-                for (var i = 0; i < capacity; i++)
-                {
+            if (isNew && Items.Count != 0) {
+                for (var i = 0; i < capacity; i++) {
                     if (Items[i] == null) continue;
                     inventoryData.Items[i] = Items[i];
                 }
             }
+            
+            for (var i = 0; i < capacity; i++) {
+               Debug.Log($"Items {i}" + (Items[i] == null));
+               Debug.Log($"Save Data{i}" + (inventoryData.Items[i] == null));
+            }
+            
+            Items.Items = inventoryData.Items;
+            
+            // Debug.Log("INVENTORY MODEL BIND");
+            // inventoryData = data;
+            //
+            // inventoryData.Capacity = capacity;
+            //
+            // bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
+            //
+            // if (isNew)
+            // {
+            //     // 새로운 데이터일 경우 빈 아이템 배열 초기화
+            //     inventoryData.Items = new Item[capacity];
+            // }
+            // else
+            // {
+            //     // 기존 데이터에서 아이템을 로드
+            //     for (var i = 0; i < capacity; i++)
+            //     {
+            //         if (Items[i] == null) continue; 
+            //         if(Items[i].Quantity == 0)
+            //         {
+            //             inventoryData.Items[i] = null;
+            //             continue;
+            //         }
+            //         //inventoryData.Items[i] = ItemDatabase.GetDetailsById(data.Items[i].DetailsId).Create(data.Items[i].Quantity);
+            //         
+            //     }
+            // }
+            //
+            // if (isNew && Items.Count != 0)
+            // {
+            //     // 아이템 복사
+            //     for (var i = 0; i < capacity; i++)
+            //     {
+            //         if (Items[i] == null) continue;
+            //         inventoryData.Items[i] = Items[i];
+            //     }
+            // }
+            //
+            // for (var i = 0; i < capacity; i++)
+            // {
+            //     if (inventoryData.Items[i] == null) continue;
+            //     if(inventoryData.Items[i].Quantity == 0)
+            //         inventoryData.Items[i] = null;
+            // }
+            
 
             // Items 배열과 inventoryData의 아이템 연결
-            Items.Items = inventoryData.Items;
+            //Items.Items = inventoryData.Items;
         }
 
         /// <summary>

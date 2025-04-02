@@ -15,18 +15,21 @@ namespace Managers
     public class SceneLoader : PersistentSingleton<SceneLoader>
     {
         [Header("Fade Settings")] [SerializeField]
-        private CanvasGroup fadeCanvasGroup; // 페이드 효과용 CanvasGroup
+        CanvasGroup fadeCanvasGroup; // 페이드 효과용 CanvasGroup
 
-        [SerializeField] private float fadeDuration = 1f; // 페이드 시간
+        [SerializeField]
+        float fadeDuration = 1f; // 페이드 시간
 
         [Header("Loading Screen UI")] [SerializeField]
-        private GameObject loadingScreen; // 로딩 화면
+        GameObject loadingScreen; // 로딩 화면
 
-        [SerializeField] private Slider progressBar; // 로딩 진행률 바
-        [SerializeField] private TextMeshProUGUI progressText; // 진행률 텍스트
+        [SerializeField]
+        Slider progressBar; // 로딩 진행률 바
+        [SerializeField]
+        TextMeshProUGUI progressText; // 진행률 텍스트
 
         // 상수 선언
-        private const float SceneActivationThreshold = 0.9f; // 씬 활성화 기준값
+        const float SceneActivationThreshold = 0.9f; // 씬 활성화 기준값
         public event Action OnSceneLoadedCallback;
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace Managers
         /// 로딩 준비.
         /// </summary>
         /// <param name="onSceneLoaded">씬 완료 후 실행할 동작</param>
-        private void PrepareSceneLoad(Action onSceneLoaded)
+        void PrepareSceneLoad(Action onSceneLoaded)
         {
             OnSceneLoadedCallback = onSceneLoaded;
         }
@@ -64,7 +67,7 @@ namespace Managers
         /// 씬을 비동기적으로 로드하는 코루틴.
         /// </summary>
         /// <param name="sceneName">로드할 씬 이름</param>
-        private IEnumerator LoadSceneAsync(string sceneName)
+        IEnumerator LoadSceneAsync(string sceneName)
         {
             loadingScreen?.SetActive(true);
 
@@ -114,7 +117,7 @@ namespace Managers
         /// 로딩 중 진행률 UI를 업데이트합니다.
         /// </summary>
         /// <param name="operation">비동기 오퍼레이션</param>
-        private void UpdateLoadingProgress(AsyncOperation operation)
+        void UpdateLoadingProgress(AsyncOperation operation)
         {
             if (progressBar == null && progressText == null) return;
 
@@ -132,7 +135,7 @@ namespace Managers
         /// CanvasGroup을 사용한 페이드 효과.
         /// </summary>
         /// <param name="targetAlpha">도달할 알파값</param>
-        private IEnumerator Fade(float targetAlpha)
+        IEnumerator Fade(float targetAlpha)
         {
             if (fadeCanvasGroup == null) yield break;
 

@@ -25,7 +25,8 @@ namespace Timelesss
         // Animator 객체: 적의 애니메이션 상태를 관리
         [SerializeField, Child] Animator animator;
 
-        [SerializeField] private EnemyDrop enemyDrop;
+        [SerializeField]
+        EnemyDrop enemyDrop;
 
         //[SerializeField] private ItemSpawner itemSpawner;
 
@@ -45,8 +46,8 @@ namespace Timelesss
         /// 에디터에서 컴포넌트가 설정되었는지 유효성 검사 및 자동 설정.
         //[SerializeField] SkinnedMeshRenderer skinRenderer;
         public Image hpBar;
-        private float enemyHp;
-        private Transform enemyTransform;
+        float enemyHp;
+        Transform enemyTransform;
         public bool isDie = false;
 
         public event System.Action OnDamageTaken;
@@ -191,7 +192,7 @@ namespace Timelesss
                 enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => DungeonManager.Instance.RemoveEnemy(gameObject));
             }
         }
-        private IEnumerator DelayDie(float count)
+        IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
             ItemSpawner.Instance.SpawnItem(enemyDrop.RandomItemDetails(), this.gameObject.transform.position);

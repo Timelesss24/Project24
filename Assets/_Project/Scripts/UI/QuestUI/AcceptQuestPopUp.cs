@@ -7,18 +7,25 @@ namespace Timelesss
 {
     public class AcceptQuestPopUp : UIPopup
     {
-        [SerializeField] private Button acceptButton;
-        [SerializeField] private Button declineButton;
-        [SerializeField] private Button rewardButton;
+        [SerializeField]
+        Button acceptButton;
+        [SerializeField]
+        Button declineButton;
+        [SerializeField]
+        Button rewardButton;
 
-        [SerializeField] private TextMeshProUGUI questNameText;
-        [SerializeField] private TextMeshProUGUI questDescriptionText;
-        [SerializeField] private TextMeshProUGUI questTargetText;
-        [SerializeField] private TextMeshProUGUI questRewardText;
+        [SerializeField]
+        TextMeshProUGUI questNameText;
+        [SerializeField]
+        TextMeshProUGUI questDescriptionText;
+        [SerializeField]
+        TextMeshProUGUI questTargetText;
+        [SerializeField]
+        TextMeshProUGUI questRewardText;
 
-        private QuestData questData;
+        QuestData questData;
 
-        private void Start()
+        void Start()
         {
             acceptButton.onClick.AddListener(OnClickAcceptButton);
             declineButton.onClick.AddListener(OnClickDeclineButton);
@@ -52,7 +59,7 @@ namespace Timelesss
             questRewardText.text = $"{questData.rewardExp} 경험치";
         }
 
-        private void OnClickAcceptButton()
+        void OnClickAcceptButton()
         {
             DialogueManager.Instance.ShowQuestDialogue(true);
 
@@ -62,13 +69,13 @@ namespace Timelesss
             ClosePopup();
         }
 
-        private void OnClickDeclineButton()
+        void OnClickDeclineButton()
         {
             DialogueManager.Instance.ShowQuestDialogue(false);
             ClosePopup();
         }
 
-        private void OnClickRewardButton()
+        void OnClickRewardButton()
         {
             QuestManager.Instance.CompleteQuest(questData.key);
             DialogueManager.Instance.ShowQuestDialogue(true);

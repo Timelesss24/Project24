@@ -1298,6 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeButton: {fileID: 6746445747177062388}
+  exitButton: {fileID: 9079473219754157388}
 --- !u!223 &7518035919870051624
 Canvas:
   m_ObjectHideFlags: 0

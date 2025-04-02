@@ -19,9 +19,11 @@ namespace Timelesss
         // Animator 객체: 적의 애니메이션 상태를 관리
         [SerializeField] Animator animator;
 
-        [SerializeField] private Bounds generateArea;
+        [SerializeField]
+        Bounds generateArea;
 
-        [SerializeField] private EnemyDrop enemyDrop;
+        [SerializeField]
+        EnemyDrop enemyDrop;
 
         // 상태 기계(State Machine) 객체: 적의 상태 전환 및 동작 관리
         public StateMachine stateMachine;
@@ -29,10 +31,10 @@ namespace Timelesss
         // 카운트다운 타이머 객체: 공격 간 간격을 추적
         CountdownTimer attackTimer;
 
-        private float enemyHp;
-        private Transform enemyTransform;
-        private bool isSmokeAttack = false;
-        private bool isShakeAttack = false;
+        float enemyHp;
+        Transform enemyTransform;
+        bool isSmokeAttack = false;
+        bool isShakeAttack = false;
 
         public Image hpBar;
         public bool isDie = false;
@@ -48,7 +50,7 @@ namespace Timelesss
 
         public event System.Action OnDamageTaken;
 
-        private void Awake()
+        void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             playerDetector = GetComponent<PlayerDetector>();
@@ -159,7 +161,7 @@ namespace Timelesss
         //    yield return new WaitForSeconds(1);
         //    As(walkState, attackState);
         //}
-        private IEnumerator DelayDie(float count)
+        IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
             ItemSpawner.Instance.SpawnItem(enemyDrop.RandomItemDetails(),this.gameObject.transform.position);
@@ -208,7 +210,7 @@ namespace Timelesss
             EarthShake.SetActive(false);
             isShakeAttack = false;
         }
-        private void OnDrawGizmosSelected()
+        void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(generateArea.center, generateArea.size);

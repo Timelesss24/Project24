@@ -8,7 +8,7 @@ namespace Timelesss
     {
         public Camera playerCamera;
 
-        private void Awake()
+        void Awake()
         {
             playerCamera = Camera.main;
         }

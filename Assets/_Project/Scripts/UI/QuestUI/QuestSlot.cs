@@ -9,11 +9,13 @@ namespace Timelesss
 {
     public class QuestSlot : MonoBehaviour, IPointerClickHandler
     {
-        [SerializeField] private TextMeshProUGUI questNameText;
-        [SerializeField] private Image completeCheckIcon;
+        [SerializeField]
+        TextMeshProUGUI questNameText;
+        [SerializeField]
+        Image completeCheckIcon;
 
-        private QuestPopUp questPopup;
-        private QuestData questData;
+        QuestPopUp questPopup;
+        QuestData questData;
 
         public void OnPointerClick(PointerEventData eventData)
         {

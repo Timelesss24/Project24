@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundSource : MonoBehaviour
 {
-    private AudioSource _audioSource; // 오디오 소스 컴포넌트
+    AudioSource _audioSource; // 오디오 소스 컴포넌트
 
     public void Play(AudioClip clip, float soundEffectVolume, float soundEffectPitchVariance)
     {

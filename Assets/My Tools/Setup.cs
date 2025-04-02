@@ -73,7 +73,7 @@ namespace MyTools
                 }
             }
 
-            private static void CreateSubFolders(string rootPath, string folderHierarchy)
+            static void CreateSubFolders(string rootPath, string folderHierarchy)
             {
                 var folders = folderHierarchy.Split('/');
                 var currentPath = rootPath;

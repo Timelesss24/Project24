@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public abstract class UIBase : MonoBehaviour
 {
-    private readonly Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+    readonly Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
     
     
     /// <summary>
@@ -69,14 +69,14 @@ public abstract class UIBase : MonoBehaviour
         }
     }
 
-    private T FindObject<T>(string objName) where T : UnityEngine.Object
+    T FindObject<T>(string objName) where T : UnityEngine.Object
     {
         return typeof(T) == typeof(GameObject)
             ? Util.FindChild(gameObject, objName, true) as T
             : Util.FindChild<T>(gameObject, objName, true);
     }
 
-    private T Get<T>(int index) where T : UnityEngine.Object
+    T Get<T>(int index) where T : UnityEngine.Object
     {
         return _objects.TryGetValue(typeof(T), out var mappedObjects) ? mappedObjects[index] as T : null;
     }

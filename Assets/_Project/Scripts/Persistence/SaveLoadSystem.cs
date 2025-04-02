@@ -13,7 +13,8 @@ namespace Systems.Persistence {
         public string Name = "Game";
         public PlayerData PlayerData;
         public SaveableQuestData QuestData;
-        //public InventoryData InventoryData;
+        public InventoryData InventoryData;
+        public EquipmentData EquipmentData;
     }
         
     public interface ISaveable  
@@ -47,8 +48,8 @@ namespace Systems.Persistence {
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
         {
-            if (scene.name == "Title") return;
-            
+            SaveGame();
+            LoadGame(GameData.Name);
             AllBind();
         }
 
@@ -56,7 +57,9 @@ namespace Systems.Persistence {
         {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
-            //Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
+            Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
+            Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
+            Debug.Log(GameData.EquipmentData.Id.ToGuid());
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -91,27 +94,19 @@ namespace Systems.Persistence {
                 Name = "Game",
                 PlayerData = new PlayerData 
                 {
-                    Id = SerializableGuid.NewGuid(),
                     PlayerLevel = 1,
-                    CurrentHealth = 100,
+                    CurrentHealth = 80,
                     MaxHealth = 100,
                     CurrentExp = 0,
                     RequiredExp = 100
                 },
                 QuestData = new SaveableQuestData 
                 {
-                    Id = SerializableGuid.NewGuid(),
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
-                // InventoryData = new InventoryData 
-                // {
-                //     Id = SerializableGuid.NewGuid(),
-                //     Capacity = 20,
-                //     Coins = 0,
-                //     Items = new Item[20],
-                //     ItemQuantities = new int[20],
-                // }
+                InventoryData = new InventoryData(),
+                EquipmentData = new EquipmentData()
             };
         }
 
@@ -121,14 +116,21 @@ namespace Systems.Persistence {
             dataService.Save(GameData);   
         }
 
-        public GameData LoadGame(string gameName)
+        public void LoadGame(string gameName)
         {
             GameData = dataService.Load(gameName);
-            return dataService.Load(gameName);
+            
+            
+            //return dataService.Load(gameName);
         }
         
         public void ReloadGame() => LoadGame(GameData.Name);
 
         public void DeleteGame(string gameName) => dataService.Delete(gameName);
+
+        void OnApplicationQuit()
+        {
+            SaveGame();
+        }
     }
 }

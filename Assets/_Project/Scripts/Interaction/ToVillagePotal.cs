@@ -9,7 +9,8 @@ namespace Timelesss
     {
         public override string InteractionName { get; } = "돌아가기";
 
-        [SerializeField] private string targetSceneName;
+        [SerializeField]
+        string targetSceneName;
 
         public override void Interact()
         {

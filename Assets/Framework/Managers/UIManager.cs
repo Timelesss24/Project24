@@ -15,20 +15,20 @@ namespace Managers
 
     public class UIManager : Singleton<UIManager>
     {
-        private readonly Dictionary<UICategory, string> _uiPrefixes = new()
+        readonly Dictionary<UICategory, string> _uiPrefixes = new()
         {
             { UICategory.SceneUI, "UI/Scene/" },
             { UICategory.PopupUI, "UI/Popup/" },
         };
 
 
-        private int _currentOrder = 10; // 현재까지 최근에 사용된 오더
-        private readonly Dictionary<string, UIPopup> _activeUIs = new();
+        int _currentOrder = 10; // 현재까지 최근에 사용된 오더
+        readonly Dictionary<string, UIPopup> _activeUIs = new();
         public int CurrentPopupCount => _activeUIs.Count;
 
         public UIScene CurrentSceneUI { get; private set; }
 
-        private GameObject Root
+        GameObject Root
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Managers
             return CreateUIInstance<T>(prefab, uiName);
         }
 
-        private T CreateUIInstance<T>(GameObject prefab, string uiName) where T : UIBase
+        T CreateUIInstance<T>(GameObject prefab, string uiName) where T : UIBase
         {
             var obj = Instantiate(prefab, Root.transform);
             obj.name = uiName;
@@ -84,7 +84,7 @@ namespace Managers
             return uiComponent;
         }
 
-        private GameObject LoadUIResource(string path, string resourceName)
+        GameObject LoadUIResource(string path, string resourceName)
         {
             var resource = Resources.Load<GameObject>($"{path}{resourceName}");
             if (resource == null)
@@ -110,7 +110,7 @@ namespace Managers
             }
         }
 
-        private T EnableUIComponent<T>(GameObject obj,string uiName) where T : UIBase
+        T EnableUIComponent<T>(GameObject obj,string uiName) where T : UIBase
         {
             var uiComponent = obj.GetOrAdd<T>();
             if (uiComponent is UIPopup popup)
@@ -168,7 +168,6 @@ namespace Managers
                     ClosePopup(popup);
                 }
             }
-
         }
     }
 }

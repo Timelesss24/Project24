@@ -14,12 +14,12 @@ namespace Timelesss
         [SerializeField] GameObject gameOverButton;
         [SerializeField] TextMeshProUGUI gameOverText;
 
-        private void Awake()
+        void Awake()
         {
             gameOverButton.GetComponent<Button>().onClick.AddListener(OnClickGameOverButton);
         }
 
-        private void Start()
+        void Start()
         {
             StartCoroutine(WaitTime());
         }

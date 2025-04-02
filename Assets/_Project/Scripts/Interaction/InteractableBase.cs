@@ -11,7 +11,8 @@ namespace Timelesss
 
         public abstract string InteractionName { get; }
 
-        [SerializeField] private AnimationClip clip;
+        [SerializeField]
+        AnimationClip clip;
         public AnimationClip Clip => clip;
         
 
@@ -23,8 +24,8 @@ namespace Timelesss
         {
             InteractionManager.Instance.StartInteraction(this);
         }
-        
-        private void Awake()
+
+        void Awake()
         {
             if (interactionText != null)
             {
@@ -65,7 +66,7 @@ namespace Timelesss
             }
         }
 
-        private IEnumerator RotateInteractionText()
+        IEnumerator RotateInteractionText()
         {
             while (interactionText.IsActive())
             {

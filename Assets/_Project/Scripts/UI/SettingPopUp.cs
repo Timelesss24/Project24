@@ -9,21 +9,23 @@ namespace Timelesss
 {
     public class SettingPopUp : UIPopup
     {
-        [SerializeField] Button closeButton;
+        [SerializeField] private Button closeButton;
+        [SerializeField] private Button exitButton;
 
         private void Awake()
         {
             closeButton.onClick.AddListener(OnClickCloseButton);
+            exitButton.onClick.AddListener(OnClickExitButton);
         }
 
-        private void Start()
-        {
-
-        }
-
-        void OnClickCloseButton()
+        private void OnClickCloseButton()
         {
             ClosePopup();
+        }
+
+        private void OnClickExitButton()
+        {
+            GameStateManager.Instance.QuitGame();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using KBCore.Refs;
 using Systems.Persistence;
 using UnityEditor;
@@ -12,71 +11,68 @@ namespace Timelesss
     public class PlayerData : ISaveable
     {
         [field: SerializeField] public SerializableGuid Id { get; set; }
-
+        
         public int PlayerLevel;
         public int MaxHealth;
         public int CurrentHealth;
         public int CurrentExp;
         public int RequiredExp;
     }
-
+    
     public class PlayerInfo : ValidatedMonoBehaviour, IDamageable, IBind<PlayerData>
     {
         [SerializeField, Self] PlayerController playerController;
 
         public string PlayerName { get; private set; }
 
-        private int playerLevel = 1;
+        int TotalMaxHealth => playerData?.MaxHealth ?? 100;//{ get => baseMaxHealth + equipmentMaxHealth; }
+        //private int equipmentMaxHealth = 0;
 
-        private int totalMaxHealth { get => baseMaxHealth + equipmentMaxHealth; }
-        private int baseMaxHealth = 100;
-        private int equipmentMaxHealth = 0;
-        private int currentHealth = 100;
+        float maxStamina = 100;
+        float currentStamina = 100;
 
-        private float maxStamina = 100;
-        private float currentStamina = 100;
+        public int TotalDeffence => baseDeffence + equipmentDeffecne;
+        int baseDeffence = 5;
+        int equipmentDeffecne = 0;
 
-        public int totalDeffence { get => baseDeffence + equipmentDeffecne; }
-        private int baseDeffence = 5;
-        private int equipmentDeffecne = 0;
+        public int TotalAttack => baseAttack + equipmentAttack;
+        int baseAttack = 100;
+        int equipmentAttack = 0;
 
-        public int totalAttack { get => baseAttack + equipmentAttack; }
-        private int baseAttack = 100;
-        private int equipmentAttack = 0;
-
-        private int currentExp = 0;
-        private int requiredExp = 100;
-
-        [SerializeField] private EventChannel<float> hpChangedEvent;
-        [SerializeField] private EventChannel<float> staminaChangedEvent;
-        [SerializeField] private EventChannel<float> expChangedEvent;
-        [SerializeField] private EventChannel<int> levelChangedEvent;
+        [SerializeField]
+        EventChannel<float> hpChangedEvent;
+        [SerializeField]
+        EventChannel<float> staminaChangedEvent;
+        [SerializeField]
+        EventChannel<float> expChangedEvent;
+        [SerializeField]
+        EventChannel<int> levelChangedEvent;
 
         public event Action ExhanstedAction;
         public event Action DeathAction;
 
-        private IEnumerator staminaCoroutine;
-
+        IEnumerator staminaCoroutine;
+        
         [SerializeField] PlayerData playerData;
-        private event Action DataChangedAction;
+        event Action DataChangedAction;
 
 
-        private void Start()
+        void Start()
         {
             GetName();
-            LoadPlayerData();
+            //LoadPlayerData();
 
-            DataChangedAction += SavePlayerData;
+            //DataChangedAction += SavePlayerData;
         }
 
         public void InitalizedValueChanged()
         {
-            hpChangedEvent?.Invoke((float)currentHealth/ (float)totalMaxHealth);
-            staminaChangedEvent?.Invoke((float)currentStamina/ (float)maxStamina);
-            expChangedEvent?.Invoke((float)currentExp/ (float)requiredExp);
-            levelChangedEvent?.Invoke(playerLevel);
+            hpChangedEvent?.Invoke(playerData.CurrentHealth);
+            staminaChangedEvent?.Invoke(currentStamina);
+            expChangedEvent?.Invoke(playerData.CurrentExp);
+            levelChangedEvent?.Invoke(playerData.PlayerLevel);
         }
-
+        
         public string GetName()
         {
             if (PlayerName != null) return PlayerName;
@@ -85,7 +81,7 @@ namespace Timelesss
 
             if (PlayerName == string.Empty)
                 PlayerName = "유니티24조";
-
+            
             return PlayerName;
         }
 
@@ -99,9 +95,7 @@ namespace Timelesss
                     equipmentAttack = (int)itemdata.EquipValue;
                     break;
                 case EquipType.Helmet:
-                    equipmentMaxHealth = (int)itemdata.EquipValue;
-                    break;
-                default:
+                    //equipmentMaxHealth = (int)itemdata.EquipValue;
                     break;
             }
         }
@@ -116,7 +110,7 @@ namespace Timelesss
                     equipmentAttack = 0;
                     break;
                 case EquipType.Helmet:
-                    equipmentMaxHealth = 0;
+                   // equipmentMaxHealth = 0;
                     break;
                 default:
                     break;
@@ -126,19 +120,16 @@ namespace Timelesss
         public event Action OnDamageTaken;
         public void TakeDamage(int value)
         {
-            if (!playerController.CanHit) return;
-
-            float damageReductionFactor = (float)value / (value + totalDeffence);
+            if(!playerController.CanHit) return;
+            
+            float damageReductionFactor = (float)value / (value + TotalDeffence);
             int reducedDamage = Mathf.RoundToInt(value * damageReductionFactor);
 
-            currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
-            hpChangedEvent?.Invoke((float)currentHealth / (float)totalMaxHealth);
+            playerData.CurrentHealth = Mathf.Clamp(playerData.CurrentHealth - reducedDamage, 0, TotalMaxHealth);
+            hpChangedEvent?.Invoke(playerData.CurrentHealth);
             if (reducedDamage > 0) OnDamageTaken?.Invoke();
-            if (currentHealth <= 0f)
+            if(playerData.CurrentHealth <= 0f)
                 DeathAction?.Invoke();
-
-            SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
-            SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
         }
 
         public bool UseStamina(float value)
@@ -159,39 +150,37 @@ namespace Timelesss
             StartCoroutine(staminaCoroutine);
 
             currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
-            staminaChangedEvent?.Invoke((float)currentStamina / (float)maxStamina);
+            staminaChangedEvent?.Invoke(currentStamina);
             return true;
         }
 
         public void RestoreHealth(float value)
         {
-            currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, totalMaxHealth);
-            hpChangedEvent?.Invoke((float)currentHealth/ (float)totalMaxHealth);
-            if (currentHealth <= 0f)
+            playerData.CurrentHealth = Mathf.Clamp(playerData.CurrentHealth + Mathf.RoundToInt(value), 0, TotalMaxHealth);
+            hpChangedEvent?.Invoke(playerData.CurrentHealth);
+            if(playerData.CurrentHealth <= 0f)
                 DeathAction?.Invoke();
-
-            SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
-            SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
-            Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
+            
+            Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {playerData.CurrentHealth}/{TotalMaxHealth}");
         }
 
         public void RestoreStamina(float value)
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
-            staminaChangedEvent?.Invoke((float)currentStamina / (float)maxStamina);
+            staminaChangedEvent?.Invoke(currentStamina);
 
             if (value > 1)
                 Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
         }
 
-        private IEnumerator RestoreStaminaCoroutine()
+        IEnumerator RestoreStaminaCoroutine()
         {
             yield return new WaitForSeconds(1f);
 
             float restoreValue = 0.2f;
             float waitTime = 0.03f;
 
-            while (currentHealth <= maxStamina)
+            while (playerData.CurrentHealth <= maxStamina)
             {
                 RestoreStamina(restoreValue);
                 yield return new WaitForSeconds(waitTime);
@@ -202,74 +191,73 @@ namespace Timelesss
 
         public void IncreasedExp(int value)
         {
-            currentExp += value;
-            Debug.Log($"{value} 경험치를 획득하였습니다. 현재 경험치: {currentExp}/{requiredExp}");
-
-            while (currentExp >= requiredExp && playerLevel < 100)
+            playerData.CurrentExp += value;            
+            Debug.Log($"{value} 경험치를 획득하였습니다. 현재 경험치: {playerData.CurrentExp}/{playerData.RequiredExp}");
+            
+            while (playerData.CurrentExp >= playerData.RequiredExp && playerData.PlayerLevel < 100)
             {
-                currentExp -= requiredExp;
+                playerData.CurrentExp -= playerData.RequiredExp;
                 LevelUp();
             }
-            SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
-            expChangedEvent?.Invoke((float)currentExp / (float)requiredExp);
+            expChangedEvent?.Invoke(playerData.CurrentExp);
         }
 
-        private void LevelUp()
+        void LevelUp()
         {
-            baseMaxHealth = (int)((float)baseMaxHealth * 1.15f);
+            playerData.MaxHealth = (int)((float)playerData.MaxHealth * 1.15f);
             maxStamina += 10f;
 
             baseAttack += Mathf.Max((int)(baseAttack * 0.15f), 1);
             baseDeffence += Mathf.Max((int)(baseDeffence * 0.15f), 1);
 
-            playerLevel++;
-            requiredExp = (int)((float)requiredExp * 1.25f);
+            playerData.PlayerLevel++;
+            playerData.RequiredExp = (int)((float)playerData.RequiredExp * 1.25f);
 
-            levelChangedEvent?.Invoke(playerLevel);
-
-            SaveLoadSystem.Instance.GameData.PlayerData.PlayerLevel = playerLevel;
-            SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
-            SaveLoadSystem.Instance.GameData.PlayerData.RequiredExp = requiredExp;
-
-            Debug.Log($"레벨업. 현재 레벨: {playerLevel} / 현재 경험치: {currentExp}/{requiredExp}");
+            levelChangedEvent?.Invoke(playerData.PlayerLevel);
+            
+            
+            Debug.Log($"레벨업. 현재 레벨: {playerData.PlayerLevel} / 현재 경험치: {playerData.CurrentExp}/{playerData.RequiredExp}");
         }
-
+        
         [field: SerializeField] public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
+        
         public void Bind(PlayerData data)
         {
             playerData = data;
-            Id = data.Id;
-            playerLevel = data.PlayerLevel;
-            baseMaxHealth = data.MaxHealth;
-            currentHealth = data.CurrentHealth;
-            currentExp = data.CurrentExp;
-            requiredExp = data.RequiredExp;
+            playerData.Id = Id;
+            
+            Debug.Log("Bind PlayerData:" + data.Id.ToGuid());
+            // playerData.PlayerLevel = data.PlayerLevel;
+            // playerData.MaxHealth = data.MaxHealth;
+            // playerData.CurrentHealth = data.CurrentHealth;
+            // playerData.CurrentExp = data.CurrentExp;
+            //playerData.requiredExp = data.RequiredExp;
         }
 
-        private void SavePlayerData()
-        {
-            SaveLoadSystem.Instance.GameData.PlayerData = playerData;
-            SaveLoadSystem.Instance.SaveGame();
-        }
+        // void SavePlayerData()
+        // {
+        //     SaveLoadSystem.Instance.GameData.PlayerData = playerData;
+        //     SaveLoadSystem.Instance.SaveGame();
+        // }
 
-        private void LoadPlayerData()
-        {
-            playerData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).PlayerData;
-
-            if (playerData != null)
-                Bind(playerData);
-        }
+        // void LoadPlayerData()
+        // {
+        //     playerData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).PlayerData;
+        //     
+        //     if (playerData != null)
+        //         Bind(playerData);
+        // }
     }
 
     [CustomEditor(typeof(PlayerInfo))]
     public class PlayerInfoEditor : Editor
     {
-        private int healAmount = 10;
-        private int damageAmount = 10;
-        private int expAmount;
+        int healAmount = 10;
+        int damageAmount = 10;
+        int expAmount;
 
-        private float staminaRecoverAmount = 10f;
-        private float staminaUseAmount = 10f;
+        float staminaRecoverAmount = 10f;
+        float staminaUseAmount = 10f;
 
         public override void OnInspectorGUI()
         {

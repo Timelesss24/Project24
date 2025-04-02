@@ -92,7 +92,7 @@ public class QuestDataLoader
     }
 
     [Serializable]
-    private class Wrapper
+    class Wrapper
     {
         public List<QuestData> Items;
     }

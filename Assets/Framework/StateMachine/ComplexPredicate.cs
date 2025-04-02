@@ -6,7 +6,7 @@ namespace Timelesss
 {
     public class ComplexPredicate : IPredicate
     {
-        private readonly IEnumerable<IPredicate> predicates;
+        readonly IEnumerable<IPredicate> predicates;
 
         public ComplexPredicate(IEnumerable<IPredicate> predicates)
         {

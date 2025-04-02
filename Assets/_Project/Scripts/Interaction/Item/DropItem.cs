@@ -10,7 +10,7 @@ namespace Timelesss
 
         public override string InteractionName { get; } = "획득하기";
 
-        private ItemSpawner spawner;
+        ItemSpawner spawner;
 
         [SerializeField] EventChannel<Item> itemEventChannel;
 
