@@ -1,4 +1,5 @@
-﻿using Managers;
+﻿using Framework.Audio;
+using Managers;
 using System;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
@@ -57,6 +58,7 @@ namespace Timelesss
             PlayerManager.Instance.PlayerIfo.DeathAction += OnGameOverUI;
             navMeshSurface.BuildNavMesh();
             SetEnemy();
+            SoundManager.Instance.ChangeBGMWithFade("GameplayBGM", 1.0f);
         }
 
         void CreateLeftRoom()
@@ -116,11 +118,13 @@ namespace Timelesss
             Destroy(gameObject);
             if (enemies.Count == 1)
             {
+                SoundManager.Instance.ChangeBGMWithFade("Last Gaint", 1.0f);
                 bossObect.SetActive(true);
                 bossHpUIAction?.Invoke();
             }
             else if(enemies.Count == 0)
             {
+                SoundManager.Instance.ChangeBGMWithFade("GameplayBGM", 1.0f);
                 GameClear();
             }
         }

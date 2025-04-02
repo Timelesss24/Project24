@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using Managers;
@@ -13,55 +13,73 @@ namespace Framework.Audio
     /// </summary>
     public class SoundManager : PersistentSingleton<SoundManager>
     {
-               [Header("BGM Settings")]
-        [SerializeField]
-               AudioSource bgmSource; // 배경 음악용 오디오 소스
+        [Header("BGM Settings")]
+        [SerializeField] private AudioSource bgmSource; // 배경 음악용 오디오 소스
 
         [FormerlySerializedAs("bgmVolume")]
         [Range(0f, 1f)] public float BGMVolume = 1f; // 배경음악(BGM)의 볼륨
 
+        [SerializeField] private List<AudioClip> bgmClips; // 배경 음악 클립 리스트
+
+        [Header("SFX Settings")]
         [SerializeField]
-        List<AudioClip> bgmClips; // 배경 음악 클립 리스트
+        [Range(0f, 1f)]
+        private float sfxVolume = 1f; // 효과음 볼륨
 
-        [Header("SFX Settings")] [SerializeField] [Range(0f, 1f)]
-        float sfxVolume = 1f; // 효과음 볼륨
-
-        [SerializeField] [Range(0f, 1f)]
-        float sfxPitchVariance; // 효과음 피치 변동 범위
+        [SerializeField][Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
 
         [FormerlySerializedAs("soundSourcePrefab")]
         public SoundSource SoundSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
 
-        [SerializeField]
-        bool isMuted; // 음소거 설정 여부
+        [SerializeField] private bool isMuted; // 음소거 설정 여부
 
-        Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
-        
-        
+        private Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
+
+
         // 추가
-        Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
-        [SerializeField]
-        AudioClip clickSound;
+        private Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
+        [SerializeField] private AudioClip clickSound;
         public AudioClip ClickSound => clickSound;
+
 
         protected void Start()
         {
             bgmSource = gameObject.GetOrAdd<AudioSource>();
-            
+
             ApplyVolumeSettings(); // 초기 볼륨 설정
-            
-            //PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")); 
+
+            //PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", ""));
         }
 
-        
+        protected void Update()
+        {
+            //BGMSetting();
+        }
+
         /// <summary>
         /// 볼륨 설정 적용
         /// </summary>
-        void ApplyVolumeSettings()
+        private void ApplyVolumeSettings()
         {
             bgmSource.volume = isMuted ? 0f : BGMVolume;
             bgmSource.loop = true;
             //isMuted | isSfxMuted? 0f : sfxVolume;
+        }
+
+        public void BGMSetting()
+        {
+            GameObject Boss = GameObject.FindGameObjectWithTag("Boss");
+            if (Boss != null && Boss.activeSelf)
+            {
+                ChangeBGMWithFade("Last Gaint", 2.5f);
+                //StartCoroutine(ChangeBGMCoroutine("Last Gaint", 5.2f));
+                //PlayBGM("Last Gaint");
+            }
+            else
+            {
+                ChangeBGMWithFade($"{GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")}BGM", 1.2f);
+                //StartCoroutine(ChangeBGMCoroutine($"{GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")}BGM", 4.2f));
+            }
         }
 
         /// <summary>
@@ -106,7 +124,7 @@ namespace Framework.Audio
         /// <summary>
         /// 풀에서 SoundSource 가져오기. 없으면 새로 생성.
         /// </summary>
-        SoundSource GetSoundSourceFromPool()
+        private SoundSource GetSoundSourceFromPool()
         {
             if (soundSourcePool.Count > 0)
             {
@@ -163,14 +181,14 @@ namespace Framework.Audio
         /// 배경음악 페이드아웃
         /// </summary>
         /// <param name="fadeDuration">페이드 아웃 시간</param>
-        IEnumerator FadeOutBGM(float fadeDuration)
+        private IEnumerator FadeOutBGM(float fadeDuration)
         {
             // 현재 실행 중인 페이드 코루틴 중단 (중복 실행 방지)
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
 
             float startVolume = bgmSource.volume;
-            
+
             while (bgmSource.volume > 0)
             {
                 bgmSource.volume =
@@ -186,7 +204,7 @@ namespace Framework.Audio
         /// </summary>
         /// <param name="clipName">재생할 클립 이름</param>
         /// <param name="fadeDuration">페이드 인 시간</param>
-        IEnumerator FadeInBGM(string clipName, float fadeDuration)
+        private IEnumerator FadeInBGM(string clipName, float fadeDuration)
         {
             // 새로운 클립 가져오기
             AudioClip newClip = bgmClips.Find(c => c.name == clipName);
@@ -210,7 +228,7 @@ namespace Framework.Audio
                     (BGMVolume / fadeDuration) * Time.deltaTime);
                 yield return null;
             }
-            
+
             bgmSource.volume = BGMVolume; // 최종 볼륨 고정
         }
 
@@ -232,7 +250,7 @@ namespace Framework.Audio
         /// </summary>
         /// <param name="clipName">재생할 클립 이름</param>
         /// <param name="fadeDuration">페이드 시간</param>
-        IEnumerator ChangeBGMCoroutine(string clipName, float fadeDuration)
+        private IEnumerator ChangeBGMCoroutine(string clipName, float fadeDuration)
         {
             float initialVolume = bgmSource.volume;
             // 클립이 같고 이미 재생 중이라면 페이드아웃 생략

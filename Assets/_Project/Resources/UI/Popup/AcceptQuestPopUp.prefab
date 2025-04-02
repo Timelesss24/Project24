@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1172828748048416344}
   - component: {fileID: 710954541318561148}
   - component: {fileID: 6021630300863429774}
+  - component: {fileID: 2188751381874167845}
   m_Layer: 5
   m_Name: RewardButton
   m_TagString: Untagged
@@ -200,6 +201,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2188751381874167845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120604145333937308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6773d209abaf88e408b82a98a1a2b4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 6b211cd82de849e4b9a82e8f93c20a55, type: 3}
 --- !u!1 &1366779458934351248
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1430,7 @@ GameObject:
   - component: {fileID: 5180259309973449159}
   - component: {fileID: 8559903135829793487}
   - component: {fileID: 7065003378498034739}
+  - component: {fileID: 6233865807475565098}
   m_Layer: 5
   m_Name: DeclineButton
   m_TagString: Untagged
@@ -1525,6 +1540,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6233865807475565098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4075531790384271422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6773d209abaf88e408b82a98a1a2b4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 6b211cd82de849e4b9a82e8f93c20a55, type: 3}
 --- !u!1 &5086372443504551885
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,6 +1741,7 @@ GameObject:
   - component: {fileID: 3236481023443860698}
   - component: {fileID: 2869123685324370517}
   - component: {fileID: 2174522825299264718}
+  - component: {fileID: 7922790903198928653}
   m_Layer: 5
   m_Name: AcceptButton
   m_TagString: Untagged
@@ -1822,6 +1851,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7922790903198928653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6607883561439039616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6773d209abaf88e408b82a98a1a2b4f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 6b211cd82de849e4b9a82e8f93c20a55, type: 3}
 --- !u!1 &6784137360568936737
 GameObject:
   m_ObjectHideFlags: 0

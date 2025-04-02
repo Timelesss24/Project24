@@ -45,15 +45,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe18d72e01c24656af492507ee6583c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AutoUnparentOnAwake: 1
   bgmSource: {fileID: 6315411985952576660}
-  bgmVolume: 1
+  BGMVolume: 1
   bgmClips:
-  - {fileID: 8300000, guid: ff94d5cc0af7b4146894c4850047c72e, type: 3}
-  - {fileID: 8300000, guid: 5532249f389924f29a1f88030361fd35, type: 3}
+  - {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}
+  - {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
+  - {fileID: 8300000, guid: 0a9c8bad76c5ec842a5ec9096c565284, type: 3}
+  - {fileID: 8300000, guid: 9666c4ecf2224394eb686453a5311c39, type: 3}
   sfxVolume: 1
   sfxPitchVariance: 0
-  soundSourcePrefab: {fileID: 1205712310517853258, guid: 573306b1e5b3f4497a486bcc69883977, type: 3}
+  SoundSourcePrefab: {fileID: 1205712310517853258, guid: 573306b1e5b3f4497a486bcc69883977,
+    type: 3}
   isMuted: 0
+  clickSound: {fileID: 8300000, guid: 380bec18c46d7c74a997d7a56ac4e211, type: 3}
 --- !u!82 &6315411985952576660
 AudioSource:
   m_ObjectHideFlags: 0

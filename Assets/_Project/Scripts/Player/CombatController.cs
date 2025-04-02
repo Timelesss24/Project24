@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Core;
+using Framework.Audio;
 using KBCore.Refs;
 using UnityEngine;
 using Utilities;
@@ -46,6 +47,8 @@ namespace Timelesss
         public bool IsAttacking => AttackState != AttackStates.Idle;
         public AttackData CurrentAttack { get; private set; }
 
+        public AudioClip audioClips;
+
         void OnValidate() => this.ValidateRefs();
 
 
@@ -57,6 +60,7 @@ namespace Timelesss
 
             OnStartAttack += attackTimer.Start;
             OnEndAttack += attackTimer.Stop;
+
         }
 
         void Update() => attackTimer.Tick(Time.deltaTime);
@@ -101,6 +105,8 @@ namespace Timelesss
 
             float attackLength = attack.Clip.length;
             attackTimer.Reset(attackLength);
+
+            SoundManager.PlaySfx(audioClips);
 
             OnStartAttack?.Invoke();
 

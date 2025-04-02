@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -69,6 +70,11 @@ namespace Managers
         IEnumerator LoadSceneAsync(string sceneName)
         {
             loadingScreen?.SetActive(true);
+
+            if (progressBar != null)
+                progressBar.value = 0f;
+            if (progressText != null)
+                progressText.text = "0%";
 
             // 페이드 아웃
             if (fadeCanvasGroup != null)
