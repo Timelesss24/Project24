@@ -49,7 +49,6 @@ namespace Timelesss
 
         void RefreshView()
         {
-            
             for (int i = 0; i < capacity; i++)
             {
                 var item = Model.Get(i);
@@ -70,23 +69,15 @@ namespace Timelesss
         {
             // readonly InventoryView view;
             IEnumerable<ItemDetails> itemDetails;
-            Item[] items;
+
             int capacity = 20;
-            
+
             public Builder WithStartingItems(IEnumerable<ItemDetails> itemDetails)
             {
                 this.itemDetails = itemDetails;
                 return this;
             }
 
-            public Builder WithLoadItems(Item[] items)
-            {
-                Debug.Log("WithLoadItems 호출");
-                
-                this.items = items;
-                return this;
-            }
-            
             public Builder WithCapacity(int capacity)
             {
                 this.capacity = capacity;
@@ -95,14 +86,9 @@ namespace Timelesss
 
             public InventoryController Build()
             {
-                InventoryModel model;
-
-                if (items != null)
-                    model = new InventoryModel(items, capacity);
-                else if (itemDetails != null)
-                    model = new InventoryModel(itemDetails, capacity);
-                else
-                    model = new InventoryModel(Array.Empty<ItemDetails>(), capacity);
+                var model = itemDetails != null
+                    ? new InventoryModel(itemDetails, capacity)
+                    : new InventoryModel(Array.Empty<ItemDetails>(), capacity);
 
                 return new InventoryController(model, capacity);
             }

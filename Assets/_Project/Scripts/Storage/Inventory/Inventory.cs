@@ -14,32 +14,13 @@ namespace Timelesss
 
         public InventoryController Controller { get; private set; }
 
-        public InventoryData inventoryData { get; private set; }
-
         void Awake()
         {
-            inventoryData = SaveLoadSystem.Instance.LoadGame("Game").InventoryData;
-
-            bool isEmpty = !Array.Exists(inventoryData.Items, item => item != null);
-
-            if (isEmpty)
-            {
-                // InventoryController 초기화
-                Controller = new InventoryController.Builder()
-                    .WithStartingItems(startingItems)
-                    .WithCapacity(capacity)
-                    .Build();
-            }
-            else
-            {
-                Debug.Log("어웨이크에서 인벤토리 데이터 로드");
-                
-                Controller =
-                    new InventoryController.Builder()
-                        .WithLoadItems(inventoryData.Items)
-                        .WithCapacity(capacity)
-                        .Build();
-            }
+            // InventoryController 초기화
+            Controller = new InventoryController.Builder()
+                .WithStartingItems(startingItems)
+                .WithCapacity(capacity)
+                .Build();
         }
 
         public void AddItem(Item item)
@@ -48,14 +29,14 @@ namespace Timelesss
             Controller.Model.Add(item);
             Controller.SubscribeToItem(item);
         }
-        
+
         /// <summary>
         /// InventoryData를 컨트롤러에 바인딩
         /// </summary>
         public void Bind(InventoryData data)
         {
             Debug.Log($"Binding inventory {Id} to data {data.Id}");
-           Controller.Bind(data); // 모델 데이터와 컨트롤러 연결
+            Controller.Bind(data); // 모델 데이터와 컨트롤러 연결
             data.Id = Id; // 데이터 ID를 현재 Inventory ID로 설정
         }
     }
