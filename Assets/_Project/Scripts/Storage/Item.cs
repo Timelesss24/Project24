@@ -3,20 +3,12 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    public interface IItem
-    {
-        SerializableGuid Id { get; }
-        SerializableGuid DetailsId { get; }
-        ItemDetails Details { get; }
-        int Quantity { get; }
-    }
-
     [Serializable]
-    public class Item : IItem
+    public class Item
     {
-        [field: SerializeField] public SerializableGuid Id { get;  set; }
-        [field: SerializeField] public SerializableGuid DetailsId { get;  set; }
-        [field: SerializeField] public ItemDetails Details { get;  set; }
+        [field: SerializeField] public SerializableGuid Id;
+        [field: SerializeField] public SerializableGuid DetailsId;
+        public ItemDetails Details;
         public event Action OnChanged = delegate { };
         [SerializeField] public int quantity;
 

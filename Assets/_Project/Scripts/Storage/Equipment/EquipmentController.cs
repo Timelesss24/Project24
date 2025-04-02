@@ -100,7 +100,12 @@ namespace Timelesss
 
 
                 foreach (var item in model.Items.Items)
+                {
                     visualHandler.Equip((EquipmentItem)item);
+       
+                    //var item2 = model.Get(item.Details.EquipmentType);
+                    //Debug.Log(item2.Details.EquipmentType);
+                }
 
 
                 return new EquipmentController(model, visualHandler);

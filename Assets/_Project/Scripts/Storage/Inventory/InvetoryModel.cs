@@ -74,12 +74,12 @@ namespace Timelesss
             if (isNew) {
                 inventoryData.Items = new Item[capacity];
             }
-            // else {
-            //     for (var i = 0; i < capacity; i++) {
-            //         if (Items[i] == null) continue;
-            //         inventoryData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
-            //     }
-            // }
+            else {
+                for (var i = 0; i < capacity; i++) {
+                    if (Items[i] == null) continue;
+                    inventoryData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
+                }
+            }
      
 
             if (isNew && Items.Count != 0) {

@@ -8,7 +8,7 @@ namespace Timelesss
     {
         //  public ObservableDictionary<EquipmentType, Item> Items { get; private set; }
         public ObservableArray<Item> Items { get; set; }
-        EquipmentData equipmentData = new();
+        public EquipmentData equipmentData = new();
 
         public event Action<Item[]> OnModelChanged
         {
@@ -22,13 +22,20 @@ namespace Timelesss
             foreach (var detail in itemDetails)
             {
                 var item = detail.Create(1);
-                Items.TryAddAt((int)item.Details.EquipmentType, item);
+                Debug.Log(item.Details.EquipmentType);
+                Debug.Log(Items.TryAddAt((int)item.Details.EquipmentType, item));
+                Debug.Log(Get(item.Details.EquipmentType));
+                
             }
         }
 
         public void Bind(EquipmentData data)
         {
-                        
+            for (int i=0; i<Items.Length; i++)
+            {
+                Debug.Log($"1 {i} {Items[i] != null}");
+            }
+            
             for (var i = 0; i < data.Items.Length; i++)
             {
                 if (data.Items[i].Id == SerializableGuid.Empty)
@@ -37,15 +44,44 @@ namespace Timelesss
             
             equipmentData = data;
 
-            Debug.Log($"{Enum.GetValues(typeof(EquipmentType)).Length} Equipment Bind");
-            equipmentData.Items = new Item[Enum.GetValues(typeof(EquipmentType)).Length];
+            bool isNew = equipmentData.Items == null || equipmentData.Items.Length == 0;
 
-            for (int i = 0; i < equipmentData.Items.Length; i++)
+            if (isNew) {
+                equipmentData.Items = new Item[Enum.GetValues(typeof(EquipmentType)).Length];
+            }
+            // else {
+            //     for (var i = 0; i < equipmentData.Items.Length; i++) {
+            //         if (Items[i] == null) continue;
+            //         equipmentData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
+            //     }
+            // }
+            
+           
+            if (isNew && Items.Count != 0) {
+                Debug.Log(Items.Count);
+                
+                for (var i = 0; i < Items.Length; i++) {
+                    if (Items[i] == null)
+                    {
+                        Debug.Log(i);
+                        continue;
+                    }
+                    Debug.Log(Items[i].Details.EquipmentType);
+                    equipmentData.Items[i] = Items[i];
+                }
+            }
+            for (int i=0; i<Items.Length; i++)
             {
-                equipmentData.Items[i] = null;
+                Debug.Log($"2 {i} {Items[i] != null}");
             }
 
+
             Items.Items = equipmentData.Items;
+            for (int i=0; i<Items.Length; i++)
+            {
+                Debug.Log($"3 {i} {Items[i] != null}");
+            }
+
         }
 
         public Item Get(EquipmentType type) => Items[(int)type];

@@ -64,7 +64,7 @@ public class ObservableArray<T> : IObservableArray<T>
 
     public bool TryAddAt(int index, T item)
     {
-        Debug.Log(index);
+
         
         if (index < 0 || index >= Items.Length)
         {
@@ -77,7 +77,7 @@ public class ObservableArray<T> : IObservableArray<T>
             Debug.Log("Index already occupied TryAddAt");
             return false;
         }
-
+        
         Items[index] = item;
         Invoke();
         return true;
