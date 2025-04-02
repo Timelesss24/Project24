@@ -1285,11 +1285,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BeholderCustom
       objectReference: {fileID: 0}
-    - target: {fileID: 4656192437591420167, guid: 507a1a3f9ca57474abe85e16e86da748,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4786562564244088828, guid: 507a1a3f9ca57474abe85e16e86da748,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1340,11 +1335,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7022860099544658328, guid: 507a1a3f9ca57474abe85e16e86da748,
-        type: 3}
-      propertyPath: itemSpawner
-      value: 
-      objectReference: {fileID: 1367557202}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
