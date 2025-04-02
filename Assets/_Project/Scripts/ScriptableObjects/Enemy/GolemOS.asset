@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCode: 1002
   maxHp: 200
-  attackDamage: 8
+  attackDamage: 20
   exp: 60
   wanderRadius: 6
   timeBetweenAttacks: 1
