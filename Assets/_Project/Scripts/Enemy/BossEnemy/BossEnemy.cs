@@ -143,7 +143,7 @@ namespace Timelesss
         }
         void UpdateUI()
         {
-            FloatEventChannel?.Invoke(enemyHp);
+            FloatEventChannel?.Invoke(enemyHp / (float)playerDetector.Date.maxHp);
         }
         void FadeOutDestroy()
         {

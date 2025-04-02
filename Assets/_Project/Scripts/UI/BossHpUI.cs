@@ -13,7 +13,7 @@ namespace Timelesss
         public void SetBossHpBar(float amount)
         {
             Debug.Log("보스 체력 감소");
-            bossHpBar.value = amount / 1000.0f;
+            bossHpBar.value = amount;
         }
     }
 }

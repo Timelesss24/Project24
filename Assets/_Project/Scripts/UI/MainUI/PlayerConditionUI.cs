@@ -22,17 +22,17 @@ namespace Timelesss
 
         public void SetHPBar(float amount)
         {
-            hpBar.value = amount / 100.0f;
+            hpBar.value = amount;
         }
 
         public void SetStaminaBar(float amount)
         {
-            staminaBar.value = amount / 100.0f;
+            staminaBar.value = amount;
         }
 
         public void SetExpBar(float amount)
         {
-            ExpBar.value = amount / 100.0f;
+            ExpBar.value = amount;
         }
 
         public void SetLevel(int level)

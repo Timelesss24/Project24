@@ -12,14 +12,14 @@ namespace Timelesss
     public class PlayerData : ISaveable
     {
         [field: SerializeField] public SerializableGuid Id { get; set; }
-        
+
         public int PlayerLevel;
         public int MaxHealth;
         public int CurrentHealth;
         public int CurrentExp;
         public int RequiredExp;
     }
-    
+
     public class PlayerInfo : ValidatedMonoBehaviour, IDamageable, IBind<PlayerData>
     {
         [SerializeField, Self] PlayerController playerController;
@@ -31,7 +31,7 @@ namespace Timelesss
         private int totalMaxHealth { get => baseMaxHealth + equipmentMaxHealth; }
         private int baseMaxHealth = 100;
         private int equipmentMaxHealth = 0;
-        private int currentHealth  = 100;
+        private int currentHealth = 100;
 
         private float maxStamina = 100;
         private float currentStamina = 100;
@@ -56,10 +56,10 @@ namespace Timelesss
         public event Action DeathAction;
 
         private IEnumerator staminaCoroutine;
-        
+
         [SerializeField] PlayerData playerData;
         private event Action DataChangedAction;
-        
+
 
         private void Start()
         {
@@ -71,12 +71,12 @@ namespace Timelesss
 
         public void InitalizedValueChanged()
         {
-            hpChangedEvent?.Invoke(currentHealth);
-            staminaChangedEvent?.Invoke(currentStamina);
-            expChangedEvent?.Invoke(currentExp);
+            hpChangedEvent?.Invoke((float)currentHealth/ (float)totalMaxHealth);
+            staminaChangedEvent?.Invoke((float)currentStamina/ (float)maxStamina);
+            expChangedEvent?.Invoke((float)currentExp/ (float)requiredExp);
             levelChangedEvent?.Invoke(playerLevel);
         }
-        
+
         public string GetName()
         {
             if (PlayerName != null) return PlayerName;
@@ -85,7 +85,7 @@ namespace Timelesss
 
             if (PlayerName == string.Empty)
                 PlayerName = "유니티24조";
-            
+
             return PlayerName;
         }
 
@@ -126,17 +126,17 @@ namespace Timelesss
         public event Action OnDamageTaken;
         public void TakeDamage(int value)
         {
-            if(!playerController.CanHit) return;
-            
+            if (!playerController.CanHit) return;
+
             float damageReductionFactor = (float)value / (value + totalDeffence);
             int reducedDamage = Mathf.RoundToInt(value * damageReductionFactor);
 
             currentHealth = Mathf.Clamp(currentHealth - reducedDamage, 0, totalMaxHealth);
-            hpChangedEvent?.Invoke(currentHealth);
+            hpChangedEvent?.Invoke((float)currentHealth / (float)totalMaxHealth);
             if (reducedDamage > 0) OnDamageTaken?.Invoke();
-            if(currentHealth <= 0f)
+            if (currentHealth <= 0f)
                 DeathAction?.Invoke();
-            
+
             SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
             SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
         }
@@ -159,17 +159,17 @@ namespace Timelesss
             StartCoroutine(staminaCoroutine);
 
             currentStamina = Mathf.Clamp(currentStamina - value, 0, maxStamina);
-            staminaChangedEvent?.Invoke(currentStamina);
+            staminaChangedEvent?.Invoke((float)currentStamina / (float)maxStamina);
             return true;
         }
 
         public void RestoreHealth(float value)
         {
             currentHealth = Mathf.Clamp(currentHealth + Mathf.RoundToInt(value), 0, totalMaxHealth);
-            hpChangedEvent?.Invoke(currentHealth);
-            if(currentHealth <= 0f)
+            hpChangedEvent?.Invoke((float)currentHealth/ (float)totalMaxHealth);
+            if (currentHealth <= 0f)
                 DeathAction?.Invoke();
-            
+
             SaveLoadSystem.Instance.GameData.PlayerData.CurrentHealth = currentHealth;
             SaveLoadSystem.Instance.GameData.PlayerData.MaxHealth = baseMaxHealth;
             Debug.Log($"체력이 {value}만큼 회복되었습니다. 현재 체력: {currentHealth}/{totalMaxHealth}");
@@ -178,7 +178,7 @@ namespace Timelesss
         public void RestoreStamina(float value)
         {
             currentStamina = Mathf.Clamp(currentStamina + value, 0, maxStamina);
-            staminaChangedEvent?.Invoke(currentStamina);
+            staminaChangedEvent?.Invoke((float)currentStamina / (float)maxStamina);
 
             if (value > 1)
                 Debug.Log($"스태미너가 {value}만큼 회복되었습니다. 현재 스태미너: {currentStamina}/{maxStamina}");
@@ -202,16 +202,16 @@ namespace Timelesss
 
         public void IncreasedExp(int value)
         {
-            currentExp += value;            
+            currentExp += value;
             Debug.Log($"{value} 경험치를 획득하였습니다. 현재 경험치: {currentExp}/{requiredExp}");
-            
+
             while (currentExp >= requiredExp && playerLevel < 100)
             {
                 currentExp -= requiredExp;
                 LevelUp();
             }
             SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
-            expChangedEvent?.Invoke(currentExp);
+            expChangedEvent?.Invoke((float)currentExp / (float)requiredExp);
         }
 
         private void LevelUp()
@@ -230,7 +230,7 @@ namespace Timelesss
             SaveLoadSystem.Instance.GameData.PlayerData.PlayerLevel = playerLevel;
             SaveLoadSystem.Instance.GameData.PlayerData.CurrentExp = currentExp;
             SaveLoadSystem.Instance.GameData.PlayerData.RequiredExp = requiredExp;
-            
+
             Debug.Log($"레벨업. 현재 레벨: {playerLevel} / 현재 경험치: {currentExp}/{requiredExp}");
         }
 
@@ -251,11 +251,11 @@ namespace Timelesss
             SaveLoadSystem.Instance.GameData.PlayerData = playerData;
             SaveLoadSystem.Instance.SaveGame();
         }
-        
+
         private void LoadPlayerData()
         {
             playerData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).PlayerData;
-            
+
             if (playerData != null)
                 Bind(playerData);
         }
