@@ -13,7 +13,7 @@ namespace Systems.Persistence {
         public string Name = "Game";
         public PlayerData PlayerData;
         public SaveableQuestData QuestData;
-        public InventoryData InventoryData;
+        //public InventoryData InventoryData;
     }
         
     public interface ISaveable  
@@ -49,14 +49,14 @@ namespace Systems.Persistence {
         {
             if (scene.name == "Title") return;
             
-            AllBind();
+            //AllBind();
         }
 
         public void AllBind()
         {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
-            Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
+            //Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -109,7 +109,8 @@ namespace Systems.Persistence {
                 //     Id = SerializableGuid.NewGuid(),
                 //     Capacity = 20,
                 //     Coins = 0,
-                //     Items = new Item[20]
+                //     Items = new Item[20],
+                //     ItemQuantities = new int[20],
                 // }
             };
         }

@@ -14,32 +14,20 @@ namespace Timelesss
 
         public InventoryController Controller { get; private set; }
 
-        public InventoryData inventoryData { get; private set; }
-
         void Awake()
         {
-            inventoryData = SaveLoadSystem.Instance.LoadGame("Game").InventoryData;
+            // InventoryController 초기화
+            Controller = new InventoryController.Builder()
+                .WithStartingItems(startingItems)
+                .WithCapacity(capacity)
+                .Build();
+        }
 
-            bool isEmpty = !Array.Exists(inventoryData.Items, item => item != null);
-
-            if (isEmpty)
-            {
-                // InventoryController 초기화
-                Controller = new InventoryController.Builder()
-                    .WithStartingItems(startingItems)
-                    .WithCapacity(capacity)
-                    .Build();
-            }
-            else
-            {
-                Debug.Log("어웨이크에서 인벤토리 데이터 로드");
-                
-                Controller =
-                    new InventoryController.Builder()
-                        .WithLoadItems(inventoryData.Items)
-                        .WithCapacity(capacity)
-                        .Build();
-            }
+        public void AddItem(Item item)
+        {
+            Debug.Log($"Adding item {item.Id} to inventory {Id}");
+            Controller.Model.Add(item);
+            Controller.SubscribeToItem(item);
         }
 
         /// <summary>

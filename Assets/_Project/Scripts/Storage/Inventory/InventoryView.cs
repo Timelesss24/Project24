@@ -26,12 +26,6 @@ namespace Timelesss
             // 슬롯 배열 초기화
             Slots = new Slot[capacity];
             
-            Debug.Log($"{capacity} 캐퍼시티");
-            
-            // 저장 데이터 초기화
-            inventoryData.Capacity = capacity;
-            inventoryData.Items = new Item[capacity];
-
             // 제목 설정
             inventoryHeader.text = panelName;
 
@@ -49,36 +43,6 @@ namespace Timelesss
 
             // 닫기 버튼 이벤트 연결
             closeButton.onClick.AddListener(ClosePopup);
-
-            inventoryData = SaveLoadSystem.Instance.LoadGame("Game").InventoryData;
-            
-            if (inventoryData.Items.Length == 0)
-            {
-                inventoryData.Items = new Item[capacity];
-                inventoryData.Capacity = capacity;
-            }
-
-            bool isEmpty = !Array.Exists(inventoryData.Items, item => item != null);
-
-            foreach (var slot in Slots)
-            {
-                if (slot == null) continue;
-
-                if (isEmpty)
-                {
-                    Item item = GetItemFromSlot(slot);
-                    
-                    if (item == null) continue;
-                    
-                    slot.item = item;
-                    slot.item.Quantity = item.Quantity;
-                }
-                else
-                {
-                    slot.item = inventoryData.Items[slot.Index];
-                    slot.item.Quantity = inventoryData.Items[slot.Index].Quantity;
-                }
-            }
         }
 
         protected override Item GetItemFromSlot(Slot slot)
@@ -119,16 +83,14 @@ namespace Timelesss
 
             var targetItem = model.Get(toIndex);
 
-            if (targetItem != null && targetItem.Details &&
-                targetItem.Details.Name == item.Details.Name &&
+            if (targetItem != null &&
+                targetItem.Details.Id == item.Details.Id &&
                 targetItem.Quantity + item.Quantity <= item.Details.MaxStack)
             {
-                (Slots[fromIndex].item, Slots[toIndex].item) = (Slots[toIndex].item, Slots[fromIndex].item);
                 model.Combine(fromIndex, toIndex);
             }
             else
             {
-                (Slots[fromIndex].item, Slots[toIndex].item) = (Slots[toIndex].item, Slots[fromIndex].item);
                 model.Swap(fromIndex, toIndex);
             }
 
@@ -137,32 +99,8 @@ namespace Timelesss
             RefreshSlot(fromIndex);
             RefreshSlot(toIndex);
 
-            SaveItems();
 
             return true;
-        }
-
-        private void SaveItems()
-        {
-            foreach (var slot in Slots)
-            {
-                if (slot.item != null)
-                {
-                    Debug.Log($"배열 길이 : {inventoryData.Items.Length}");
-                    
-                    inventoryData.Items[slot.Index] = slot.item;
-                    inventoryData.Items[slot.Index].Quantity = slot.item.Quantity;
-
-                    if (inventoryData.Items[slot.Index].Details != null)
-                        Debug.Log($"{slot.Index}번 {inventoryData.Items[slot.Index].Details.Name}, {inventoryData.Items[slot.Index].Quantity}개 저장 완료");
-                    else
-                        Debug.Log($"{slot.Index}번 빈슬롯 저장 완료");
-                }
-            }
-            
-            
-            SaveLoadSystem.Instance.GameData.InventoryData = inventoryData;
-            SaveLoadSystem.Instance.SaveGame();
         }
 
         void RefreshSlot(int index)
