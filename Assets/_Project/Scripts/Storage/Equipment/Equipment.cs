@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Systems.Persistence;
 using UnityEngine;
@@ -23,9 +24,17 @@ namespace Timelesss
 
         public void Bind(EquipmentData data)
         {
-            Debug.Log($"Binding equipment {Id} to data {data.Id}");
             Controller.Bind(data);
             data.Id = Id;
+            Debug.Log($"Equipment {Id.ToGuid()} bound to data {data.Id.ToGuid()}");
+        }
+
+        void OnGUI()
+        {
+            //GUI.Label(new Rect(10, 100, 300, 20), $"Equipment ID: {Id.ToString()}");
+            GUILayout.Label($"Inventory ID: {Id.ToGuid()}");
+            GUILayout.Label($"Inventory ID: {Controller.Model.equipmentData.Id.ToGuid()}");
+            GUILayout.Label($"Inventory ID: {SaveLoadSystem.Instance.GameData.EquipmentData.Id.ToGuid()}");
         }
     }
 }

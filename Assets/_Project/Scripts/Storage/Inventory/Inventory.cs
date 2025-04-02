@@ -42,7 +42,7 @@ namespace Timelesss
 
         void OnGUI()
         {
-            GUILayout.Label($"Inventory ID: {Controller.Model.inventoryData.Id.ToGuid()}");
+            //GUILayout.Label($"Inventory ID: {Controller.Model.inventoryData.Id.ToGuid()}");
         }
     }
 }

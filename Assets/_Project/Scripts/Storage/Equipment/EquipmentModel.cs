@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Timelesss
 {
@@ -7,7 +8,7 @@ namespace Timelesss
     {
         public ObservableDictionary<EquipmentType, Item> Items { get; private set; }
 
-        EquipmentData equipmentData = new();
+        public EquipmentData equipmentData = new();
 
         public event Action<Dictionary<EquipmentType, Item>> OnModelChanged
         {
@@ -27,6 +28,12 @@ namespace Timelesss
 
         public void Bind(EquipmentData data)
         {
+            for (var i = 0; i < data.Items.Length; i++)
+            {
+                if (data.Items[i].Id == SerializableGuid.Empty)
+                    data.Items[i] = null;
+            }
+            
             equipmentData = data;
 
             bool isNew = equipmentData.Items == null || equipmentData.Items.Length == 0;
@@ -53,6 +60,7 @@ namespace Timelesss
             {
                 equipmentData.Items[(int)pair.Key] = pair.Value;
             }
+            
         }
 
         public Item Get(EquipmentType type) => Items.GetValueOrDefault(type);

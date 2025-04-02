@@ -10,7 +10,7 @@ namespace Timelesss
         ObservableArray<Item> Items { get; }
 
         /// 현재 바인딩된 인벤토리 데이터입니다.
-        public InventoryData inventoryData = new();
+         InventoryData inventoryData = new();
 
         /// 인벤토리의 최대 용량입니다. 
         readonly int capacity;

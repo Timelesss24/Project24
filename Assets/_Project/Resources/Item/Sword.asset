@@ -19,7 +19,7 @@ MonoBehaviour:
     Part2: 1309408808
     Part3: 2944228506
     Part4: 2324025850
-  ItemType: 0
+  ItemType: 1
   DropPrefab: {fileID: 0}
   EquipmentType: 0
   EquipmentPrefab: {fileID: 1380736215264169070, guid: 4bdcefeecacf84fc3a5366408a0b2634,

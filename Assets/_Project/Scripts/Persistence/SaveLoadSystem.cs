@@ -14,6 +14,7 @@ namespace Systems.Persistence {
         public PlayerData PlayerData;
         public SaveableQuestData QuestData;
         public InventoryData InventoryData;
+        public EquipmentData EquipmentData;
     }
         
     public interface ISaveable  
@@ -57,7 +58,8 @@ namespace Systems.Persistence {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
             Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
-            Debug.Log(GameData.InventoryData.Id.ToGuid());
+            Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
+            Debug.Log(GameData.EquipmentData.Id.ToGuid());
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -103,8 +105,8 @@ namespace Systems.Persistence {
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
-                InventoryData = new InventoryData()
-     
+                InventoryData = new InventoryData(),
+                EquipmentData = new EquipmentData()
             };
         }
 
