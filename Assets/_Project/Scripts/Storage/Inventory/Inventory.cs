@@ -42,13 +42,20 @@ namespace Timelesss
             }
         }
 
+        public void AddItem(Item item)
+        {
+            Debug.Log($"Adding item {item.Id} to inventory {Id}");
+            Controller.Model.Add(item);
+            Controller.SubscribeToItem(item);
+        }
+        
         /// <summary>
         /// InventoryData를 컨트롤러에 바인딩
         /// </summary>
         public void Bind(InventoryData data)
         {
             Debug.Log($"Binding inventory {Id} to data {data.Id}");
-            Controller.Bind(data); // 모델 데이터와 컨트롤러 연결
+           Controller.Bind(data); // 모델 데이터와 컨트롤러 연결
             data.Id = Id; // 데이터 ID를 현재 Inventory ID로 설정
         }
     }

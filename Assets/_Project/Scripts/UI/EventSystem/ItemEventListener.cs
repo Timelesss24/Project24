@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Timelesss
 {
-    public class ItemEventListener : EventListener<ItemDetails>
+    public class ItemEventListener : EventListener<Item>
     {
         
     }
