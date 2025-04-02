@@ -48,7 +48,7 @@ namespace Timelesss
 
         public bool HandleDrop(Slot fromSlot, Slot toSlot, Item item)
         {
-            Debug.Log($"[ConsumableStorage] HandleDrop called. Item: {item?.Details?.Name}");
+            Debug.Log($"[ConsumableStorage] HandleDrop called. Item: {item?.Details?.ItemType}");
 
             if (item is not ConsumableItem consumable)
             {

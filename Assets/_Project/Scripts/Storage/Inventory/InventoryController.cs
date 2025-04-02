@@ -42,8 +42,11 @@ namespace Timelesss
             item.OnChanged += RefreshView;
         }
 
-        public void Bind(InventoryData data) => Model.Bind(data);
-        
+        public void Bind(InventoryData data)
+        {
+            Model.Bind(data);
+        }
+
 
         void HandleModelChanged(IList<Item> items) => RefreshView();
 

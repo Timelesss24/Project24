@@ -50,7 +50,7 @@ namespace Timelesss
                 Items.TryAdd(itemDetail.Create(1));
             }
         }
-        
+
         // 메서드
         /// <summary>
         /// InventoryData와 모델을 바인딩합니다.
@@ -61,7 +61,7 @@ namespace Timelesss
         {
             Debug.Log("INVENTORY MODEL BIND");
             inventoryData = data;
-            
+
             inventoryData.Capacity = capacity;
 
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
@@ -73,11 +73,16 @@ namespace Timelesss
             }
             else
             {
+
                 // 기존 데이터에서 아이템을 로드
                 for (var i = 0; i < capacity; i++)
                 {
-                    if (Items[i] == null) continue;
-                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].DetailsId), data.Items[i].Quantity);
+                    if (Items[i] == null || data.Items[i].Quantity > 0)
+                    {
+                        inventoryData.Items[i] = null;
+                        continue;
+                    }
+                    inventoryData.Items[i] = ItemDatabase.GetDetailsById(Items[i].DetailsId).Create(data.Items[i].Quantity);
                 }
             }
 

@@ -82,7 +82,7 @@ namespace Timelesss
             var targetItem = model.Get(toIndex);
             
             
-            if (targetItem != null &&
+            if (targetItem.Details != null &&
                 targetItem.Details.Id == item.Details.Id &&
                 targetItem.Quantity + item.Quantity <= item.Details.MaxStack)
             {
