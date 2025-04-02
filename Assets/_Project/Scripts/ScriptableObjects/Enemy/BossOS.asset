@@ -16,10 +16,10 @@ MonoBehaviour:
   maxHp: 1000
   attackDamage: 15
   exp: 100
-  wanderRadius: 20
+  wanderRadius: 25
   timeBetweenAttacks: 1
   detectionAngle: 360
   detectionRadius: 20
-  innerDetectionRadius: 1
-  detectionCooldown: 1
-  attackRange: 6
+  innerDetectionRadius: 0.1
+  detectionCooldown: 0.1
+  attackRange: 8
