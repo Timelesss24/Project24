@@ -16,7 +16,7 @@ namespace Managers
         }
 
         [Header("Game State")] [SerializeField]
-        private GameState currentState = GameState.Gameplay;
+        GameState currentState = GameState.Gameplay;
 
         /// <summary>
         /// 현재 게임 상태를 제공.
@@ -67,7 +67,7 @@ namespace Managers
             }
         }
 
-        private string GetSceneNameByGameState(GameState state)
+        string GetSceneNameByGameState(GameState state)
         {
             return state switch
             {

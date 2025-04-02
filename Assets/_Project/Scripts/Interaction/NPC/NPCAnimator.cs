@@ -6,15 +6,15 @@ namespace Timelesss
 {
     public class NPCAnimator : MonoBehaviour
     {
-        private Animator animator;
+        Animator animator;
 
-        private const string idleHashString = "IdleState";
-        private const string talkHashString = "IsTalk";
+        const string idleHashString = "IdleState";
+        const string talkHashString = "IsTalk";
 
         [HideInInspector] public int idleHash;
         [HideInInspector] public int talkHash;
 
-        private void Start()
+        void Start()
         {
             animator = GetComponent<Animator>();
 
@@ -24,7 +24,7 @@ namespace Timelesss
             InvokeRepeating(nameof(SetRandomIdleAnimation), 0f, 5f);
         }
 
-        private void SetRandomIdleAnimation()
+        void SetRandomIdleAnimation()
         {
             int randomIdle = Random.Range(0, 4);
             animator.SetInteger(idleHash, randomIdle);

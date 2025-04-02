@@ -7,7 +7,7 @@ namespace Timelesss
     public class InventoryModel
     {
         /// 인벤토리에 저장된 아이템 배열입니다. 
-        private ObservableArray<Item> Items { get; }
+        ObservableArray<Item> Items { get; }
 
         /// 현재 바인딩된 인벤토리 데이터입니다.
         InventoryData inventoryData = new();

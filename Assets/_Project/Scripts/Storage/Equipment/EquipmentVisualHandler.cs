@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Timelesss
 {
     [Serializable]
-    class BoneTarget
+    internal class BoneTarget
     {
         public EquipmentType Type;
         public SkinnedMeshRenderer Renderer;

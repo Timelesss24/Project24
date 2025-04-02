@@ -10,21 +10,28 @@ namespace Timelesss
 {
     public class DungeonManager : Singleton<DungeonManager>
     {
-        [SerializeField] private GameObject[] leftroomPrefabs;
-        [SerializeField] private GameObject[] rightroomPrefabs;
-        private List<Vector3> roomJoint;
-        private List<GameObject> rooms;
+        [SerializeField]
+        GameObject[] leftroomPrefabs;
+        [SerializeField]
+        GameObject[] rightroomPrefabs;
+        List<Vector3> roomJoint;
+        List<GameObject> rooms;
 
-        [SerializeField] private List<GameObject> enemyPrefabs;
-        private List<Enemy> enemies;
-        [SerializeField] private GameObject bossPrefabs;
-        [SerializeField] private Transform bossSpawner;
-        [SerializeField] private Transform portalSpawner;
-        private GameObject bossObect;
+        [SerializeField]
+        List<GameObject> enemyPrefabs;
+        List<Enemy> enemies;
+        [SerializeField]
+        GameObject bossPrefabs;
+        [SerializeField]
+        Transform bossSpawner;
+        [SerializeField]
+        Transform portalSpawner;
+        GameObject bossObect;
 
-        [SerializeField] private GameObject potal;
+        [SerializeField]
+        GameObject potal;
 
-        private NavMeshSurface navMeshSurface;
+        NavMeshSurface navMeshSurface;
 
         public Action bossHpUIAction;
 
@@ -45,7 +52,7 @@ namespace Timelesss
             enemies = new List<Enemy>();           
         }
 
-        private void Start()
+        void Start()
         {
             PlayerManager.Instance.PlayerIfo.DeathAction += OnGameOverUI;
             navMeshSurface.BuildNavMesh();

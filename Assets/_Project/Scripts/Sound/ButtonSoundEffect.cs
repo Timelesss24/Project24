@@ -9,11 +9,12 @@ namespace Timelesss
     [RequireComponent(typeof(Button))]
     public class ButtonSoundEffect : MonoBehaviour
     {
-        [SerializeField] private AudioClip clickSound;
+        [SerializeField]
+        AudioClip clickSound;
 
-        private Button[] buttons;
+        Button[] buttons;
 
-        private void Awake()
+        void Awake()
         {
             buttons = GetComponents<Button>();
             foreach (var button in buttons)
@@ -22,7 +23,7 @@ namespace Timelesss
             }
         }
 
-        private void PlayClickSound()
+        void PlayClickSound()
         {
             if (clickSound == null)
                 clickSound = SoundManager.Instance.ClickSound;

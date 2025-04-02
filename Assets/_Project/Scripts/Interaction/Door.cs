@@ -10,13 +10,15 @@ namespace Timelesss
         enum State { Single, Double }
 
 
-        public override string InteractionName => "¿­±â";
+        public override string InteractionName => "ï¿½ï¿½ï¿½ï¿½";
 
-        [SerializeField] private State doorState;
+        [SerializeField]
+        State doorState;
 
-        [SerializeField] private Transform[] doorTransforms;
+        [SerializeField]
+        Transform[] doorTransforms;
 
-        private bool isOpen;
+        bool isOpen;
 
         public override void Interact()
         {
@@ -25,7 +27,7 @@ namespace Timelesss
             RotateDoor();
         }
 
-        private void RotateDoor()
+        void RotateDoor()
         {
             if (doorState == State.Single)
             {
@@ -37,7 +39,7 @@ namespace Timelesss
             }
         }
 
-        private IEnumerator RotateSingleDoor()
+        IEnumerator RotateSingleDoor()
         {
             if (isOpen) yield break;
 
@@ -65,7 +67,7 @@ namespace Timelesss
             transform.rotation = Quaternion.Euler(0, targetRotationY, 0);
         }
 
-        private IEnumerator RotateDoubleDoor()
+        IEnumerator RotateDoubleDoor()
         {
             if (isOpen) yield break;
 

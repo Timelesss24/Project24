@@ -9,20 +9,24 @@ namespace Timelesss
 {
     public class DialoguePopUp : UIPopup
     {
-        [SerializeField] private Button nextButton; // 다음 버튼
-        [SerializeField] private Button closeButton; // 닫기 버튼
+        [SerializeField]
+        Button nextButton; // 다음 버튼
+        [SerializeField]
+        Button closeButton; // 닫기 버튼
 
-        [SerializeField] private TextMeshProUGUI dialogueText; // 대화 텍스트
-        [SerializeField] private TextMeshProUGUI npcNameText; // NPC 이름 텍스트
+        [SerializeField]
+        TextMeshProUGUI dialogueText; // 대화 텍스트
+        [SerializeField]
+        TextMeshProUGUI npcNameText; // NPC 이름 텍스트
 
-        private Coroutine typewriterCoroutine; // 타자 효과 코루틴
-        private const float TypeWriterSpeed = 0.05f; // 타자 효과 속도
+        Coroutine typewriterCoroutine; // 타자 효과 코루틴
+        const float TypeWriterSpeed = 0.05f; // 타자 효과 속도
 
-        private PlayerInfo playerInfo;
+        PlayerInfo playerInfo;
 
-        private int npcID; // NPC ID
+        int npcID; // NPC ID
 
-        private void Awake()
+        void Awake()
         {
             playerInfo = FindObjectOfType<PlayerInfo>(); 
 
@@ -49,8 +53,8 @@ namespace Timelesss
                 StartCoroutine(ChangeDialogueTextCoroutine(text, hasNextDialogue, hasQuest, isComplete)); // 새로운 코루틴 시작
         }
 
-        private IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest,
-            bool isComplete = false)
+        IEnumerator ChangeDialogueTextCoroutine(string text, bool hasNextDialogue, bool hasQuest,
+                                                bool isComplete = false)
         {
             dialogueText.text = ""; // 대화 텍스트 초기화
 
@@ -72,7 +76,7 @@ namespace Timelesss
             }
         }
 
-        private void HandleEndOfDialogue(bool hasQuest, bool isComplete)
+        void HandleEndOfDialogue(bool hasQuest, bool isComplete)
         {
             if (isComplete)
             {
@@ -88,7 +92,7 @@ namespace Timelesss
             }
         }
 
-        private void ShowQuestPopup(bool isComplete)
+        void ShowQuestPopup(bool isComplete)
         {
             int questID = isComplete
                 ? QuestManager.Instance.FindCompletedQuestID(npcID) // 완료된 퀘스트 ID 찾기
@@ -104,12 +108,12 @@ namespace Timelesss
             popUp.SetQuestInfo(questData, isComplete); // 퀘스트 정보 설정
         }
 
-        private void OnClickNextButton()
+        void OnClickNextButton()
         {
             DialogueManager.Instance.ShowCurrentDialogue(); // 현재 대화 표시
         }
 
-        private void OnClickCloseButton()
+        void OnClickCloseButton()
         {
             ClosePopup(); // 팝업 닫기
         }

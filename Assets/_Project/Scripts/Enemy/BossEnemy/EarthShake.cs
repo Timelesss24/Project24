@@ -9,16 +9,16 @@ namespace Timelesss
         BossEnemy enemy;
         bool engage = false;
 
-        private void Start()
+        void Start()
         {
             enemy = GetComponentInParent<BossEnemy>();
             InvokeRepeating("SkillDamage", 0, 1);
         }
-        private void OnTriggerEnter(Collider other)
+        void OnTriggerEnter(Collider other)
         {
             engage = true;
         }
-        private void OnTriggerExit(Collider other)
+        void OnTriggerExit(Collider other)
         {
             engage = false;
         }

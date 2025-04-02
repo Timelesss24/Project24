@@ -6,11 +6,10 @@ namespace Framework
 {
     public class SceneBootstrapper : MonoBehaviour
     {
-        private static string StartingSceneName { get; set; } // 시작 씬 이름 저장
+        static string StartingSceneName { get; set; } // 시작 씬 이름 저장
 
         // 씬이 로드되기 이전 단계에 해당 메서드를 자동으로 호출하도록 지정하는 어노테이션입니다.
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Bootstrap()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)] static void Bootstrap()
         {
             // 시작 씬 이름 저장 (최초 실행 시에만)
             if (string.IsNullOrEmpty(StartingSceneName))
@@ -38,7 +37,7 @@ namespace Framework
         /// <summary>
         /// 필수 매니저 초기화
         /// </summary>
-        private static void InitializeManagers()
+        static void InitializeManagers()
         {
             // GameManager 강제 생성
             if (!GameStateManager.Instance)
@@ -64,7 +63,7 @@ namespace Framework
         /// </summary>
         /// <param name="managerName">매니저 이름</param>
         /// <param name="resourcePath">리소스 경로</param>
-        private static void CreateManager(string managerName, string resourcePath)
+        static void CreateManager(string managerName, string resourcePath)
         {
             var prefab = Resources.Load<GameObject>(resourcePath);
             if (prefab == null)

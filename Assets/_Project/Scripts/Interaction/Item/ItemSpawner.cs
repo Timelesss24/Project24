@@ -7,18 +7,20 @@ namespace Timelesss
 {
     public class ItemSpawner : Singleton<ItemSpawner>
     {
-        [SerializeField] private DropItem dropItemPrefab;
-        [SerializeField] private int poolSize = 10;
+        [SerializeField]
+        DropItem dropItemPrefab;
+        [SerializeField]
+        int poolSize = 10;
         [SerializeField] public List<ItemDetails> itemDataList = new List<ItemDetails>();
 
-        private Queue<DropItem> itemPool = new Queue<DropItem>();
+        Queue<DropItem> itemPool = new Queue<DropItem>();
 
-        private void Start()
+        void Start()
         {
             InitializePool();
         }
 
-        private void InitializePool()
+        void InitializePool()
         {
             for (int i = 0; i < poolSize; i++)
             {
@@ -26,7 +28,7 @@ namespace Timelesss
             }
         }
 
-        private void CreateNewItem()
+        void CreateNewItem()
         {
             DropItem newItem = Instantiate(dropItemPrefab, transform);
             newItem.gameObject.SetActive(false);

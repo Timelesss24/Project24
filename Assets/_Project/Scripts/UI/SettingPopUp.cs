@@ -11,12 +11,12 @@ namespace Timelesss
     {
         [SerializeField] Button closeButton;
 
-        private void Awake()
+        void Awake()
         {
             closeButton.onClick.AddListener(OnClickCloseButton);
         }
 
-        private void Start()
+        void Start()
         {
 
         }

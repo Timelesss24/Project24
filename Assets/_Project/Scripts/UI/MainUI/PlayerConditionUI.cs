@@ -15,7 +15,7 @@ namespace Timelesss
         [SerializeField] Slider ExpBar;
         [SerializeField] TextMeshProUGUI levelText;
 
-        private void Start()
+        void Start()
         {
             PlayerManager.Instance.PlayerIfo.InitalizedValueChanged();
         }

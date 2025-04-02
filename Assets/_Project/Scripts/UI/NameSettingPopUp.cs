@@ -10,16 +10,19 @@ namespace Timelesss
 {
     public class NameSettingPopUp : UIPopup
     {
-        [SerializeField] private Button startButton;
+        [SerializeField]
+        Button startButton;
 
-        [SerializeField] private TMP_InputField nameInput;
-        [SerializeField] private TextMeshProUGUI waringText;
+        [SerializeField]
+        TMP_InputField nameInput;
+        [SerializeField]
+        TextMeshProUGUI waringText;
 
-        private const string PlayerNameKey = "PlayerName";
-        
-        private const float WarningTextDuration = 3f;
+        const string PlayerNameKey = "PlayerName";
 
-        private void Start()
+        const float WarningTextDuration = 3f;
+
+        void Start()
         {
             startButton.onClick.AddListener(OnClickStartButton);
 
@@ -33,7 +36,7 @@ namespace Timelesss
             }
         }
 
-        private void OnClickStartButton()
+        void OnClickStartButton()
         {
             string playerName = nameInput.text.Trim();
 
@@ -48,14 +51,14 @@ namespace Timelesss
             GameStateManager.Instance.SetGameState(GameStateManager.GameState.Village);
         }
 
-        private void SavePlayerName(string playerName)
+        void SavePlayerName(string playerName)
         {
             PlayerPrefs.SetString(PlayerNameKey, playerName);
             PlayerPrefs.Save();
             Debug.Log($"닉네임 '{playerName}'이(가) 저장되었습니다.");
         }
 
-        private IEnumerator ViewWarningText(string message)
+        IEnumerator ViewWarningText(string message)
         {
             waringText.text = message;
             waringText.color = Color.red;

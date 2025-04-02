@@ -14,29 +14,34 @@ namespace Framework.Audio
     public class SoundManager : PersistentSingleton<SoundManager>
     {
                [Header("BGM Settings")]
-        [SerializeField] private AudioSource bgmSource; // 배경 음악용 오디오 소스
+        [SerializeField]
+               AudioSource bgmSource; // 배경 음악용 오디오 소스
 
         [FormerlySerializedAs("bgmVolume")]
         [Range(0f, 1f)] public float BGMVolume = 1f; // 배경음악(BGM)의 볼륨
 
-        [SerializeField] private List<AudioClip> bgmClips; // 배경 음악 클립 리스트
+        [SerializeField]
+        List<AudioClip> bgmClips; // 배경 음악 클립 리스트
 
         [Header("SFX Settings")] [SerializeField] [Range(0f, 1f)]
-        private float sfxVolume = 1f; // 효과음 볼륨
+        float sfxVolume = 1f; // 효과음 볼륨
 
-        [SerializeField] [Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
+        [SerializeField] [Range(0f, 1f)]
+        float sfxPitchVariance; // 효과음 피치 변동 범위
 
         [FormerlySerializedAs("soundSourcePrefab")]
         public SoundSource SoundSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
 
-        [SerializeField] private bool isMuted; // 음소거 설정 여부
+        [SerializeField]
+        bool isMuted; // 음소거 설정 여부
 
-        private Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
+        Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
         
         
         // 추가
-        private Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
-        [SerializeField] private AudioClip clickSound;
+        Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
+        [SerializeField]
+        AudioClip clickSound;
         public AudioClip ClickSound => clickSound;
 
         protected void Start()
@@ -52,7 +57,7 @@ namespace Framework.Audio
         /// <summary>
         /// 볼륨 설정 적용
         /// </summary>
-        private void ApplyVolumeSettings()
+        void ApplyVolumeSettings()
         {
             bgmSource.volume = isMuted ? 0f : BGMVolume;
             bgmSource.loop = true;
@@ -101,7 +106,7 @@ namespace Framework.Audio
         /// <summary>
         /// 풀에서 SoundSource 가져오기. 없으면 새로 생성.
         /// </summary>
-        private SoundSource GetSoundSourceFromPool()
+        SoundSource GetSoundSourceFromPool()
         {
             if (soundSourcePool.Count > 0)
             {
@@ -158,7 +163,7 @@ namespace Framework.Audio
         /// 배경음악 페이드아웃
         /// </summary>
         /// <param name="fadeDuration">페이드 아웃 시간</param>
-        private IEnumerator FadeOutBGM(float fadeDuration)
+        IEnumerator FadeOutBGM(float fadeDuration)
         {
             // 현재 실행 중인 페이드 코루틴 중단 (중복 실행 방지)
             if (_fadeCoroutine != null)
@@ -181,7 +186,7 @@ namespace Framework.Audio
         /// </summary>
         /// <param name="clipName">재생할 클립 이름</param>
         /// <param name="fadeDuration">페이드 인 시간</param>
-        private IEnumerator FadeInBGM(string clipName, float fadeDuration)
+        IEnumerator FadeInBGM(string clipName, float fadeDuration)
         {
             // 새로운 클립 가져오기
             AudioClip newClip = bgmClips.Find(c => c.name == clipName);
@@ -227,7 +232,7 @@ namespace Framework.Audio
         /// </summary>
         /// <param name="clipName">재생할 클립 이름</param>
         /// <param name="fadeDuration">페이드 시간</param>
-        private IEnumerator ChangeBGMCoroutine(string clipName, float fadeDuration)
+        IEnumerator ChangeBGMCoroutine(string clipName, float fadeDuration)
         {
             float initialVolume = bgmSource.volume;
             // 클립이 같고 이미 재생 중이라면 페이드아웃 생략

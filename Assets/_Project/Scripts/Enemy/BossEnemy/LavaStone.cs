@@ -20,7 +20,7 @@ namespace Timelesss
 
             lavaRigidbody.AddForce(new Vector3(enemy.playerDetector.Target.position.x+3, boundForce, enemy.playerDetector.Target.position.y+3), ForceMode.Impulse);
         }
-        private void OnCollisionEnter(Collision collision)
+        void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.CompareTag("Player"))
             {
@@ -34,7 +34,7 @@ namespace Timelesss
                 StartCoroutine(DestroyDelay(5));
             }
         }
-        private IEnumerator DestroyDelay(float count)
+        IEnumerator DestroyDelay(float count)
         {
             yield return new WaitForSeconds(count);
             Destroy(this.gameObject);

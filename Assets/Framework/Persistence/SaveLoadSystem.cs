@@ -49,6 +49,8 @@ namespace Systems.Persistence {
         {
             if (scene.name == "Title") return;
             
+            Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
+            //bind
             //AllBind();
         }
 
@@ -64,6 +66,7 @@ namespace Systems.Persistence {
             var entity = FindObjectsByType<T>(FindObjectsSortMode.None).FirstOrDefault();
             if (entity != null)
             {
+                Debug.Log($"Bind {entity.name}");
                 data ??= new TData { Id = entity.Id };
                 entity.Bind(data);
             }
@@ -91,16 +94,14 @@ namespace Systems.Persistence {
                 Name = "Game",
                 PlayerData = new PlayerData 
                 {
-                    Id = SerializableGuid.NewGuid(),
                     PlayerLevel = 1,
-                    CurrentHealth = 100,
+                    CurrentHealth = 80,
                     MaxHealth = 100,
                     CurrentExp = 0,
                     RequiredExp = 100
                 },
                 QuestData = new SaveableQuestData 
                 {
-                    Id = SerializableGuid.NewGuid(),
                     ActiveQuestList = new List<ActiveQuestInfo>(),
                     CompleteQuestList = new List<int>(),
                 },
@@ -121,10 +122,12 @@ namespace Systems.Persistence {
             dataService.Save(GameData);   
         }
 
-        public GameData LoadGame(string gameName)
+        public void LoadGame(string gameName)
         {
             GameData = dataService.Load(gameName);
-            return dataService.Load(gameName);
+            
+            
+            //return dataService.Load(gameName);
         }
         
         public void ReloadGame() => LoadGame(GameData.Name);

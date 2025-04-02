@@ -8,22 +8,30 @@ namespace Timelesss
 {
     public class QuestPopUp : UIPopup
     {
-        [SerializeField] private Button closeButton;
-        [SerializeField] private TextMeshProUGUI nameText;
-        [SerializeField] private TextMeshProUGUI descriptionText;
-        [SerializeField] private TextMeshProUGUI progressText;
-        [SerializeField] private TextMeshProUGUI rewardText;
+        [SerializeField]
+        Button closeButton;
+        [SerializeField]
+        TextMeshProUGUI nameText;
+        [SerializeField]
+        TextMeshProUGUI descriptionText;
+        [SerializeField]
+        TextMeshProUGUI progressText;
+        [SerializeField]
+        TextMeshProUGUI rewardText;
 
-        [SerializeField] private GameObject infoObj;
-        [SerializeField] private GameObject slotPrefab;
-        [SerializeField] private Transform slotParent;
+        [SerializeField]
+        GameObject infoObj;
+        [SerializeField]
+        GameObject slotPrefab;
+        [SerializeField]
+        Transform slotParent;
 
-        private QuestManager questManager;
+        QuestManager questManager;
 
-        private List<QuestData> questDataList = new List<QuestData>();
-        private List<QuestSlot> questSlots = new List<QuestSlot>();
+        List<QuestData> questDataList = new List<QuestData>();
+        List<QuestSlot> questSlots = new List<QuestSlot>();
 
-        private void Awake()
+        void Awake()
         {
             closeButton.onClick.AddListener(OnClickCloseButton);
 
@@ -35,7 +43,7 @@ namespace Timelesss
                 CreateQuestSlots();
         }
 
-        private void LoadActiveQuests()
+        void LoadActiveQuests()
         {
             foreach (ActiveQuestInfo quest in questManager.ActiveQuestList)
             {
@@ -48,7 +56,7 @@ namespace Timelesss
             ClosePopup();
         }
 
-        private void CreateQuestSlots()
+        void CreateQuestSlots()
         {
             foreach (QuestData questData in questDataList)
             {

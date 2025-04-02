@@ -14,19 +14,20 @@ namespace Timelesss
 
     public class NPC : InteractableBase
     {
-        [SerializeField] private NPCInfo npcInfo;
+        [SerializeField]
+        NPCInfo npcInfo;
 
-        private NPCAnimator animator;
+        NPCAnimator animator;
 
         public override string InteractionName { get; } = "대화하기";
 
-        private Quaternion startingRotation;
-        private Transform playerTransform;
+        Quaternion startingRotation;
+        Transform playerTransform;
 
-        private float rotationSpeed = 5f;
-        private Coroutine rotationCoroutine;
+        float rotationSpeed = 5f;
+        Coroutine rotationCoroutine;
 
-        private void Start()
+        void Start()
         {
             animator = GetComponent<NPCAnimator>();
 
@@ -78,7 +79,7 @@ namespace Timelesss
             rotationCoroutine = StartCoroutine(RotatingToTarget(startingRotation));
         }
 
-        private IEnumerator RotatingToTarget(object target)
+        IEnumerator RotatingToTarget(object target)
         {
             Quaternion targetRotation;
 

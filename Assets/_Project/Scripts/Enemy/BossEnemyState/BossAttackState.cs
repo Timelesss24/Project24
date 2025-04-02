@@ -75,7 +75,7 @@ namespace Timelesss
                 skillcount = 4.5f;
             }
         }
-        private IEnumerator AttackDelay(float count)//작동을 안해...
+        IEnumerator AttackDelay(float count)//작동을 안해...
         {
             yield return new WaitForSeconds(count);
             enemy.stateMachine.TransitionState(enemy.attackState, enemy.walkState);

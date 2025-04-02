@@ -13,7 +13,8 @@ namespace Timelesss
             public float probability; // 0~1 사이의 확률 (예: 0.1은 10%)
         }
 
-        [SerializeField] private DropItem dropItemPrefab;
+        [SerializeField]
+        DropItem dropItemPrefab;
         [SerializeField] public List<EnemyDropItem> itemDataList = new List<EnemyDropItem>();
 
         

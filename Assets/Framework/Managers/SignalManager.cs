@@ -11,7 +11,7 @@ namespace Managers
     public class SignalManager : Singleton<SignalManager>
     {
         // 신호 저장소 (Delegate 타입으로 Action과 Func 모두 저장 가능)
-        private readonly Dictionary<string, Delegate> _signals = new();
+        readonly Dictionary<string, Delegate> _signals = new();
 
         // ==================== Action ====================
 

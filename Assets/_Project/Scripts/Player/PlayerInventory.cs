@@ -8,7 +8,7 @@ namespace Timelesss
         public Queue<ItemData> playerItems;
         Dictionary<EquipType, ItemData> playerEquipSlot;
 
-        private void Awake()
+        void Awake()
         {
             playerItems = new Queue<ItemData>();
             playerEquipSlot = new Dictionary<EquipType, ItemData>();

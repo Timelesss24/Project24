@@ -18,30 +18,30 @@ namespace Timelesss
     
     public class QuestManager : PersistentSingleton<QuestManager>, IBind<SaveableQuestData>
     {
-        private QuestDataLoader questDataLoader;
+        QuestDataLoader questDataLoader;
 
-        private Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
+        Dictionary<int, QuestData> questDict = new Dictionary<int, QuestData>();
 
-        private List<ActiveQuestInfo> activeQuestList = new List<ActiveQuestInfo>();
+        List<ActiveQuestInfo> activeQuestList = new List<ActiveQuestInfo>();
 
         public List<ActiveQuestInfo> ActiveQuestList => activeQuestList;
 
-        private List<int> completeQuestList = new List<int>();
+        List<int> completeQuestList = new List<int>();
 
         public List<int> CompleteQuestList => completeQuestList;
 
-        private QuestType questType;
-        
-        private const int InvalidQuestID = 0;
-        
-        [SerializeField] private SaveableQuestData saveableQuestData;
+        QuestType questType;
 
-        private void Start()
+        const int InvalidQuestID = 0;
+        
+        [SerializeField]
+        SaveableQuestData saveableQuestData;
+
+        void Start()
         {
             questDataLoader = new QuestDataLoader();
             questDict = questDataLoader.ItemsDict;
             
-            LoadQuestData();
             InvokeRepeating(nameof(SaveQuestData), 0, 3f);
         }
 
@@ -116,7 +116,7 @@ namespace Timelesss
             }
         }
 
-        private void RewardPlayer(int exp, int itemId, int itemNum)
+        void RewardPlayer(int exp, int itemId, int itemNum)
         {
             Debug.Log($"보상 지급: 경험치 {exp}, 아이템 ID {itemId}, 수량 {itemNum}");
         }
@@ -189,15 +189,8 @@ namespace Timelesss
             activeQuestList = data.ActiveQuestList;
             completeQuestList = data.CompleteQuestList;
         }
+
+        void SaveQuestData() => SaveLoadSystem.Instance.GameData.QuestData = saveableQuestData;
         
-        private void SaveQuestData() => SaveLoadSystem.Instance.GameData.QuestData = saveableQuestData;
-        
-        private void LoadQuestData()
-        {
-            saveableQuestData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).QuestData;
-            
-            if (saveableQuestData != null)
-                Bind(saveableQuestData);
-        }
     }
 }

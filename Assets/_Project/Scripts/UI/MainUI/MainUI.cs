@@ -16,14 +16,14 @@ namespace Timelesss
 
         [SerializeField] GameObject bossHpUI;
 
-        private void Awake()
+        void Awake()
         {
             settingButton.onClick.AddListener(OnClickSettingButton);
             inventoryButton.onClick.AddListener(OnClickInventoryButton);
             questButton.onClick.AddListener(OnClickQuestButton);           
         }
 
-        private void Start()
+        void Start()
         {
             uIManager = UIManager.Instance;
 

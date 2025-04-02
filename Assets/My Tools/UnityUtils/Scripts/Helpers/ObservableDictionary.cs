@@ -5,7 +5,7 @@ using System.Collections.Generic;
 [Serializable]
 public class ObservableDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
 {
-    private Dictionary<TKey, TValue> dict = new();
+    Dictionary<TKey, TValue> dict = new();
 
     /// <summary>
     /// 내부 값이 변경될 때 발생하는 이벤트입니다.
@@ -59,7 +59,7 @@ public class ObservableDictionary<TKey, TValue> : IEnumerable<KeyValuePair<TKey,
         Invoke();
     }
 
-    private void Invoke()
+    void Invoke()
     {
         AnyValueChanged.Invoke(dict);
     }

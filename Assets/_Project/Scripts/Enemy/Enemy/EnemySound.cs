@@ -7,9 +7,9 @@ namespace Timelesss
     public class EnemySound : MonoBehaviour
     {
         public AudioClip[] audioClips;
-        private AudioSource audioSource;
+        AudioSource audioSource;
 
-        private void Start()
+        void Start()
         {
             audioSource = GetComponent<AudioSource>();
         }
