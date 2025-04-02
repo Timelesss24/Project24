@@ -27,7 +27,7 @@ namespace Timelesss
 
         [SerializeField] private EnemyDrop enemyDrop;
 
-        [SerializeField] private ItemSpawner itemSpawner;
+        //[SerializeField] private ItemSpawner itemSpawner;
 
         // 적의 무작위 이동 반경 (wander radius)을 정의
         //[SerializeField] float wanderRadius = 10f;
@@ -194,7 +194,7 @@ namespace Timelesss
         private IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
-            itemSpawner.SpawnItem(enemyDrop.RandomItemDetails(), this.gameObject.transform.position);
+            ItemSpawner.Instance.SpawnItem(enemyDrop.RandomItemDetails(), this.gameObject.transform.position);
             FadeOutDestroy();
         }
     }

@@ -19,6 +19,7 @@ namespace Timelesss
         private List<Enemy> enemies;
         [SerializeField] private GameObject bossPrefabs;
         [SerializeField] private Transform bossSpawner;
+        [SerializeField] private Transform portalSpawner;
         private GameObject bossObect;
 
         [SerializeField] private GameObject potal;
@@ -119,7 +120,7 @@ namespace Timelesss
 
         void GameClear()
         {
-            Instantiate(potal, bossSpawner.position, potal.transform.rotation);
+            Instantiate(potal, portalSpawner.position, potal.transform.rotation);
         }
 
         void OnGameOverUI()
