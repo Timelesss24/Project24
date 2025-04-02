@@ -27,7 +27,7 @@ namespace Timelesss
         public void AddItem(Item item)
         {
             Debug.Log($"Adding item {item.Id.ToGuid()} to inventory {Id.ToGuid()}");
-            Controller.Model.Add(item);
+            Debug.Log(Controller.Model.Add(item));
             Controller.SubscribeToItem(item);
         }
 

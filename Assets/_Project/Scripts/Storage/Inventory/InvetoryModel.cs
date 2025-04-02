@@ -77,12 +77,13 @@ namespace Timelesss
                 // 기존 데이터에서 아이템을 로드
                 for (var i = 0; i < capacity; i++)
                 {
-                    if (Items[i] == null || data.Items[i].Quantity > 0)
+                    if (Items[i] == null) continue; 
+                    if(data.Items[i].Quantity == 0)
                     {
                         inventoryData.Items[i] = null;
                         continue;
                     }
-                    inventoryData.Items[i] = ItemDatabase.GetDetailsById(Items[i].DetailsId).Create(data.Items[i].Quantity);
+                    inventoryData.Items[i] = ItemDatabase.GetDetailsById(data.Items[i].DetailsId).Create(data.Items[i].Quantity);
                 }
             }
 
