@@ -1,11 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using KBCore.Refs;
 using UnityEngine;
 using UnityEngine.AI;
 using Utilities;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEditor;
 
 namespace Timelesss
 {
@@ -21,6 +20,10 @@ namespace Timelesss
         [SerializeField] Animator animator;
 
         [SerializeField] private Bounds generateArea;
+
+        [SerializeField] private EnemyDrop enemyDrop;
+
+        [SerializeField] private ItemSpawner itemSpawner;
 
         // 상태 기계(State Machine) 객체: 적의 상태 전환 및 동작 관리
         public StateMachine stateMachine;
@@ -52,6 +55,7 @@ namespace Timelesss
             agent = GetComponent<NavMeshAgent>();
             playerDetector = GetComponent<PlayerDetector>();
             animator = GetComponent<Animator>();
+            enemyDrop = GetComponentInChildren<EnemyDrop>();
         }
         void Start()
         {
@@ -76,7 +80,6 @@ namespace Timelesss
             enemyTransform = GetComponent<Transform>();
             hpBar = GetComponentInChildren<Image>();
             enemyHp = playerDetector.Date.maxHp;
-            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y + 6, this.transform.position.z);
             // 초기 상태 설정 (방황 상태로 시작)
             stateMachine.SetState(idleState);
         }
@@ -91,6 +94,7 @@ namespace Timelesss
 
             // 공격 타이머 시간 계산
             attackTimer.Tick(Time.deltaTime);
+            generateArea.center = new Vector3(this.transform.position.x, this.transform.position.y + 6, this.transform.position.z);
         }
         void FixedUpdate()
         {
@@ -160,6 +164,7 @@ namespace Timelesss
         private IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
+            itemSpawner.SpawnItem(enemyDrop.RandomItemDetails(),this.gameObject.transform.position);
             FadeOutDestroy();
         }
         public void SmokeAttack()
@@ -209,6 +214,22 @@ namespace Timelesss
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(generateArea.center, generateArea.size);
+        }
+    }
+    [CustomEditor(typeof(BossEnemy))]
+    public class BossEnemyDie : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            if (EditorApplication.isPlaying)
+            {
+                if (GUILayout.Button("한 방에 주님 곁에"))
+                {
+                    ((BossEnemy)target).TakeDamage(10000);
+                }
+            }
         }
     }
 }

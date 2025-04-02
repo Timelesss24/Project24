@@ -879,6 +879,7 @@ Transform:
   - {fileID: 3199721115685681219}
   - {fileID: 1851017190136744084}
   - {fileID: 2725639126948118276}
+  - {fileID: 1344719338123416633}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7844114060244704431
@@ -917,6 +918,8 @@ MonoBehaviour:
   agent: {fileID: 6587209154283263260}
   playerDetector: {fileID: 8197265236536319742}
   animator: {fileID: 7844114060244704431}
+  enemyDrop: {fileID: 0}
+  itemSpawner: {fileID: 0}
   hpBar: {fileID: 0}
   isDie: 0
   enemyEventChannel: {fileID: 11400000, guid: 8a220449c9af2d249be31fcffd850784, type: 2}
@@ -1218,6 +1221,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7766045751814736211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8030537864789249834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1344719338123416633}
+  - component: {fileID: 8782037274550300502}
+  m_Layer: 7
+  m_Name: DropItem (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1344719338123416633
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030537864789249834}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.7856193, y: -0.024719238, z: 3.7073786}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8453937913422188302}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8782037274550300502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030537864789249834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4b9d6ee529c5346ad95e43df0eef2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItemPrefab: {fileID: 2346308601761311012, guid: 5316bbc50d6be5a488a68763b6532d1b,
+    type: 3}
+  itemDataList:
+  - itemDetails: {fileID: 11400000, guid: f5d16d3fdf08b49c7aafee7e36bb414c, type: 2}
+    probability: 0.5
+  - itemDetails: {fileID: 11400000, guid: ebb1564f6091e4ef0a2ddbd4cd8cc0ef, type: 2}
+    probability: 0.5
 --- !u!1 &8276561922661258560
 GameObject:
   m_ObjectHideFlags: 0
