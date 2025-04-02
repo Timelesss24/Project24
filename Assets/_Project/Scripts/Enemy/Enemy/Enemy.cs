@@ -25,6 +25,10 @@ namespace Timelesss
         // Animator 객체: 적의 애니메이션 상태를 관리
         [SerializeField, Child] Animator animator;
 
+        [SerializeField] private EnemyDrop enemyDrop;
+
+        [SerializeField] private ItemSpawner itemSpawner;
+
         // 적의 무작위 이동 반경 (wander radius)을 정의
         //[SerializeField] float wanderRadius = 10f;
 
@@ -73,6 +77,7 @@ namespace Timelesss
             At(attackState, chaseState, new FuncPredicate(() => !playerDetector.CanAttackPlayer())); // 공격 불가 시 추적
 
             //skinRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+            enemyDrop = GetComponentInChildren<EnemyDrop>();
             enemyTransform = GetComponent<Transform>();
             hpBar = GetComponentInChildren<Image>();
             enemyHp = playerDetector.Date.maxHp;
@@ -189,6 +194,7 @@ namespace Timelesss
         private IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
+            itemSpawner.SpawnItem(enemyDrop.RandomItemDetails(), this.gameObject.transform.position);
             FadeOutDestroy();
         }
     }
