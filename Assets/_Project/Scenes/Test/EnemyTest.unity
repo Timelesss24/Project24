@@ -812,6 +812,7 @@ MonoBehaviour:
   hitboxLayer:
     serializedVersion: 2
     m_Bits: 0
+  audioClips: {fileID: 0}
 --- !u!114 &1079561579 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5234501713427197604, guid: 927eb925089e24dec90b3c9f28cdd3e9,
@@ -1259,7 +1260,7 @@ PrefabInstance:
     - target: {fileID: 1522695186968703268, guid: 188174a480189614ca8f2788907b4e5d,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4239364692877031599, guid: 188174a480189614ca8f2788907b4e5d,
         type: 3}

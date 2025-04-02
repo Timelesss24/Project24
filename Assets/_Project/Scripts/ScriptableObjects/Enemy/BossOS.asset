@@ -20,6 +20,6 @@ MonoBehaviour:
   timeBetweenAttacks: 1
   detectionAngle: 360
   detectionRadius: 20
-  innerDetectionRadius: 0.1
-  detectionCooldown: 0.1
+  innerDetectionRadius: 5
+  detectionCooldown: 1
   attackRange: 8
