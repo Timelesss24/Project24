@@ -70,6 +70,7 @@ namespace Timelesss
                     return true;
                 }
 
+                Debug.Log("인벤토리 공간 부족");
                 return false;
             }
 

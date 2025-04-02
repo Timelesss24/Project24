@@ -6,9 +6,9 @@ namespace Timelesss
 {
     public class EquipmentModel
     {
-      //  public ObservableDictionary<EquipmentType, Item> Items { get; private set; }
-        public ObservableArray<Item> Items { get; }
-         EquipmentData equipmentData = new();
+        //  public ObservableDictionary<EquipmentType, Item> Items { get; private set; }
+        public ObservableArray<Item> Items { get; set; }
+        EquipmentData equipmentData = new();
 
         public event Action<Item[]> OnModelChanged
         {
@@ -28,48 +28,17 @@ namespace Timelesss
 
         public void Bind(EquipmentData data)
         {
-            // for (var i = 0; i < data.Items.Length; i++)
-            // {
-            //     if (data.Items[i].Id == SerializableGuid.Empty)
-            //         data.Items[i] = null;
-            // }
-            //
             equipmentData = data;
 
-            bool isNew = equipmentData.Items == null || equipmentData.Items.Length == 0;
+            Debug.Log($"{Enum.GetValues(typeof(EquipmentType)).Length} Equipment Bind");
+            equipmentData.Items = new Item[Enum.GetValues(typeof(EquipmentType)).Length];
 
-            if (isNew)
+            for (int i = 0; i < equipmentData.Items.Length; i++)
             {
-                equipmentData.Items = new Item[Enum.GetValues(typeof(EquipmentType)).Length];
+                equipmentData.Items[i] = null;
             }
-
-            // 데이터 동기화
-            // foreach (EquipmentType type in Enum.GetValues(typeof(EquipmentType)))
-            // {
-            //     var item = equipmentData.Items[(int)type];
-            //
-            //     if (item != null)
-            //     {
-            //         item  = new EquipmentItem(ItemDatabase.GetDetailsById(item.Id));
-            //         Items[type] = item;
-            //     }
-            // }
-            //
-            // // Items와 equipmentData 연결 (역참조)
-            // foreach (var pair in Items)
-            // {
-            //     equipmentData.Items[(int)pair.Key] = pair.Value;
-            // }
 
             Items.Items = equipmentData.Items;
-
-            foreach (var VARIABLE in equipmentData.Items)
-            {
-                if(VARIABLE == null) continue;
-                if(VARIABLE.Details == null) continue;
-                Debug.Log(VARIABLE.Id);
-                Debug.Log(Get(VARIABLE.Details.EquipmentType).Id);
-            }
         }
 
         public Item Get(EquipmentType type) => Items[(int)type];
@@ -79,13 +48,13 @@ namespace Timelesss
             Items.Clear();
         }
 
-        public bool Add(Item item) => Items.TryAddAt(((int)item.Details.EquipmentType),item);
+        public bool Add(Item item) => Items.TryAddAt(((int)item.Details.EquipmentType), item);
         // {
         //     var type = item.Details.EquipmentType;
         //     return Items.TrySet(type, item);
         // }
 
-        
+
         public bool Remove(Item item) => Items.TryRemoveAt((int)item.Details.EquipmentType);
         // public bool Remove(Item item)
         // {

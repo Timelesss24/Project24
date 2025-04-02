@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +29,7 @@ public class ObservableArray<T> : IObservableArray<T>
     public int Length => Items.Length;
     public T this[int index] => Items[index];
     
-    public ObservableArray(int size = 20, IList<T> initialList = null)
+    public ObservableArray(int size, IList<T> initialList = null)
     {
         Items = new T[size];
         if (initialList != null)
@@ -64,9 +64,19 @@ public class ObservableArray<T> : IObservableArray<T>
 
     public bool TryAddAt(int index, T item)
     {
-        if (index < 0 || index >= Items.Length) return false;
+        Debug.Log(index);
+        
+        if (index < 0 || index >= Items.Length)
+        {
+            Debug.Log("Index out of range TryAddAt");
+            return false;
+        }
 
-        if (Items[index] != null) return false;
+        if (Items[index] != null)
+        {
+            Debug.Log("Index already occupied TryAddAt");
+            return false;
+        }
 
         Items[index] = item;
         Invoke();

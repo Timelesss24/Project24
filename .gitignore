@@ -78,3 +78,13 @@ crashlytics-build.properties
 [Ss]andbox*.unity
 [Ss]andbox*.unity.meta
 /[Aa]ssets/Eflatun
+Assets/Resources/Eflatun.meta
+Assets/Resources/Eflatun/SceneReference.meta
+Assets/Resources/Eflatun/SceneReference/.keep
+Assets/Resources/Eflatun/SceneReference/SceneGuidToAddressMap.generated.json
+Assets/Resources/Eflatun/SceneReference/SceneGuidToAddressMap.generated.json.meta
+Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json
+Assets/Resources/Eflatun/SceneReference/SceneGuidToPathMap.generated.json.meta
+Packages/manifest.json
+Packages/packages-lock.json
+ProjectSettings/Packages/com.eflatun.scenereference/Settings.json
