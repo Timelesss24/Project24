@@ -2,61 +2,6 @@
 플레이어가 던전을 돌며 몬스터와 싸우고 성장하는 **3D RPG 어드벤처 게임**입니다!
 
 ---
-유니티 버전 2022.3.17f1
-
-사용 에셋 
-
-2D Icons Minipack Potions : https://assetstore.unity.com/packages/2d/gui/icons/2d-icons-minipack-potions-300562
-
-3D_Sci-fi_volcanic_rocks_01 : https://assetstore.unity.com/packages/3d/environments/3d-volcanic-rocks-01-310065?srsltid=AfmBOopSH0gTnUSfyDDSK6pa2-E05FPK0K6iR66Zv1Zxt0oVnZSdfG5b
-
-Basic_RPG_Icons : https://assetstore.unity.com/packages/2d/gui/icons/basic-rpg-icons-181301?srsltid=AfmBOoo0T6TGckWlcrO_RRsTn4afFXOjqRCKybjXH-1xmKz1jByO3myQ
-
-Deadly Kombat Free version : https://assetstore.unity.com/packages/audio/sound-fx/free-deadly-kombat-228835?srsltid=AfmBOorsqGKoEdpD8gzufK_iTsidu65xYZJ8tSApH9hXesjFiDjY3yVZ
-
-DoubleL : https://assetstore.unity.com/packages/3d/animations/rpg-animations-pack-free-288783#content
-
-EnemySound : 
-
-Fantasy Music and Ambience (Dark & Emotional) : 
-
-FantasyForest : 
-
-Free Fantasy Adventure Music Pack : 
-
-FreeDragons : 
-
-Low Poly Dungeons : https://assetstore.unity.com/packages/3d/environments/dungeons/low-poly-dungeons-176350?srsltid=AfmBOorZQbJ9KXC3Aj1PEXBd3YjtP0SQoM7TUKJAWH4rdbT7hSszcLmQ
-
-LowPolyFantasyBundle :
-
-Mini Legion Footman PBR HP Polyart : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/mini-legion-footman-pbr-hp-polyart-86576?srsltid=AfmBOoopqi1yYMiKVaAfaGldKhbN6AlY1EC590s3Yrvcog9_tsMPzTTf
-
-Mini Legion Rock Golem PBR HP Polyart : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/mini-legion-rock-golem-pbr-hp-polyart-94707?srsltid=AfmBOorywSwS22bgXP7aXLDBdL63J5K5Gr_RfDnNygVpWcyz5QggVrvi
-
-MixamoAnimation :
-
-MoCapCentralAnimation : 
-
-POLYGON Particle FX : Low Poly 3D Art by Synty - https://assetstore.unity.com/packages/vfx/particles/polygon-particle-fx-low-poly-3d-art-by-synty-168372?srsltid=AfmBOopByrRw5LkltT_zFaWRkRZnO_wwvW6urPypIqrKFb3djkIOfcQd
-
-PolysplitGames : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/low-poly-medieval-fantasy-heroes-basic-pack-288957#content
-
-RPGMonsterBuddiesPBRPA : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/low-poly-medieval-fantasy-heroes-basic-pack-288957#content](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-buddy-pbr-polyart-253961?srsltid=AfmBOooDmApFztW0Wtamp5rjjyYV6F-F0Up46W5tjm3eWDi3abKeKaXQ
-
-RPGMonsterPartnersPBRPolyart : https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-partners-pbr-polyart-168251?srsltid=AfmBOoo1-46NFwgbepIpfi-tseLTPq0FjM7P8DMqM3dZ_HSaLtAlKkI8
-
-RPGPP_LT : https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410?srsltid=AfmBOortJicB4BbQSZqAOxtKvGgYeQ_aB4Ip7-ZpRHVQGuOv_492SFHz
-
-Simple Fantasy GUI : https://assetstore.unity.com/packages/2d/gui/simple-fantasy-gui-99451?srsltid=AfmBOorqXCZ-YPkzGG5SrECO8_ogzv3ZH1NQFMWVo0t0NLUfUs9e6jgA
-
-TuBoss : 
-
-Violet Theme Ui : https://assetstore.unity.com/packages/2d/gui/violet-themed-ui-235559?srsltid=AfmBOooQ5U9ftfH5sUSYl2Uc_Wb7NcL2coaP7P2GHJpjmOiHlmZB1tNt
-
-UI Soundpack :
-
----
 
 ## ⚙ 주요 시스템
 **🏹 전투 시스템**
@@ -154,3 +99,60 @@ UI Soundpack :
 - 보스 몬스터 처치시 마을로 귀환
 
 ---
+
+유니티 버전 2022.3.17f1
+
+사용 에셋 
+
+2D Icons Minipack Potions : https://assetstore.unity.com/packages/2d/gui/icons/2d-icons-minipack-potions-300562
+
+3D_Sci-fi_volcanic_rocks_01 : https://assetstore.unity.com/packages/3d/environments/3d-volcanic-rocks-01-310065?srsltid=AfmBOopSH0gTnUSfyDDSK6pa2-E05FPK0K6iR66Zv1Zxt0oVnZSdfG5b
+
+Basic_RPG_Icons : https://assetstore.unity.com/packages/2d/gui/icons/basic-rpg-icons-181301?srsltid=AfmBOoo0T6TGckWlcrO_RRsTn4afFXOjqRCKybjXH-1xmKz1jByO3myQ
+
+Deadly Kombat Free version : https://assetstore.unity.com/packages/audio/sound-fx/free-deadly-kombat-228835?srsltid=AfmBOorsqGKoEdpD8gzufK_iTsidu65xYZJ8tSApH9hXesjFiDjY3yVZ
+
+DoubleL : https://assetstore.unity.com/packages/3d/animations/rpg-animations-pack-free-288783#content
+
+EnemySound : 
+
+Fantasy Music and Ambience (Dark & Emotional) : 
+
+FantasyForest : 
+
+Free Fantasy Adventure Music Pack : 
+
+FreeDragons : 
+
+Low Poly Dungeons : https://assetstore.unity.com/packages/3d/environments/dungeons/low-poly-dungeons-176350?srsltid=AfmBOorZQbJ9KXC3Aj1PEXBd3YjtP0SQoM7TUKJAWH4rdbT7hSszcLmQ
+
+LowPolyFantasyBundle :
+
+Mini Legion Footman PBR HP Polyart : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/mini-legion-footman-pbr-hp-polyart-86576?srsltid=AfmBOoopqi1yYMiKVaAfaGldKhbN6AlY1EC590s3Yrvcog9_tsMPzTTf
+
+Mini Legion Rock Golem PBR HP Polyart : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/mini-legion-rock-golem-pbr-hp-polyart-94707?srsltid=AfmBOorywSwS22bgXP7aXLDBdL63J5K5Gr_RfDnNygVpWcyz5QggVrvi
+
+MixamoAnimation :
+
+MoCapCentralAnimation : 
+
+POLYGON Particle FX : Low Poly 3D Art by Synty - https://assetstore.unity.com/packages/vfx/particles/polygon-particle-fx-low-poly-3d-art-by-synty-168372?srsltid=AfmBOopByrRw5LkltT_zFaWRkRZnO_wwvW6urPypIqrKFb3djkIOfcQd
+
+PolysplitGames : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/low-poly-medieval-fantasy-heroes-basic-pack-288957#content
+
+RPGMonsterBuddiesPBRPA : https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/low-poly-medieval-fantasy-heroes-basic-pack-288957#content](https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-buddy-pbr-polyart-253961?srsltid=AfmBOooDmApFztW0Wtamp5rjjyYV6F-F0Up46W5tjm3eWDi3abKeKaXQ
+
+RPGMonsterPartnersPBRPolyart : https://assetstore.unity.com/packages/3d/characters/creatures/rpg-monster-partners-pbr-polyart-168251?srsltid=AfmBOoo1-46NFwgbepIpfi-tseLTPq0FjM7P8DMqM3dZ_HSaLtAlKkI8
+
+RPGPP_LT : https://assetstore.unity.com/packages/3d/environments/landscapes/rpg-poly-pack-lite-148410?srsltid=AfmBOortJicB4BbQSZqAOxtKvGgYeQ_aB4Ip7-ZpRHVQGuOv_492SFHz
+
+Simple Fantasy GUI : https://assetstore.unity.com/packages/2d/gui/simple-fantasy-gui-99451?srsltid=AfmBOorqXCZ-YPkzGG5SrECO8_ogzv3ZH1NQFMWVo0t0NLUfUs9e6jgA
+
+TuBoss : 
+
+Violet Theme Ui : https://assetstore.unity.com/packages/2d/gui/violet-themed-ui-235559?srsltid=AfmBOooQ5U9ftfH5sUSYl2Uc_Wb7NcL2coaP7P2GHJpjmOiHlmZB1tNt
+
+UI Soundpack :
+
+---
+
