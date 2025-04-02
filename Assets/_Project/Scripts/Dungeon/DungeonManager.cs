@@ -25,6 +25,8 @@ namespace Timelesss
 
         private NavMeshSurface navMeshSurface;
 
+        public Action bossHpUIAction;
+
 
 
         protected override void Awake()
@@ -107,7 +109,7 @@ namespace Timelesss
             if (enemies.Count == 1)
             {
                 bossObect.SetActive(true);
-                UIManager.Instance.ShowPopup<BossHpPopUp>();
+                bossHpUIAction?.Invoke();
             }
             else if(enemies.Count == 0)
             {

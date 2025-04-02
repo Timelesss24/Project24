@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Timelesss
 {
-    public class BossHpPopUp : ConfirmPopup
+    public class BossHpUI : MonoBehaviour
     {
         [SerializeField] Slider bossHpBar;
 
