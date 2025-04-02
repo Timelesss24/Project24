@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using Managers;
 using Scripts.UI;
 using UnityEngine;
@@ -13,7 +13,7 @@ namespace Timelesss
         [SerializeField] Button questButton;
 
         [SerializeField] private GameObject bossUI;
-        
+
         UIManager uIManager;
 
         private void Awake()
@@ -21,13 +21,16 @@ namespace Timelesss
             settingButton.onClick.AddListener(OnClickSettingButton);
             inventoryButton.onClick.AddListener(OnClickInventoryButton);
             questButton.onClick.AddListener(OnClickQuestButton);
-           
+
         }
 
         private void Start()
         {
             uIManager = UIManager.Instance;
-            DungeonManager.Instance.bossHpUIAction += OnBossUI;
+            if (DungeonManager.HasInstance)
+            {
+                DungeonManager.Instance.bossHpUIAction += OnBossUI;
+            }
         }
 
         void OnClickSettingButton()
@@ -40,7 +43,7 @@ namespace Timelesss
             var view = uIManager.ShowPopup<InventoryView>();
             view.Bind(PlayerManager.Instance.Inventory.Controller);
             PlayerManager.Instance.Inventory.Controller.InitializeView(view);
-            
+
             var eqView = uIManager.ShowPopup<EquipmentView>();
             eqView.Bind(PlayerManager.Instance.Equipment.Controller);
             PlayerManager.Instance.Equipment.Controller.InitializeView(eqView);
@@ -55,6 +58,6 @@ namespace Timelesss
         {
             bossUI.SetActive(true);
         }
- 
+
     }
 }
