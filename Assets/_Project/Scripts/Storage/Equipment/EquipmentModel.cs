@@ -28,6 +28,13 @@ namespace Timelesss
 
         public void Bind(EquipmentData data)
         {
+                        
+            for (var i = 0; i < data.Items.Length; i++)
+            {
+                if (data.Items[i].Id == SerializableGuid.Empty)
+                    data.Items[i] = null;
+            }
+            
             equipmentData = data;
 
             Debug.Log($"{Enum.GetValues(typeof(EquipmentType)).Length} Equipment Bind");
