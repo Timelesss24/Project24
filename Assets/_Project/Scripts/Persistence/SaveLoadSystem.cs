@@ -57,6 +57,7 @@ namespace Systems.Persistence {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
             Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
+            Debug.Log(GameData.InventoryData.Id.ToGuid());
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -64,7 +65,6 @@ namespace Systems.Persistence {
             var entity = FindObjectsByType<T>(FindObjectsSortMode.None).FirstOrDefault();
             if (entity != null)
             {
-                Debug.Log($"Bind {entity.name}");
                 data ??= new TData { Id = entity.Id };
                 entity.Bind(data);
             }

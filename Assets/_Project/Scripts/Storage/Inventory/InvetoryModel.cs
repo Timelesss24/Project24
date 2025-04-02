@@ -10,7 +10,7 @@ namespace Timelesss
         ObservableArray<Item> Items { get; }
 
         /// 현재 바인딩된 인벤토리 데이터입니다.
-        InventoryData inventoryData = new();
+        public InventoryData inventoryData = new();
 
         /// 인벤토리의 최대 용량입니다. 
         readonly int capacity;
@@ -59,6 +59,7 @@ namespace Timelesss
         /// <param name="data">InventoryData 인스턴스.</param>
         public void Bind(InventoryData data)
         {
+            Debug.Log("INVENTORY MODEL BIND");
             inventoryData = data;
             
             inventoryData.Capacity = capacity;
@@ -76,7 +77,7 @@ namespace Timelesss
                 for (var i = 0; i < capacity; i++)
                 {
                     if (Items[i] == null) continue;
-                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].DetailsId));
+                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].DetailsId), data.Items[i].Quantity);
                 }
             }
 
