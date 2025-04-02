@@ -1,4 +1,5 @@
-using _01_Scripts.UI;
+﻿using _01_Scripts.UI;
+using Framework.Audio;
 using Managers;
 using Scripts.UI;
 using Timelesss;
@@ -23,6 +24,9 @@ namespace Framework
 
             // 게임 로직 실행
             Debug.Log("Gameplay is now running.");
+
+            if (GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "") == "Village")
+            { SoundManager.Instance.ChangeBGMWithFade("VillageBGM", 1.0f); }
         }
     }
 }

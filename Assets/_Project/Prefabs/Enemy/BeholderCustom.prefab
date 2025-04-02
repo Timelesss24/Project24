@@ -1132,7 +1132,6 @@ MonoBehaviour:
   playerDetector: {fileID: 3770541890150124077}
   animator: {fileID: 589710377612808545}
   enemyDrop: {fileID: 0}
-  itemSpawner: {fileID: 0}
   hpBar: {fileID: 0}
   isDie: 0
   enemyEventChannel: {fileID: 11400000, guid: 8a220449c9af2d249be31fcffd850784, type: 2}
@@ -1190,10 +1189,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25178313
-  m_Height: 1.7541237
+  m_Radius: 0.32710552
+  m_Height: 2.0339475
   m_Direction: 1
-  m_Center: {x: -0.022050858, y: 1.2504466, z: -0.08646178}
+  m_Center: {x: -0.022050858, y: 1.1105347, z: -0.011139393}
 --- !u!114 &7405043243594653666
 MonoBehaviour:
   m_ObjectHideFlags: 0
