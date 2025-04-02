@@ -19,6 +19,8 @@ namespace Timelesss
         public RectTransform RectTransform => GetComponent<RectTransform>();
 
         public event Action<Vector2, Slot> OnStartDrag = delegate { }; // 드래그 시작 이벤트
+
+        public Item item;
         
         /// <summary>
         /// 슬롯 초기화 메서드

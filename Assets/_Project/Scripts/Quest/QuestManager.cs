@@ -1,13 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Systems.Persistence;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityUtils;
 
 namespace Timelesss
 {
-    public class QuestManager : PersistentSingleton<QuestManager>
+    [Serializable]
+    public class SaveableQuestData : ISaveable
+    {
+        [field: SerializeField] public SerializableGuid Id { get; set; }
+        public List<ActiveQuestInfo> ActiveQuestList;
+        public List<int> CompleteQuestList;
+    }
+    
+    public class QuestManager : PersistentSingleton<QuestManager>, IBind<SaveableQuestData>
     {
         private QuestDataLoader questDataLoader;
 
@@ -24,11 +33,16 @@ namespace Timelesss
         private QuestType questType;
         
         private const int InvalidQuestID = 0;
+        
+        [SerializeField] private SaveableQuestData saveableQuestData;
 
         private void Start()
         {
             questDataLoader = new QuestDataLoader();
             questDict = questDataLoader.ItemsDict;
+            
+            LoadQuestData();
+            InvokeRepeating(nameof(SaveQuestData), 0, 3f);
         }
 
         public int GetQuestID(int npcID)
@@ -65,7 +79,7 @@ namespace Timelesss
                 if (questData != null)
                 {
                     activeQuestList.Add(new ActiveQuestInfo(questID, questData.targetNum));
-                    Debug.Log($"퀘스트 시작: {questDict[questID].questName}");
+                    saveableQuestData.ActiveQuestList = activeQuestList;
                 }
             }
             else
@@ -82,6 +96,9 @@ namespace Timelesss
             {
                 activeQuestList.Remove(activeQuest);
                 completeQuestList.Add(questID);
+                
+                saveableQuestData.ActiveQuestList = activeQuestList;
+                saveableQuestData.CompleteQuestList = completeQuestList;
 
                 if (questDict.TryGetValue(questID, out var completedQuest))
                 {
@@ -158,9 +175,29 @@ namespace Timelesss
             {
                 if (activeQuest.progress < activeQuest.goal)
                     activeQuest.progress++;
-
+                
+                saveableQuestData.ActiveQuestList = activeQuestList;
                 Debug.Log($"퀘스트 진행 업데이트: {activeQuest.progress}/{activeQuest.goal}");
             }
+        }
+
+        [field: SerializeField] public SerializableGuid Id { get; set; } = SerializableGuid.NewGuid();
+        public void Bind(SaveableQuestData data)
+        {
+            saveableQuestData = data;
+            Id = data.Id;
+            activeQuestList = data.ActiveQuestList;
+            completeQuestList = data.CompleteQuestList;
+        }
+        
+        private void SaveQuestData() => SaveLoadSystem.Instance.GameData.QuestData = saveableQuestData;
+        
+        private void LoadQuestData()
+        {
+            saveableQuestData = SaveLoadSystem.Instance.LoadGame(SaveLoadSystem.Instance.GameData.Name).QuestData;
+            
+            if (saveableQuestData != null)
+                Bind(saveableQuestData);
         }
     }
 }

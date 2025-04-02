@@ -1,16 +1,16 @@
-
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Timelesss
 {
     public class InventoryModel
     {
         /// 인벤토리에 저장된 아이템 배열입니다. 
-        ObservableArray<Item> Items { get; }
-        
+        private ObservableArray<Item> Items { get; }
+
         /// 현재 바인딩된 인벤토리 데이터입니다.
-        InventoryData inventoryData = new ();
+        InventoryData inventoryData = new();
 
         /// 인벤토리의 최대 용량입니다. 
         readonly int capacity;
@@ -24,7 +24,7 @@ namespace Timelesss
             get => inventoryData.Coins;
             set => inventoryData.Coins = value;
         }
-        
+
         /// <summary>
         /// 인벤토리 모델이 변경될 때 호출되는 이벤트입니다.
         /// 아이템 배열이 변경될 때 발생합니다.
@@ -34,7 +34,7 @@ namespace Timelesss
             add => Items.AnyValueChanged += value;
             remove => Items.AnyValueChanged -= value;
         }
-        
+
         /// <summary>
         /// InventoryModel 클래스의 생성자.
         /// 주어진 아이템 세부 정보와 용량으로 인벤토리를 초기화합니다.
@@ -51,6 +51,17 @@ namespace Timelesss
             }
         }
 
+        public InventoryModel(Item[] items, int capacity)
+        {
+            this.capacity = capacity;
+            Items = new ObservableArray<Item>(capacity);
+            foreach (var item in items)
+            {
+                if (item.Details == null) continue;
+                Items.TryAdd(item.Details.Create(item.Quantity));
+            }
+        }
+        
         // 메서드
         /// <summary>
         /// InventoryData와 모델을 바인딩합니다.
@@ -60,6 +71,15 @@ namespace Timelesss
         public void Bind(InventoryData data)
         {
             inventoryData = data;
+
+            for (int i = 0; i < inventoryData.Items.Length; i++)
+            {
+                if (inventoryData.Items[i].Details == null)
+                    Debug.Log($"{i}번 슬롯 빈 슬롯");
+                else
+                    Debug.Log($"{i}번 슬롯 {inventoryData.Items[i].Details.name} 아이템 바인딩 완료");
+            }
+
             inventoryData.Capacity = capacity;
 
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
@@ -71,12 +91,12 @@ namespace Timelesss
             }
             else
             {
-                // 기존 데이터에서 아이템을 로드
-                for (var i = 0; i < capacity; i++)
-                {
-                    if (Items[i] == null) continue;
-                    inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
-                }
+                // // 기존 데이터에서 아이템을 로드
+                // for (var i = 0; i < capacity; i++)
+                // {
+                //     if (Items[i] == null) continue;
+                //     inventoryData.Items[i] = new Item(ItemDatabase.GetDetailsById(Items[i].Id));
+                // }
             }
 
             if (isNew && Items.Count != 0)
