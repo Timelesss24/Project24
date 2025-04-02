@@ -14,6 +14,8 @@ namespace Timelesss
 
         UIManager uIManager;
 
+        [SerializeField] GameObject bossHpUI;
+
         private void Awake()
         {
             settingButton.onClick.AddListener(OnClickSettingButton);
@@ -23,7 +25,12 @@ namespace Timelesss
 
         private void Start()
         {
-            uIManager = UIManager.Instance;           
+            uIManager = UIManager.Instance;
+
+            if (DungeonManager.HasInstance)
+            {
+                DungeonManager.Instance.bossHpUIAction += OnBossHpUI;
+            }
         }
 
         void OnClickSettingButton()
@@ -46,5 +53,10 @@ namespace Timelesss
         {
             uIManager.ShowPopup<QuestPopUp>();
         }     
+
+        void OnBossHpUI() 
+        {
+            bossHpUI.SetActive(true);
+        }
     }
 }

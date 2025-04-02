@@ -19,11 +19,14 @@ namespace Timelesss
         private List<Enemy> enemies;
         [SerializeField] private GameObject bossPrefabs;
         [SerializeField] private Transform bossSpawner;
+        [SerializeField] private Transform portalSpawner;
         private GameObject bossObect;
 
         [SerializeField] private GameObject potal;
 
         private NavMeshSurface navMeshSurface;
+
+        public Action bossHpUIAction;
 
 
 
@@ -107,7 +110,7 @@ namespace Timelesss
             if (enemies.Count == 1)
             {
                 bossObect.SetActive(true);
-                UIManager.Instance.ShowPopup<BossHpPopUp>();
+                bossHpUIAction?.Invoke();
             }
             else if(enemies.Count == 0)
             {
@@ -117,7 +120,7 @@ namespace Timelesss
 
         void GameClear()
         {
-            Instantiate(potal, bossSpawner.position, potal.transform.rotation);
+            Instantiate(potal, portalSpawner.position, potal.transform.rotation);
         }
 
         void OnGameOverUI()
