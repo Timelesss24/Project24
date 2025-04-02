@@ -226,7 +226,7 @@ namespace Timelesss
             playerData = data;
             playerData.Id = Id;
             
-            Debug.Log("Bind PlayerData:" + data.Id.ToGuid());
+            //Debug.Log("Bind PlayerData:" + data.Id.ToGuid());
             // playerData.PlayerLevel = data.PlayerLevel;
             // playerData.MaxHealth = data.MaxHealth;
             // playerData.CurrentHealth = data.CurrentHealth;

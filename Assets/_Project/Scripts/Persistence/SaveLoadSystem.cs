@@ -59,7 +59,7 @@ namespace Systems.Persistence {
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
             Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
             Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
-            Debug.Log(GameData.EquipmentData.Id.ToGuid());
+//            Debug.Log(GameData.EquipmentData.Id.ToGuid());
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 

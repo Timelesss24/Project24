@@ -26,15 +26,15 @@ namespace Timelesss
         {
             Controller.Bind(data);
             data.Id = Id;
-            Debug.Log($"Equipment {Id.ToGuid()} bound to data {data.Id.ToGuid()}");
+//            Debug.Log($"Equipment {Id.ToGuid()} bound to data {data.Id.ToGuid()}");
         }
 
-        void OnGUI()
-        {
-            //GUI.Label(new Rect(10, 100, 300, 20), $"Equipment ID: {Id.ToString()}");
-            GUILayout.Label($"Inventory ID: {Id.ToGuid()}");
-            GUILayout.Label($"Inventory ID: {Controller.Model.equipmentData.Id.ToGuid()}");
-            GUILayout.Label($"Inventory ID: {SaveLoadSystem.Instance.GameData.EquipmentData.Id.ToGuid()}");
-        }
+        // void OnGUI()
+        // {
+        //     //GUI.Label(new Rect(10, 100, 300, 20), $"Equipment ID: {Id.ToString()}");
+        //     //GUILayout.Label($"Inventory ID: {Id.ToGuid()}");
+        //     //GUILayout.Label($"Inventory ID: {Controller.Model.equipmentData.Id.ToGuid()}");
+        //     //GUILayout.Label($"Inventory ID: {SaveLoadSystem.Instance.GameData.EquipmentData.Id.ToGuid()}");
+        // }
     }
 }

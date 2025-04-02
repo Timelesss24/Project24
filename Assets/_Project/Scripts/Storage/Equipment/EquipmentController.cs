@@ -44,11 +44,11 @@ namespace Timelesss
         //     Model.Add(item); // 해당 부위에 장비 착용
         // }
 
-        void HandleModelChanged(Dictionary<EquipmentType, Item> items)
+        void HandleModelChanged(IList<Item> items)
         {
             RefreshView();
 
-            foreach (var item in items.Values)
+            foreach (var item in items)
             {
                 if (item == null) continue;
                 VisualHandler?.Equip(item); // 3D 모델 장착
@@ -99,8 +99,8 @@ namespace Timelesss
                     : new EquipmentModel(Array.Empty<ItemDetails>());
 
 
-                foreach (var item in model.Items)
-                    visualHandler.Equip((EquipmentItem)item.Value);
+                foreach (var item in model.Items.Items)
+                    visualHandler.Equip((EquipmentItem)item);
 
 
                 return new EquipmentController(model, visualHandler);

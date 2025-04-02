@@ -89,10 +89,6 @@ namespace Timelesss
                 }
             }
             
-            for (var i = 0; i < capacity; i++) {
-               Debug.Log($"Items {i}" + (Items[i] == null));
-               Debug.Log($"Save Data{i}" + (inventoryData.Items[i] == null));
-            }
             
             Items.Items = inventoryData.Items;
             

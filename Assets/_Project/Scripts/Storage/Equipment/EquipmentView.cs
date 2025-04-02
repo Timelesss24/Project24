@@ -74,14 +74,14 @@ namespace Timelesss
             if ( Controller.Model.Get(item.Details.EquipmentType) != null)
             {
                 var temp = GetItemFromSlot(toSlot);
-                Controller?.Model?.Add(item);
+                Debug.Log(Controller?.Model?.Add(item));
                 onSwap?.Invoke(temp);
                 
                 return true;
             }
                 
 
-            Controller?.Model?.Add(item);
+            Debug.Log(Controller?.Model?.Add(item));
             return true;
         }
     }

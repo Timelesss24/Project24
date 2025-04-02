@@ -36,7 +36,7 @@ namespace Timelesss
         public Item(ItemDetails details, int quantity = 1)
         {
             Id = SerializableGuid.NewGuid();
-            Debug.Log("new Item "+Id.ToGuid());
+//            Debug.Log("new Item "+Id.ToGuid());
             DetailsId = details.Id;
             Details = details;
             Quantity = quantity;
