@@ -72,16 +72,6 @@ namespace Timelesss
         {
             inventoryData = data;
 
-            for (int i = 0; i < inventoryData.Items.Length; i++)
-            {
-                if (inventoryData.Items[i].Details == null)
-                    Debug.Log($"{i}번 슬롯 빈 슬롯");
-                else
-                    Debug.Log($"{i}번 슬롯 {inventoryData.Items[i].Details.name} 아이템 바인딩 완료");
-            }
-
-            inventoryData.Capacity = capacity;
-
             bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
 
             if (isNew)
