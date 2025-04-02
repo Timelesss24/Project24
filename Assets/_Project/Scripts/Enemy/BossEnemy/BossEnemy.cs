@@ -23,8 +23,6 @@ namespace Timelesss
 
         [SerializeField] private EnemyDrop enemyDrop;
 
-        [SerializeField] private ItemSpawner itemSpawner;
-
         // 상태 기계(State Machine) 객체: 적의 상태 전환 및 동작 관리
         public StateMachine stateMachine;
 
@@ -151,7 +149,7 @@ namespace Timelesss
         {
             if (enemyTransform != null)
             {
-                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => Destroy(this.gameObject));
+                enemyTransform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 2f).SetEase(Ease.InOutSine).OnComplete(() => DungeonManager.Instance.RemoveEnemy(gameObject));
             }
         }
         //private IEnumerator AttackDelay(float count)
@@ -164,7 +162,7 @@ namespace Timelesss
         private IEnumerator DelayDie(float count)
         {
             yield return new WaitForSeconds(count);
-            itemSpawner.SpawnItem(enemyDrop.RandomItemDetails(),this.gameObject.transform.position);
+            ItemSpawner.Instance.SpawnItem(enemyDrop.RandomItemDetails(),this.gameObject.transform.position);
             FadeOutDestroy();
         }
         public void SmokeAttack()

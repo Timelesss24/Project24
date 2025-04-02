@@ -1,9 +1,11 @@
+﻿using System;
 using System.Linq;
 using UnityEngine;
+using UnityUtils;
 
 namespace Timelesss
 {
-    public class UIDragHandler : MonoBehaviour
+    public class UIDragHandler : Singleton<UIDragHandler>
     {
         void Update()
         {

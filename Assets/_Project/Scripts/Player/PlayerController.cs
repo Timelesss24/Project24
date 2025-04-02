@@ -71,6 +71,7 @@ namespace Timelesss
         CountdownTimer jumpCooldownTimer;
         CountdownTimer rollCooldownTimer;
         CountdownTimer exhaustedTimer;
+        CountdownTimer fallTimer;
 
         StateMachine stateMachine;
 
@@ -147,7 +148,7 @@ namespace Timelesss
             Any(exhaustedState, new FuncPredicate(() => exhaustedTimer.IsRunning));
             Any(hitState, new ActionPredicate(ref onHit));
             At(exhaustedState,locomotionState, new FuncPredicate(() => !exhaustedTimer.IsRunning));
-            Any(inAir, new FuncPredicate(() => !groundChecker.IsGrounded));
+            Any(inAir, new FuncPredicate(() => !groundChecker.IsGrounded && !IsBusy && !fallTimer.IsRunning));
             At(inAir, locomotionState, new FuncPredicate(() => groundChecker.IsGrounded));
 
             // Set initial state
@@ -164,8 +165,9 @@ namespace Timelesss
             jumpCooldownTimer = new CountdownTimer(jumpCooldown);
             rollCooldownTimer = new CountdownTimer(rollCooldown);
             exhaustedTimer = new CountdownTimer(exhaustedDuration);
+            fallTimer = new CountdownTimer(fallTimeout);
 
-            timers = new List<Timer> { jumpCooldownTimer, rollCooldownTimer, exhaustedTimer };
+            timers = new List<Timer> { jumpCooldownTimer, rollCooldownTimer, exhaustedTimer ,fallTimer};
         }
 
         void At(IState from, IState to, IPredicate condition) => stateMachine.AddTransition(from, to, condition);
@@ -324,13 +326,14 @@ namespace Timelesss
             }
             else
             {
-
+                if(!fallTimer.IsRunning)
+                    fallTimer.Start();
                 // todo 낙하 타이머 >> 착지 로직 
             }
             // 중력 적용 (터미널 속도까지 증가)
             if (verticalVelocity < TerminalVelocity)
             {
-                verticalVelocity += Gravity * Time.deltaTime;
+                verticalVelocity += Gravity * gravityMultiplier * Time.deltaTime;
             }
         }
 

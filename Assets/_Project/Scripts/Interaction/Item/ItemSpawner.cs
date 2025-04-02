@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityUtils;
 
 namespace Timelesss
 {
-    public class ItemSpawner : MonoBehaviour
+    public class ItemSpawner : Singleton<ItemSpawner>
     {
         [SerializeField] private DropItem dropItemPrefab;
         [SerializeField] private int poolSize = 10;
