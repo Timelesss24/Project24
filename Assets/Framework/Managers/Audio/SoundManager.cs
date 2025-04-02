@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using Managers;
@@ -13,7 +13,7 @@ namespace Framework.Audio
     /// </summary>
     public class SoundManager : PersistentSingleton<SoundManager>
     {
-               [Header("BGM Settings")]
+        [Header("BGM Settings")]
         [SerializeField] private AudioSource bgmSource; // 배경 음악용 오디오 소스
 
         [FormerlySerializedAs("bgmVolume")]
@@ -21,10 +21,12 @@ namespace Framework.Audio
 
         [SerializeField] private List<AudioClip> bgmClips; // 배경 음악 클립 리스트
 
-        [Header("SFX Settings")] [SerializeField] [Range(0f, 1f)]
+        [Header("SFX Settings")]
+        [SerializeField]
+        [Range(0f, 1f)]
         private float sfxVolume = 1f; // 효과음 볼륨
 
-        [SerializeField] [Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
+        [SerializeField][Range(0f, 1f)] private float sfxPitchVariance; // 효과음 피치 변동 범위
 
         [FormerlySerializedAs("soundSourcePrefab")]
         public SoundSource SoundSourcePrefab; // 효과음 재생을 위한 사운드 소스 프리팹
@@ -32,23 +34,28 @@ namespace Framework.Audio
         [SerializeField] private bool isMuted; // 음소거 설정 여부
 
         private Coroutine _fadeCoroutine; // 현재 활성화된 페이드 코루틴
-        
-        
+
+
         // 추가
         private Queue<SoundSource> soundSourcePool = new Queue<SoundSource>();
         [SerializeField] private AudioClip clickSound;
         public AudioClip ClickSound => clickSound;
 
+
         protected void Start()
         {
             bgmSource = gameObject.GetOrAdd<AudioSource>();
-            
+
             ApplyVolumeSettings(); // 초기 볼륨 설정
-            
-            //PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")); 
+
+            //PlayBGM(GameStateManager.Instance.CurrentState.ToString().Replace("Scene", ""));
         }
 
-        
+        protected void Update()
+        {
+            //BGMSetting();
+        }
+
         /// <summary>
         /// 볼륨 설정 적용
         /// </summary>
@@ -57,6 +64,22 @@ namespace Framework.Audio
             bgmSource.volume = isMuted ? 0f : BGMVolume;
             bgmSource.loop = true;
             //isMuted | isSfxMuted? 0f : sfxVolume;
+        }
+
+        public void BGMSetting()
+        {
+            GameObject Boss = GameObject.FindGameObjectWithTag("Boss");
+            if (Boss != null && Boss.activeSelf)
+            {
+                ChangeBGMWithFade("Last Gaint", 2.5f);
+                //StartCoroutine(ChangeBGMCoroutine("Last Gaint", 5.2f));
+                //PlayBGM("Last Gaint");
+            }
+            else
+            {
+                ChangeBGMWithFade($"{GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")}BGM", 1.2f);
+                //StartCoroutine(ChangeBGMCoroutine($"{GameStateManager.Instance.CurrentState.ToString().Replace("Scene", "")}BGM", 4.2f));
+            }
         }
 
         /// <summary>
@@ -165,7 +188,7 @@ namespace Framework.Audio
                 StopCoroutine(_fadeCoroutine);
 
             float startVolume = bgmSource.volume;
-            
+
             while (bgmSource.volume > 0)
             {
                 bgmSource.volume =
@@ -205,7 +228,7 @@ namespace Framework.Audio
                     (BGMVolume / fadeDuration) * Time.deltaTime);
                 yield return null;
             }
-            
+
             bgmSource.volume = BGMVolume; // 최종 볼륨 고정
         }
 

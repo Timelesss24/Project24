@@ -13,7 +13,7 @@ namespace Timelesss
         // 공격 대상인 플레이어의 Transform
         readonly Transform target;
 
-        float skillcount;
+        //float skillcount;
 
         /// EnemyAttackState 생성자:
         /// 적 개체, 애니메이터, NavMeshAgent, 공격 타겟을 초기화합니다.
@@ -60,19 +60,19 @@ namespace Timelesss
                 // Attack 애니메이션을 부드럽게 시작 (CrossFade 사용)
                 animator.CrossFade(AttackFirstHash, crossFadeDuration);
                 Debug.Log(" 뿜기 공격");
-                skillcount = 3f;
+                //skillcount = 3f;
             }
             else if (pattern == 1)
             {
                 animator.CrossFade(AttackSecondHash, crossFadeDuration);
                 Debug.Log(" 원거리 공격");
-                skillcount = 4f;
+                //skillcount = 4f;
             }
             else
             {
                 animator.CrossFade(AttackThidHash, crossFadeDuration);
                 Debug.Log(" 억까 공격");
-                skillcount = 4.5f;
+                //skillcount = 4.5f;
             }
         }
         private IEnumerator AttackDelay(float count)//작동을 안해...

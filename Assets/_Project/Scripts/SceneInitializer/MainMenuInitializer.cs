@@ -1,4 +1,5 @@
-using _01_Scripts.UI.Scene;
+﻿using _01_Scripts.UI.Scene;
+using Framework.Audio;
 using Managers;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace Framework
 
             // 버튼 이벤트 설정 (예시)
             Debug.Log("Main Menu is now running.");
+
+            SoundManager.Instance.ChangeBGMWithFade("TitleBGM", 0.0f);
         }
     }
 }

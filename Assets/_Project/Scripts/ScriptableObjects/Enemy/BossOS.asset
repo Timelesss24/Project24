@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCode: 1006
   maxHp: 1000
-  attackDamage: 15
+  attackDamage: 25
   exp: 100
-  wanderRadius: 20
+  wanderRadius: 25
   timeBetweenAttacks: 1
   detectionAngle: 360
   detectionRadius: 20
-  innerDetectionRadius: 1
+  innerDetectionRadius: 5
   detectionCooldown: 1
-  attackRange: 6
+  attackRange: 8

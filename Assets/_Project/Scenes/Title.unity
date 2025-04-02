@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -559,6 +559,21 @@ PrefabInstance:
     - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
         type: 3}
       propertyPath: bgmClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
+    - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: BackgroundSound.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: BackgroundSound.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f7bf2764b031e7145a30431f6497036a, type: 3}
+    - target: {fileID: 7326723167440405821, guid: 3fb3c8977849c4503af8d977c8cb517d,
+        type: 3}
+      propertyPath: BackgroundSound.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: a72be6dbb33ae1d48b44895f4943bee6, type: 3}
     m_RemovedComponents: []

@@ -22,4 +22,4 @@ MonoBehaviour:
   detectionRadius: 10
   innerDetectionRadius: 5
   detectionCooldown: 1
-  attackRange: 1.25
+  attackRange: 1.6
