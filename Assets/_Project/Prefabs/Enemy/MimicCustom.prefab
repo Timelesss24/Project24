@@ -385,6 +385,57 @@ Transform:
   - {fileID: 6517190828728302480}
   m_Father: {fileID: 7455723491373815615}
   m_LocalEulerAnglesHint: {x: 63.767776, y: 70.07893, z: -58.240303}
+--- !u!1 &3764629004886393856
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2798295274194513591}
+  - component: {fileID: 1317880425985448398}
+  m_Layer: 7
+  m_Name: DropItem (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2798295274194513591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764629004886393856}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.3150225, y: -0.025097847, z: -4.982376}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8125654673358408417}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1317880425985448398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764629004886393856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4b9d6ee529c5346ad95e43df0eef2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropItemPrefab: {fileID: 2346308601761311012, guid: 5316bbc50d6be5a488a68763b6532d1b,
+    type: 3}
+  itemDataList:
+  - itemDetails: {fileID: 11400000, guid: f5d16d3fdf08b49c7aafee7e36bb414c, type: 2}
+    probability: 0.5
+  - itemDetails: {fileID: 11400000, guid: 35027283509a54f30b7641ace2bd3dc9, type: 2}
+    probability: 0.5
 --- !u!1 &3790694333329297640
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,6 +789,7 @@ Transform:
   - {fileID: 749119770681782907}
   - {fileID: 7440604240761960691}
   - {fileID: 4165412179501020917}
+  - {fileID: 2798295274194513591}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8670241998363788634
@@ -798,6 +850,8 @@ MonoBehaviour:
   agent: {fileID: 5570772173573997260}
   playerDetector: {fileID: 4268883149933166354}
   animator: {fileID: 8670241998363788634}
+  enemyDrop: {fileID: 0}
+  itemSpawner: {fileID: 0}
   hpBar: {fileID: 0}
   isDie: 0
   enemyEventChannel: {fileID: 11400000, guid: 8a220449c9af2d249be31fcffd850784, type: 2}

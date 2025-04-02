@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +13,7 @@ namespace Managers
         //게임이 커지면 씬별로 나눠도 됌
     }
 
-    public class UIManager : RegulatorSingleton<UIManager>
+    public class UIManager : Singleton<UIManager>
     {
         private readonly Dictionary<UICategory, string> _uiPrefixes = new()
         {
