@@ -16,6 +16,7 @@ namespace MyTools
         public static void CreateDefaultFolders()
         {
             Folders.CreateDefault("_Project", "Animation", "Art", "Materials", "Prefabs", "Scripts/ScriptableObjects", "Scripts/UI");
+            Folders.CreateDefault("External");
             Refresh();
         }
 
@@ -54,7 +55,7 @@ namespace MyTools
             Packages.InstallPackages(new[]
             {
                 "git+https://github.com/KyleBanks/scene-ref-attribute",
-                "git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.1"
+                //"git+https://github.com/starikcetin/Eflatun.SceneReference.git#3.1.1"
             });
         }
 
