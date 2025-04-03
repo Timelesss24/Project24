@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 public interface IObservableArray<T>
 {
@@ -28,7 +27,7 @@ public class ObservableArray<T> : IObservableArray<T>
     public int Count => Items.Count(i => i != null);
     public int Length => Items.Length;
     public T this[int index] => Items[index];
-    
+
     public ObservableArray(int size = 20, IList<T> initialList = null)
     {
         Items = new T[size];
@@ -66,8 +65,7 @@ public class ObservableArray<T> : IObservableArray<T>
     {
         if (index < 0 || index >= Items.Length) return false;
 
-        if (Items[index] != null)
-        {Debug.Log(index);return false;}
+        if (Items[index] != null) return false;
 
         Items[index] = item;
         Invoke();

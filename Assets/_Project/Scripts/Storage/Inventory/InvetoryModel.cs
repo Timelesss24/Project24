@@ -13,17 +13,8 @@ namespace Timelesss
          InventoryData inventoryData = new();
 
         /// 인벤토리의 최대 용량입니다. 
-        readonly int capacity;
-
-        /// <summary>
-        /// 보유 중인 코인의 양입니다.
-        /// 값은 inventoryData.Coins의 값을 기반으로 읽고 쓰기가 가능합니다.
-        /// </summary>
-        public int Coins
-        {
-            get => inventoryData.Coins;
-            set => inventoryData.Coins = value;
-        }
+        int capacity;
+        
 
         /// <summary>
         /// 인벤토리 모델이 변경될 때 호출되는 이벤트입니다.
@@ -59,7 +50,6 @@ namespace Timelesss
         /// <param name="data">InventoryData 인스턴스.</param>
         public void Bind(InventoryData data)
         {
-            
             for (var i = 0; i < data.Items.Length; i++)
             {
                 if (data.Items[i].Id == SerializableGuid.Empty)
@@ -73,15 +63,10 @@ namespace Timelesss
 
             if (isNew) {
                 inventoryData.Items = new Item[capacity];
+                Debug.Log("is new");
             }
-            // else {
-            //     for (var i = 0; i < capacity; i++) {
-            //         if (Items[i] == null) continue;
-            //         inventoryData.Items[i].Details = ItemDatabase.GetDetailsById(Items[i].DetailsId);
-            //     }
-            // }
-     
 
+            
             if (isNew && Items.Count != 0) {
                 for (var i = 0; i < capacity; i++) {
                     if (Items[i] == null) continue;
@@ -89,68 +74,9 @@ namespace Timelesss
                 }
             }
             
-            for (var i = 0; i < capacity; i++) {
-               Debug.Log($"Items {i}" + (Items[i] == null));
-               Debug.Log($"Save Data{i}" + (inventoryData.Items[i] == null));
-            }
-            
             Items.Items = inventoryData.Items;
-            
-            // Debug.Log("INVENTORY MODEL BIND");
-            // inventoryData = data;
-            //
-            // inventoryData.Capacity = capacity;
-            //
-            // bool isNew = inventoryData.Items == null || inventoryData.Items.Length == 0;
-            //
-            // if (isNew)
-            // {
-            //     // 새로운 데이터일 경우 빈 아이템 배열 초기화
-            //     inventoryData.Items = new Item[capacity];
-            // }
-            // else
-            // {
-            //     // 기존 데이터에서 아이템을 로드
-            //     for (var i = 0; i < capacity; i++)
-            //     {
-            //         if (Items[i] == null) continue; 
-            //         if(Items[i].Quantity == 0)
-            //         {
-            //             inventoryData.Items[i] = null;
-            //             continue;
-            //         }
-            //         //inventoryData.Items[i] = ItemDatabase.GetDetailsById(data.Items[i].DetailsId).Create(data.Items[i].Quantity);
-            //         
-            //     }
-            // }
-            //
-            // if (isNew && Items.Count != 0)
-            // {
-            //     // 아이템 복사
-            //     for (var i = 0; i < capacity; i++)
-            //     {
-            //         if (Items[i] == null) continue;
-            //         inventoryData.Items[i] = Items[i];
-            //     }
-            // }
-            //
-            // for (var i = 0; i < capacity; i++)
-            // {
-            //     if (inventoryData.Items[i] == null) continue;
-            //     if(inventoryData.Items[i].Quantity == 0)
-            //         inventoryData.Items[i] = null;
-            // }
-            
-
-            // Items 배열과 inventoryData의 아이템 연결
-            //Items.Items = inventoryData.Items;
         }
-
-        /// <summary>
-        /// 코인을 추가합니다.
-        /// </summary>
-        /// <param name="amount">추가할 코인 수량.</param>
-        public void AddCoins(int amount) => Coins += amount;
+        
 
         /// <summary>
         /// 지정된 인덱스에 해당하는 아이템을 반환합니다.

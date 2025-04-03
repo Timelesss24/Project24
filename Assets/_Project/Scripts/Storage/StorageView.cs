@@ -71,8 +71,6 @@ namespace Timelesss
         protected abstract Item GetItemFromSlot(Slot slot);
         void OnPointerDown(Vector2 position, Slot slot)
         {
-            Debug.Log("OnPointerDown");
-
             // 슬롯 인덱스를 이용해 아이템 조회
             Item item = GetItemFromSlot(slot);
             if (item == null || item.Id == SerializableGuid.Empty)

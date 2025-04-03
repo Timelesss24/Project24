@@ -22,7 +22,7 @@ namespace Timelesss
         [SerializeField] TextMeshProUGUI header; // 제목 텍스트
         
         Dictionary<EquipmentType, EquipmentSlot> slotDict;
-        
+
         public EquipmentController  Controller { get; private set; } 
         
         public override void InitializeView(int capacity = 0)
@@ -70,19 +70,9 @@ namespace Timelesss
                 Debug.LogWarning("Drop item is not equipment" + item.Details.ItemType);
                 return false;
             }
-
-            // if ( Controller.Model.Get(item.Details.EquipmentType) != null)
-            // {
-            //     var temp = GetItemFromSlot(toSlot);
-            //     Debug.Log(Controller?.Model?.Add(item));
-            //     onSwap?.Invoke(temp);
-            //     
-            //     return true;
-            // }
-                
-
-            Debug.Log(Controller?.Model?.Add(item));
-            return true;
+            
+            
+            return Controller?.Model?.Add(item) ?? false;
         }
     }
 }

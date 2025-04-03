@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Systems.Persistence;
 using UnityEngine;
@@ -26,8 +25,7 @@ namespace Timelesss
 
         public void AddItem(Item item)
         {
-            Debug.Log($"Adding item {item.Id.ToGuid()} to inventory {Id.ToGuid()}");
-            Debug.Log(Controller.Model.Add(item));
+            Controller.Model.Add(item);
             Controller.SubscribeToItem(item);
         }
 
@@ -39,10 +37,6 @@ namespace Timelesss
             Controller.Bind(data); // 모델 데이터와 컨트롤러 연결
             data.Id = Id; // 데이터 ID를 현재 Inventory ID로 설정
         }
-
-        void OnGUI()
-        {
-            //GUILayout.Label($"Inventory ID: {Controller.Model.inventoryData.Id.ToGuid()}");
-        }
+        
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Systems.Persistence;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityUtils;
 
@@ -58,12 +56,8 @@ namespace Timelesss
 
         public QuestData GetQuestData(int questID)
         {
-            if (questDict.TryGetValue(questID, out var questData))
-            {
-                return questData;
-            }
+            return questDict.GetValueOrDefault(questID);
 
-            return null;
         }
 
         public void StartQuest(int questID)
@@ -133,28 +127,29 @@ namespace Timelesss
                        x.IsComplete();
             });
 
-            return completedQuest == null ? InvalidQuestID : completedQuest.questID;
+            return completedQuest?.questID ?? InvalidQuestID;
         }
 
         public void UpdateProgress(object type)
         {
             int id = InvalidQuestID;
 
-            if (type is EnemyOS enemy)
+            switch (type)
             {
-                questType = QuestType.MonsterKill;
-                id = enemy.enemyCode;
+                case EnemyOS enemy:
+                    questType = QuestType.MonsterKill;
+                    id = enemy.enemyCode;
+                    break;
+                case ItemData:
+                    questType = QuestType.MaterialGather;
+                    // 아이템 아이디 가져오기
+                    break;
+                default:
+                    questType = QuestType.DungeonClear;
+                    break;
             }
 
-            else if (type is ItemData item)
-            {
-                questType = QuestType.MaterialGather;
-                // 아이템 아이디 가져오기
-            }
-            else
-                questType = QuestType.DungeonClear;
-
-            ActiveQuestInfo activeQuest = ActiveQuestList.Find(x =>
+            var activeQuest = ActiveQuestList.Find(x =>
             {
                 QuestData questData = GetQuestData(x.questID);
                 return questData != null &&

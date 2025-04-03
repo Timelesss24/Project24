@@ -22,7 +22,7 @@ namespace Systems.Persistence {
         SerializableGuid Id { get; set; }
     }
     
-    public interface IBind<TData> where TData : ISaveable 
+    public interface IBind<in TData> where TData : ISaveable 
     {
         SerializableGuid Id { get; set; }
         void Bind(TData data);
@@ -48,9 +48,9 @@ namespace Systems.Persistence {
         
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
         {
-            SaveGame();
             LoadGame(GameData.Name);
             AllBind();
+            SaveGame();
         }
 
         public void AllBind()
@@ -58,8 +58,7 @@ namespace Systems.Persistence {
             Bind<PlayerInfo, PlayerData>(GameData.PlayerData);
             Bind<QuestManager, SaveableQuestData>(GameData.QuestData);
             Bind<Timelesss.Inventory, InventoryData>(GameData.InventoryData);
-            Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
-            Debug.Log(GameData.EquipmentData.Id.ToGuid());
+            //Bind<Timelesss.Equipment, EquipmentData>(GameData.EquipmentData);
         }
         
         void Bind<T, TData>(TData data) where T : MonoBehaviour, IBind<TData> where TData : ISaveable, new() 
@@ -107,6 +106,7 @@ namespace Systems.Persistence {
                 },
                 InventoryData = new InventoryData(),
                 EquipmentData = new EquipmentData()
+                
             };
         }
 

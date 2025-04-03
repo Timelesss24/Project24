@@ -22,7 +22,6 @@ namespace Timelesss
         
         public virtual void OnEnter()
         {
-            Debug.Log("Entering state: " + this.GetType().Name);
         }
         public virtual void Update()
         {
@@ -34,7 +33,6 @@ namespace Timelesss
         }
         public virtual void OnExit()
         {
-            Debug.Log("Exiting state: " + this.GetType().Name);
         }
     }
 

@@ -9,7 +9,6 @@ namespace Timelesss
 
         public override void OnEnter()
         {
-            Debug.Log("Entering Locomotion State");
             animator.CrossFade(LocomotionHash, crossFadeDuration);
         }
 
